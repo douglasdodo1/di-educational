@@ -1,0 +1,102 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id         Int      @id @default(autoincrement())
+  avatarUrl  String?
+
+  email      String   @unique
+  first_name String
+  last_name  String
+  bio        String?
+  password   String
+
+  teacher    Teacher?
+  student    Student?
+
+  phones     Phone[]
+
+  memberCourses  Course[] @relation("CourseMembers")
+}
+
+model Teacher {
+  id     Int    @id
+  salary Float
+
+  user   User   @relation(fields: [id], references: [id])
+  courses Course[] @relation("TeacherCourses")
+}
+
+model Student {
+  id               Int    @id
+  enrollmentNumber String @unique
+
+  user             User   @relation(fields: [id], references: [id])
+}
+
+model Phone {
+  id      Int      @id @default(autoincrement())
+  number  String
+
+  user User @relation(fields:[userId], references: [id])
+  userId  Int @unique
+}
+
+model Course {
+  id          Int      @id @default(autoincrement())
+  imageUrl    String?
+
+  name        String
+  description String?
+  is_active   Boolean  @default(true)
+
+  start_date  DateTime
+  end_date    DateTime
+
+  teacherId   Int
+  teacher     Teacher  @relation("TeacherCourses", fields: [teacherId], references: [id])
+
+  members     User[]   @relation("CourseMembers")
+
+  classes     Class[]
+}
+
+model Class {
+  id          Int      @id @default(autoincrement())
+
+  name        String
+  description String?
+
+  courseId    Int
+  course      Course   @relation(fields: [courseId], references: [id])
+
+  content     Content?
+}
+
+model Content {
+  id       Int    @id @default(autoincrement())
+  type     ContentType
+  url      String
+
+  classId  Int    @unique
+  lesson   Class  @relation(fields: [classId], references: [id])
+}
+
+enum ContentType {
+  IMAGE
+  VIDEO
+  PDF
+}
