@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { CreateStudentDTO } from './dtos/create-student.dto';
+import { CreateStudentInput } from './inputs/create-student.input';
 import { PrismaService } from 'src/prisma.service';
-import type { Student } from 'src/generated/prisma/client';
+import { StudentsModel } from './students.model';
 
 @Injectable()
 export class StudentsService {
   constructor(private prisma: PrismaService) {}
 
-  async create(data: CreateStudentDTO): Promise<Student> {
+  async create(data: CreateStudentInput): Promise<StudentsModel> {
     return await this.prisma.student.create({
       data: {
         enrollmentNumber: data.enrollmentNumber,
@@ -20,6 +20,9 @@ export class StudentsService {
             password: data.password,
           },
         },
+      },
+      include: {
+        user: true,
       },
     });
   }
