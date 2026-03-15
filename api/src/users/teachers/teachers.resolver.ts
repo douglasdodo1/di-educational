@@ -2,8 +2,8 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
 import { TeacherModel } from './teachers.model';
 import { TeachersService } from './teachers.service';
-import { CreateTeacherInput } from './inputs/create-teacher.input';
-import { UpdateTeacherInput } from './inputs/update-teacher.input';
+import { CreateTeacherInput } from './inputs/create.teacher.input';
+import { UpdateTeacherInput } from './inputs/update.teacher.input';
 
 @Resolver(() => TeacherModel)
 export class TeachersResolver {
