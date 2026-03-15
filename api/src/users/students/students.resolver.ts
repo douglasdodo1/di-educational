@@ -1,5 +1,5 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CreateStudentDTO } from './dtos/create-student.dto';
+import { CreateStudentInput } from './inputs/create-student.input';
 import { StudentsService } from './students.service';
 import { StudentsModel } from './students.model';
 
@@ -8,7 +8,9 @@ export class StudentsResolver {
   constructor(private studentsService: StudentsService) {}
 
   @Mutation(() => StudentsModel)
-  createTeacher(@Args('data') data: CreateStudentDTO) {
+  createStudent(
+    @Args('data', { type: () => CreateStudentInput }) data: CreateStudentInput,
+  ) {
     return this.studentsService.create(data);
   }
 }
