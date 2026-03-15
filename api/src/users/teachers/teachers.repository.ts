@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { CreateTeacherInput } from './inputs/create-teacher.input';
+import { CreateTeacherInput } from './inputs/create.teacher.input';
 import { TeacherModel } from './teachers.model';
-import { UpdateTeacherInput } from './inputs/update-teacher.input';
+import { UpdateTeacherInput } from './inputs/update.teacher.input';
 
 @Injectable()
 export class TeachersRepository {
@@ -18,24 +18,27 @@ export class TeachersRepository {
             first_name: data.first_name,
             last_name: data.last_name,
             bio: data.bio,
+            phones: {
+              create: data.phones.map((number) => ({ number })),
+            },
             password: data.password,
           },
         },
       },
-      include: { user: true },
+      include: { user: { include: { phones: true } } },
     });
   }
 
   async findAll(): Promise<TeacherModel[]> {
     return await this.prisma.teacher.findMany({
-      include: { user: true },
+      include: { user: { include: { phones: true } } },
     });
   }
 
   async findById(id: number): Promise<TeacherModel | null> {
     return await this.prisma.teacher.findUnique({
       where: { id },
-      include: { user: true },
+      include: { user: { include: { phones: true } } },
     });
   }
 
@@ -51,10 +54,16 @@ export class TeachersRepository {
             last_name: data.last_name,
             bio: data.bio,
             password: data.password,
+            phones: data.phones
+              ? {
+                  deleteMany: {},
+                  create: data.phones.map((number) => ({ number })),
+                }
+              : undefined,
           },
         },
       },
-      include: { user: true },
+      include: { user: { include: { phones: true } } },
     });
   }
 
