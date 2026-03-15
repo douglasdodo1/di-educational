@@ -1,5 +1,5 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { CreateStudentInput } from './inputs/create-student.input';
+import { CreateStudentInput } from './inputs/create.student.input';
 import { StudentsService } from './students.service';
 import { StudentsModel } from './students.model';
 import { UpdateStudentInput } from './inputs/update.student.input';

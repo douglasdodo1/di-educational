@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateStudentInput } from './inputs/create-student.input';
+import { CreateStudentInput } from './inputs/create.student.input';
 import { StudentsModel } from './students.model';
 import { StudentsRepository } from './students.repository';
 import { UpdateStudentInput } from './inputs/update.student.input';
