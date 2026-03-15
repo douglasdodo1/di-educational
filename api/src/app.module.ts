@@ -15,7 +15,7 @@ import { PrismaModule } from './prisma.module';
 
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: true,
+      autoSchemaFile: 'schema.gql',
     }),
 
     TeachersModule,
