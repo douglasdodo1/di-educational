@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateStudentInput } from './inputs/create-student.input';
+import { CreateStudentInput } from './inputs/create.student.input';
 import { PrismaService } from 'src/prisma.service';
 import { StudentsModel } from './students.model';
 import { UpdateStudentInput } from './inputs/update.student.input';
@@ -18,26 +18,27 @@ export class StudentsRepository {
             first_name: data.first_name,
             last_name: data.last_name,
             bio: data.bio,
+            phones: {
+              create: data.phones.map((number) => ({ number })),
+            },
             password: data.password,
           },
         },
       },
-      include: {
-        user: true,
-      },
+      include: { user: { include: { phones: true } } },
     });
   }
 
   async findAll(): Promise<StudentsModel[]> {
     return await this.prisma.student.findMany({
-      include: { user: true },
+      include: { user: { include: { phones: true } } },
     });
   }
 
   async findById(id: number): Promise<StudentsModel | null> {
     return await this.prisma.student.findUnique({
       where: { id },
-      include: { user: true },
+      include: { user: { include: { phones: true } } },
     });
   }
 
@@ -53,10 +54,16 @@ export class StudentsRepository {
             last_name: data.last_name,
             bio: data.bio,
             password: data.password,
+            phones: data.phones
+              ? {
+                  deleteMany: {},
+                  create: data.phones.map((number) => ({ number })),
+                }
+              : undefined,
           },
         },
       },
-      include: { user: true },
+      include: { user: { include: { phones: true } } },
     });
   }
 
