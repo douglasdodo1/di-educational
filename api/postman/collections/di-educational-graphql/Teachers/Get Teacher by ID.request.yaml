@@ -1,0 +1,52 @@
+$kind: graphql-request
+name: Get Teacher by ID
+url: '{{baseUrl}}/graphql'
+order: 2000
+query: |-
+  query GetTeacher($id: Int!) {
+    teacher(id: $id) {
+      id
+      salary
+      user {
+        id
+        email
+        first_name
+        last_name
+        bio
+        avatarUrl
+      }
+    }
+  }
+variables: |-
+  {"id": 1}
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test('Status code is 200', function () {
+        pm.response.to.have.status(200);
+      });
+
+      pm.test('Response has no GraphQL errors', function () {
+        const json = pm.response.json();
+        pm.expect(json).to.not.have.property('errors');
+      });
+
+      pm.test('data.teacher is an object with id and salary', function () {
+        const json = pm.response.json();
+        const teacher = json.data.teacher;
+        pm.expect(teacher).to.be.an('object');
+        pm.expect(teacher).to.have.property('id');
+        pm.expect(teacher.id).to.be.a('number');
+        pm.expect(teacher).to.have.property('salary');
+        pm.expect(teacher.salary).to.be.a('number');
+      });
+
+      pm.test('data.teacher.user has required fields', function () {
+        const json = pm.response.json();
+        const user = json.data.teacher.user;
+        pm.expect(user).to.have.property('id');
+        pm.expect(user).to.have.property('email');
+        pm.expect(user).to.have.property('first_name');
+        pm.expect(user).to.have.property('last_name');
+      });

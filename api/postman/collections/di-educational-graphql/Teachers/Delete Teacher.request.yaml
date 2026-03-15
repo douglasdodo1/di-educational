@@ -1,0 +1,27 @@
+$kind: graphql-request
+name: Delete Teacher
+url: '{{baseUrl}}/graphql'
+order: 5000
+query: |-
+  mutation DeleteTeacher($id: Int!) {
+    deleteTeacher(id: $id)
+  }
+variables: |-
+  {"id": 1}
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test('Status code is 200', function () {
+        pm.response.to.have.status(200);
+      });
+
+      pm.test('Response has no GraphQL errors', function () {
+        const json = pm.response.json();
+        pm.expect(json).to.not.have.property('errors');
+      });
+
+      pm.test('data.deleteTeacher is a boolean', function () {
+        const json = pm.response.json();
+        pm.expect(json.data.deleteTeacher).to.be.a('boolean');
+      });
