@@ -1,8 +1,11 @@
-import { Field, Float, ObjectType } from '@nestjs/graphql';
+import { Field, Float, ObjectType, Int } from '@nestjs/graphql';
 import { User } from '../user.model';
 
 @ObjectType()
-export class TeacherModel extends User {
+export class TeacherModel {
+  @Field(() => Int)
+  id!: number;
+
   @Field(() => Float)
   salary!: number;
 
