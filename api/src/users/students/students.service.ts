@@ -1,29 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { CreateStudentInput } from './inputs/create-student.input';
-import { PrismaService } from 'src/prisma.service';
 import { StudentsModel } from './students.model';
+import { StudentsRepository } from './students.repository';
+import { UpdateStudentInput } from './inputs/update.student.input';
 
 @Injectable()
 export class StudentsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private studentsRepository: StudentsRepository) {}
 
   async create(data: CreateStudentInput): Promise<StudentsModel> {
-    return await this.prisma.student.create({
-      data: {
-        enrollmentNumber: data.enrollmentNumber,
-        user: {
-          create: {
-            email: data.email,
-            first_name: data.first_name,
-            last_name: data.last_name,
-            bio: data.bio,
-            password: data.password,
-          },
-        },
-      },
-      include: {
-        user: true,
-      },
-    });
+    return await this.studentsRepository.create(data);
+  }
+
+  async findAll(): Promise<StudentsModel[]> {
+    return await this.studentsRepository.findAll();
+  }
+
+  async findById(id: number): Promise<StudentsModel | null> {
+    return await this.studentsRepository.findById(id);
+  }
+
+  async update(
+    id: number,
+    data: UpdateStudentInput,
+  ): Promise<StudentsModel | null> {
+    return await this.studentsRepository.update(id, data);
+  }
+
+  async delete(id: number): Promise<boolean> {
+    await this.studentsRepository.delete(id);
+    return true;
   }
 }
