@@ -1,0 +1,48 @@
+$kind: graphql-request
+name: Create Student
+url: '{{baseUrl}}/graphql'
+order: 1000
+query: |-
+  mutation CreateStudent($data: CreateStudentInput!) {
+    createStudent(data: $data) {
+      enrollmentNumber
+      user {
+        id
+        email
+        first_name
+        last_name
+      }
+    }
+  }
+variables: |-
+  {
+    "data": {
+      "email": "student@example.com",
+      "first_name": "Jane",
+      "last_name": "Smith",
+      "bio": "Eager student",
+      "password": "password123",
+      "enrollmentNumber": "ENR-2024-001"
+    }
+  }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test('Status code is 200', function () {
+        pm.response.to.have.status(200);
+      });
+
+      pm.test('Response has no GraphQL errors', function () {
+        const json = pm.response.json();
+        pm.expect(json).to.not.have.property('errors');
+      });
+
+      pm.test('data.createStudent has enrollmentNumber and user', function () {
+        const json = pm.response.json();
+        const student = json.data.createStudent;
+        pm.expect(student).to.have.property('enrollmentNumber');
+        pm.expect(student.enrollmentNumber).to.be.a('string');
+        pm.expect(student).to.have.property('user');
+        pm.expect(student.user).to.be.an('object');
+      });

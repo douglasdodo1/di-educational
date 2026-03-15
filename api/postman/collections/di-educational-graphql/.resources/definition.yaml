@@ -1,0 +1,12 @@
+$kind: collection
+name: di-educational GraphQL
+description: |-
+  GraphQL collection for the di-educational API.
+  Contains all teacher and student queries and mutations.
+variables:
+  - key: baseUrl
+    value: 'http://localhost:3000'
+    description: Base URL for the API
+  - key: teacherId
+    value: '1'
+    description: ID of the teacher used across requests

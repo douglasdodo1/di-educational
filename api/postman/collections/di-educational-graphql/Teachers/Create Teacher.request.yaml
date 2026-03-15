@@ -1,0 +1,57 @@
+$kind: graphql-request
+name: Create Teacher
+url: '{{baseUrl}}/graphql'
+order: 3000
+query: |-
+  mutation CreateTeacher($data: CreateTeacherInput!) {
+    createTeacher(data: $data) {
+      id
+      salary
+      user {
+        id
+        email
+        first_name
+        last_name
+      }
+    }
+  }
+variables: |-
+  {
+    "data": {
+      "email": "teacher@example.com",
+      "first_name": "John",
+      "last_name": "Doe",
+      "bio": "Experienced teacher",
+      "password": "password123",
+      "salary": 5000.00
+    }
+  }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test('Status code is 200', function () {
+        pm.response.to.have.status(200);
+      });
+
+      pm.test('Response has no GraphQL errors', function () {
+        const json = pm.response.json();
+        pm.expect(json).to.not.have.property('errors');
+      });
+
+      pm.test('data.createTeacher has id, salary, and user', function () {
+        const json = pm.response.json();
+        const teacher = json.data.createTeacher;
+        pm.expect(teacher).to.have.property('id');
+        pm.expect(teacher.id).to.be.a('number');
+        pm.expect(teacher).to.have.property('salary');
+        pm.expect(teacher.salary).to.be.a('number');
+        pm.expect(teacher).to.have.property('user');
+        pm.expect(teacher.user).to.be.an('object');
+      });
+
+      pm.test('Save teacherId to collection variable', function () {
+        const json = pm.response.json();
+        const teacher = json.data.createTeacher;
+        pm.collectionVariables.set('teacherId', teacher.id);
+      });
