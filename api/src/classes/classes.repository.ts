@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { UpdateClassInput } from './inputs/update.class.input';
+import { UpdateContentInput } from 'src/contents/inputs/update.content.input';
 
 @Injectable()
 export class classesRepository {
@@ -20,6 +21,16 @@ export class classesRepository {
     await this.prisma.class.deleteMany({
       where: {
         id: { in: classesIds },
+      },
+    });
+  }
+
+  async updateContent(classId: number, data: UpdateContentInput) {
+    await this.prisma.content.update({
+      where: { classId },
+      data: {
+        type: data.type,
+        url: data.url,
       },
     });
   }

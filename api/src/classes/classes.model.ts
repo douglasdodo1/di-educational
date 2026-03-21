@@ -1,5 +1,5 @@
 import { Field, ObjectType, Int } from '@nestjs/graphql';
-import { ContentModel } from 'src/contents/content.model';
+import { ContentsModel } from 'src/contents/contents.model';
 
 @ObjectType()
 export class ClassModel {
@@ -12,6 +12,6 @@ export class ClassModel {
   @Field(() => String, { nullable: true })
   description?: string | null;
 
-  @Field(() => ContentModel, { nullable: true })
-  content?: ContentModel | null;
+  @Field(() => ContentsModel, { nullable: true })
+  content?: ContentsModel | null;
 }
