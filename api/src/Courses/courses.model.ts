@@ -1,6 +1,6 @@
 import { Field, ObjectType, Int } from '@nestjs/graphql';
 import { ClassModel } from 'src/classes/classes.model';
-import { StudentsModel } from 'src/users/students/students.model';
+import { UserModel } from 'src/users/models/users.model';
 import { TeacherModel } from 'src/users/teachers/teachers.model';
 
 @ObjectType()
@@ -12,10 +12,10 @@ export class CoursesModel {
   name!: string;
 
   @Field(() => String, { nullable: true })
-  imageUrl?: string;
+  imageUrl?: string | null;
 
   @Field(() => String, { nullable: true })
-  description?: string;
+  description?: string | null;
 
   @Field(() => Boolean)
   is_active!: boolean;
@@ -29,8 +29,8 @@ export class CoursesModel {
   @Field(() => TeacherModel, { nullable: true })
   teacher!: TeacherModel;
 
-  @Field(() => [StudentsModel], { nullable: true })
-  members!: StudentsModel[];
+  @Field(() => [UserModel], { nullable: true })
+  members!: UserModel[];
 
   @Field(() => [ClassModel], { nullable: true })
   classes?: ClassModel[];
