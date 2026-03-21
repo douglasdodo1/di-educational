@@ -1,5 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { ContentModel } from 'src/contents/content.model';
+import { ContentsModel } from 'src/contents/contents.model';
 
 @InputType()
 export class CreateClassInput {
@@ -9,6 +9,6 @@ export class CreateClassInput {
   @Field(() => String, { nullable: true })
   description?: string;
 
-  @Field(() => ContentModel)
-  content!: ContentModel;
+  @Field(() => ContentsModel)
+  content!: ContentsModel;
 }

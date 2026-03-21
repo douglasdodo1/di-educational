@@ -21,6 +21,7 @@ export class CoursesRepository {
   async findAll() {
     return await this.prisma.course.findMany({
       include: {
+        classes: { include: { content: true } },
         teacher: { include: { user: { include: { phones: true } } } },
         members: { include: { phones: true } },
       },
@@ -30,7 +31,9 @@ export class CoursesRepository {
   async findById(id: number) {
     return await this.prisma.course.findUnique({
       where: { id },
+
       include: {
+        classes: { include: { content: true } },
         teacher: { include: { user: { include: { phones: true } } } },
         members: { include: { phones: true } },
       },
