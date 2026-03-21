@@ -216,13 +216,13 @@ export type PhoneOrderByWithRelationInput = {
 
 export type PhoneWhereUniqueInput = Prisma.AtLeast<{
   id?: number
-  userId?: number
   AND?: Prisma.PhoneWhereInput | Prisma.PhoneWhereInput[]
   OR?: Prisma.PhoneWhereInput[]
   NOT?: Prisma.PhoneWhereInput | Prisma.PhoneWhereInput[]
   number?: Prisma.StringFilter<"Phone"> | string
+  userId?: Prisma.IntFilter<"Phone"> | number
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-}, "id" | "userId">
+}, "id">
 
 export type PhoneOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

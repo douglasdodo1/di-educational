@@ -1,5 +1,5 @@
 import { Field, Float, ObjectType, Int } from '@nestjs/graphql';
-import { User } from '../models/user.model';
+import { UserModel } from '../models/users.model';
 
 @ObjectType()
 export class TeacherModel {
@@ -9,6 +9,6 @@ export class TeacherModel {
   @Field(() => Float)
   salary!: number;
 
-  @Field(() => User)
-  user!: User;
+  @Field(() => UserModel)
+  user!: UserModel;
 }
