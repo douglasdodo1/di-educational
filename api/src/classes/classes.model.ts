@@ -9,8 +9,8 @@ export class ClassModel {
   @Field(() => String)
   name!: string;
 
-  @Field(() => String)
-  description!: string;
+  @Field(() => String, { nullable: true })
+  description?: string;
 
   @Field(() => ContentModel)
   content!: ContentModel;
