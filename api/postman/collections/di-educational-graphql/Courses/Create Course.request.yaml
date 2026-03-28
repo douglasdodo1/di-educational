@@ -1,0 +1,58 @@
+$kind: graphql-request
+name: Create Course
+url: '{{baseUrl}}/graphql'
+order: 3000
+query: |-
+  mutation CreateCourse($data: CreateCourseInput!) {
+    createCourse(data: $data) {
+      id
+      name
+      imageUrl
+      description
+      is_active
+      start_date
+      end_date
+    }
+  }
+variables: |-
+  {
+    "data": {
+      "name": "GraphQL Fundamentals",
+      "imageUrl": "https://example.com/image.png",
+      "description": "Learn GraphQL from scratch",
+      "is_active": true,
+      "start_date": "2024-01-01T00:00:00Z",
+      "end_date": "2024-06-30T00:00:00Z"
+    }
+  }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test('Status code is 200', function () {
+        pm.response.to.have.status(200);
+      });
+
+      pm.test('Response has no GraphQL errors', function () {
+        const json = pm.response.json();
+        pm.expect(json).to.not.have.property('errors');
+      });
+
+      pm.test('data.createCourse has id and name', function () {
+        const json = pm.response.json();
+        const course = json.data.createCourse;
+        pm.expect(course).to.have.property('id');
+        pm.expect(course.id).to.be.a('number');
+        pm.expect(course).to.have.property('name');
+        pm.expect(course.name).to.be.a('string');
+        pm.expect(course).to.have.property('is_active');
+        pm.expect(course.is_active).to.be.a('boolean');
+      });
+
+      pm.test('Save courseId to collection variable', function () {
+        const json = pm.response.json();
+        const course = json.data.createCourse;
+        if (course && course.id) {
+          pm.collectionVariables.set('courseId', course.id);
+        }
+      });

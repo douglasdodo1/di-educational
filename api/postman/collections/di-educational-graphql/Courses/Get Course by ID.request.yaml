@@ -1,0 +1,69 @@
+$kind: graphql-request
+name: Get Course by ID
+url: '{{baseUrl}}/graphql'
+order: 2000
+query: |-
+  query GetCourse($id: Int!) {
+    course(id: $id) {
+      id
+      name
+      imageUrl
+      description
+      is_active
+      start_date
+      end_date
+      teacher {
+        id
+        salary
+        user {
+          id
+          email
+          first_name
+          last_name
+        }
+      }
+      members {
+        id
+        email
+        first_name
+        last_name
+      }
+      classes {
+        id
+        name
+        description
+        content {
+          id
+          type
+          url
+        }
+      }
+    }
+  }
+variables: '{"id": 1}'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test('Status code is 200', function () {
+        pm.response.to.have.status(200);
+      });
+
+      pm.test('Response has no GraphQL errors', function () {
+        const json = pm.response.json();
+        pm.expect(json).to.not.have.property('errors');
+      });
+
+      pm.test('data.course is an object with required fields', function () {
+        const json = pm.response.json();
+        const course = json.data.course;
+        pm.expect(course).to.be.an('object');
+        pm.expect(course).to.have.property('id');
+        pm.expect(course.id).to.be.a('number');
+        pm.expect(course).to.have.property('name');
+        pm.expect(course.name).to.be.a('string');
+        pm.expect(course).to.have.property('is_active');
+        pm.expect(course.is_active).to.be.a('boolean');
+        pm.expect(course).to.have.property('start_date');
+        pm.expect(course).to.have.property('end_date');
+      });

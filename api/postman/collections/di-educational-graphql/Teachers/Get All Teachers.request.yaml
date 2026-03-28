@@ -1,23 +1,14 @@
 $kind: graphql-request
 name: Get All Teachers
-url: '{{baseUrl}}/graphql'
+url: "{{baseUrl}}/graphql"
+schema:
+  source: file
+  location: /C:/Users/Douglas/Desktop/projects/di-educational/api/schema.gql
 order: 1000
-query: |-
-  query GetAllTeachers {
-    teachers {
-      id
-      salary
-      user {
-        id
-        email
-        first_name
-        last_name
-      }
-    }
-  }
+query: |+
+  
 scripts:
   - type: afterResponse
-    language: text/javascript
     code: |-
       pm.test('Status code is 200', function () {
         pm.response.to.have.status(200);
@@ -48,3 +39,4 @@ scripts:
           pm.expect(teacher.user).to.have.property('last_name');
         });
       });
+    language: text/javascript

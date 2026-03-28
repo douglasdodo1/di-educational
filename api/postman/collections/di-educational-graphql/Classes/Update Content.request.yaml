@@ -1,0 +1,35 @@
+$kind: graphql-request
+name: Update Content
+url: '{{baseUrl}}/graphql'
+order: 3000
+query: |-
+  mutation UpdateContent($classId: Int!, $data: UpdateContentInput!) {
+    updateContent(classId: $classId, data: $data)
+  }
+variables: |-
+  {
+    "classId": 1,
+    "data": {
+      "id": 1,
+      "type": "PDF",
+      "url": "https://example.com/document.pdf"
+    }
+  }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test('Status code is 200', function () {
+        pm.response.to.have.status(200);
+      });
+
+      pm.test('Response has no GraphQL errors', function () {
+        const json = pm.response.json();
+        pm.expect(json).to.not.have.property('errors');
+      });
+
+      pm.test('data.updateContent is a boolean true', function () {
+        const json = pm.response.json();
+        pm.expect(json.data.updateContent).to.be.a('boolean');
+        pm.expect(json.data.updateContent).to.equal(true);
+      });

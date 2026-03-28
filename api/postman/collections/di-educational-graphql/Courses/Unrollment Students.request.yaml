@@ -1,16 +1,15 @@
 $kind: graphql-request
-name: Delete Teacher
-url: "{{baseUrl}}/graphql"
-schema:
-  source: auto
-order: 5000
+name: Unrollment Students
+url: '{{baseUrl}}/graphql'
+order: 8000
 query: |-
-  mutation DeleteTeacher($id: Int!) {
-    deleteTeacher(id: $id)
+  mutation UnrollmentStudents($courseId: Int!, $ids: [Int!]!) {
+    unrollmentStudents(courseId: $courseId, ids: $ids)
   }
-variables: '{"id": 3}'
+variables: '{"courseId": 1, "ids": [1, 2]}'
 scripts:
   - type: afterResponse
+    language: text/javascript
     code: |-
       pm.test('Status code is 200', function () {
         pm.response.to.have.status(200);
@@ -21,8 +20,7 @@ scripts:
         pm.expect(json).to.not.have.property('errors');
       });
 
-      pm.test('data.deleteTeacher is a boolean', function () {
+      pm.test('data.unrollmentStudents is a boolean', function () {
         const json = pm.response.json();
-        pm.expect(json.data.deleteTeacher).to.be.a('boolean');
+        pm.expect(json.data.unrollmentStudents).to.be.a('boolean');
       });
-    language: text/javascript
