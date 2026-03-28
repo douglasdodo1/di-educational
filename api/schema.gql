@@ -1,0 +1,178 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Phone {
+  id: Int!
+  number: String!
+}
+
+type UserModel {
+  id: Int!
+  email: String!
+  first_name: String!
+  last_name: String!
+  bio: String
+  phones: [Phone!]!
+  avatarUrl: String
+  password: String!
+}
+
+type TeacherModel {
+  id: Int!
+  salary: Float!
+  user: UserModel!
+}
+
+type StudentsModel {
+  enrollmentNumber: String!
+  user: UserModel!
+}
+
+type ContentsModel {
+  id: Int!
+  type: ContentType!
+  url: String!
+}
+
+enum ContentType {
+  IMAGE
+  VIDEO
+  PDF
+}
+
+type ClassModel {
+  id: Int!
+  name: String!
+  description: String
+  content: ContentsModel
+}
+
+type CoursesModel {
+  id: Int!
+  name: String!
+  imageUrl: String
+  description: String
+  is_active: Boolean!
+  start_date: DateTime!
+  end_date: DateTime!
+  teacher: TeacherModel
+  members: [UserModel!]
+  classes: [ClassModel!]
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Query {
+  Courses: [CoursesModel!]!
+  course(id: Int!): CoursesModel!
+  teachers: [TeacherModel!]!
+  teacher(id: Int!): TeacherModel
+  students: [StudentsModel!]!
+  student(id: Int!): StudentsModel
+}
+
+type Mutation {
+  createCourse(data: CreateCourseInput!): CoursesModel
+  updateCourse(id: Int!, data: UpdateCourseInput!): Boolean!
+  deleteCourse(id: Int!): Boolean!
+  enrollmentStudents(courseId: Int!, ids: [Int!]!): Boolean!
+  unrollmentStudents(courseId: Int!, ids: [Int!]!): Boolean!
+  createClass(courseId: Int!, data: CreateClassInput!): ClassModel
+  updateTeacher(id: Int!, data: UpdateTeacherInput!): Boolean!
+  updateIsActive(courseId: Int!, state: Boolean!): Boolean!
+  updateClass(classId: Int!, data: UpdateClassInput!): Boolean!
+  deleteClasses(classesIds: [Int!]!): Boolean!
+  updateContent(classId: Int!, data: UpdateContentInput!): Boolean!
+  createTeacher(data: CreateTeacherInput!): TeacherModel
+  deleteTeacher(id: Int!): Boolean!
+  createStudent(data: CreateStudentInput!): StudentsModel
+  updateStudent(id: Int!, data: UpdateStudentInput!): Boolean!
+  deleteStudent(id: Int!): Boolean!
+}
+
+input CreateCourseInput {
+  name: String!
+  imageUrl: String
+  description: String
+  is_active: Boolean!
+  start_date: DateTime!
+  end_date: DateTime!
+}
+
+input UpdateCourseInput {
+  id: Int!
+  name: String
+  imageUrl: String
+  description: String
+  start_date: DateTime
+  end_date: DateTime
+}
+
+input CreateClassInput {
+  name: String!
+  description: String
+  content: CreateContentInput!
+}
+
+input CreateContentInput {
+  type: ContentType!
+  url: String!
+}
+
+input UpdateTeacherInput {
+  id: Int!
+  email: String
+  first_name: String
+  last_name: String
+  bio: String
+  phones: [String!]
+  password: String
+  salary: Float
+}
+
+input UpdateClassInput {
+  id: Int!
+  name: String
+  description: String
+}
+
+input UpdateContentInput {
+  id: Int!
+  type: ContentType
+  url: String
+}
+
+input CreateTeacherInput {
+  email: String!
+  first_name: String!
+  last_name: String!
+  bio: String
+  phones: [String!]!
+  password: String!
+  salary: Float!
+}
+
+input CreateStudentInput {
+  email: String!
+  first_name: String!
+  last_name: String!
+  bio: String
+  phones: [String!]!
+  password: String!
+  enrollmentNumber: String!
+}
+
+input UpdateStudentInput {
+  id: Int!
+  email: String
+  first_name: String
+  last_name: String
+  bio: String
+  phones: [String!]
+  password: String
+  enrollmentNumber: String
+}
