@@ -1,0 +1,35 @@
+$kind: graphql-request
+name: Update Class
+url: '{{baseUrl}}/graphql'
+order: 2000
+query: |-
+  mutation UpdateClass($classId: Int!, $data: UpdateClassInput!) {
+    updateClass(classId: $classId, data: $data)
+  }
+variables: |-
+  {
+    "classId": 1,
+    "data": {
+      "id": 1,
+      "name": "Introduction to GraphQL - Updated",
+      "description": "Updated class description"
+    }
+  }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test('Status code is 200', function () {
+        pm.response.to.have.status(200);
+      });
+
+      pm.test('Response has no GraphQL errors', function () {
+        const json = pm.response.json();
+        pm.expect(json).to.not.have.property('errors');
+      });
+
+      pm.test('data.updateClass is a boolean true', function () {
+        const json = pm.response.json();
+        pm.expect(json.data.updateClass).to.be.a('boolean');
+        pm.expect(json.data.updateClass).to.equal(true);
+      });

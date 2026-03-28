@@ -1,0 +1,35 @@
+$kind: graphql-request
+name: Update Course
+url: '{{baseUrl}}/graphql'
+order: 4000
+query: |-
+  mutation UpdateCourse($id: Int!, $data: UpdateCourseInput!) {
+    updateCourse(id: $id, data: $data)
+  }
+variables: |-
+  {
+    "id": 1,
+    "data": {
+      "id": 1,
+      "name": "GraphQL Fundamentals Updated",
+      "description": "Updated description"
+    }
+  }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test('Status code is 200', function () {
+        pm.response.to.have.status(200);
+      });
+
+      pm.test('Response has no GraphQL errors', function () {
+        const json = pm.response.json();
+        pm.expect(json).to.not.have.property('errors');
+      });
+
+      pm.test('data.updateCourse is a boolean true', function () {
+        const json = pm.response.json();
+        pm.expect(json.data.updateCourse).to.be.a('boolean');
+        pm.expect(json.data.updateCourse).to.equal(true);
+      });

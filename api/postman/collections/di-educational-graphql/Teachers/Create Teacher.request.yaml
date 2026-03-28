@@ -1,34 +1,41 @@
 $kind: graphql-request
 name: Create Teacher
-url: '{{baseUrl}}/graphql'
+url: "{{baseUrl}}/graphql"
+schema:
+  source: auto
 order: 3000
-query: |-
+query: |
   mutation CreateTeacher($data: CreateTeacherInput!) {
-    createTeacher(data: $data) {
-      id
-      salary
-      user {
-        id
-        email
-        first_name
-        last_name
+      createTeacher {
+          id
+          salary
+          user {
+              id
+              email
+              first_name
+              last_name
+              bio
+              phones {
+                  id
+                  number
+              }
+          }
       }
-    }
   }
 variables: |-
   {
     "data": {
-      "email": "teacher@example.com",
+      "salary": 5000.00,
+      "email": "teacher1@example.com",
       "first_name": "John",
       "last_name": "Doe",
       "bio": "Experienced teacher",
-      "password": "password123",
-      "salary": 5000.00
+      "phones": ["+5581999999999", "+5581988888888"],
+      "password": "password123"
     }
   }
 scripts:
   - type: afterResponse
-    language: text/javascript
     code: |-
       pm.test('Status code is 200', function () {
         pm.response.to.have.status(200);
@@ -55,3 +62,4 @@ scripts:
         const teacher = json.data.createTeacher;
         pm.collectionVariables.set('teacherId', teacher.id);
       });
+    language: text/javascript

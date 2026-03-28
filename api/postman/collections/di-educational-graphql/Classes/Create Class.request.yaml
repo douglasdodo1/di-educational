@@ -1,0 +1,60 @@
+$kind: graphql-request
+name: Create Class
+url: '{{baseUrl}}/graphql'
+order: 1000
+query: |-
+  mutation CreateClass($courseId: Int!, $data: CreateClassInput!) {
+    createClass(courseId: $courseId, data: $data) {
+      id
+      name
+      description
+      content {
+        id
+        type
+        url
+      }
+    }
+  }
+variables: |-
+  {
+    "courseId": 1,
+    "data": {
+      "name": "Introduction to GraphQL",
+      "description": "First class of the course",
+      "content": {
+        "type": "VIDEO",
+        "url": "https://example.com/video.mp4"
+      }
+    }
+  }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test('Status code is 200', function () {
+        pm.response.to.have.status(200);
+      });
+
+      pm.test('Response has no GraphQL errors', function () {
+        const json = pm.response.json();
+        pm.expect(json).to.not.have.property('errors');
+      });
+
+      pm.test('data.createClass has id, name, and content', function () {
+        const json = pm.response.json();
+        const cls = json.data.createClass;
+        pm.expect(cls).to.have.property('id');
+        pm.expect(cls.id).to.be.a('number');
+        pm.expect(cls).to.have.property('name');
+        pm.expect(cls.name).to.be.a('string');
+        pm.expect(cls).to.have.property('content');
+        pm.expect(cls.content).to.be.an('object');
+      });
+
+      pm.test('Save classId to collection variable', function () {
+        const json = pm.response.json();
+        const cls = json.data.createClass;
+        if (cls && cls.id) {
+          pm.collectionVariables.set('classId', cls.id);
+        }
+      });

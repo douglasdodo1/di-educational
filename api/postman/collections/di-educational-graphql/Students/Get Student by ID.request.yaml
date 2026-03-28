@@ -1,14 +1,11 @@
 $kind: graphql-request
-name: Get Teacher by ID
-url: "{{baseUrl}}/graphql"
-schema:
-  source: auto
+name: Get Student by ID
+url: '{{baseUrl}}/graphql'
 order: 2000
 query: |-
-  query GetTeacher($id: Int!) {
-    teacher(id: $id) {
-      id
-      salary
+  query GetStudent($id: Int!) {
+    student(id: $id) {
+      enrollmentNumber
       user {
         id
         email
@@ -16,12 +13,17 @@ query: |-
         last_name
         bio
         avatarUrl
+        phones {
+          id
+          number
+        }
       }
     }
   }
 variables: '{"id": 1}'
 scripts:
   - type: afterResponse
+    language: text/javascript
     code: |-
       pm.test('Status code is 200', function () {
         pm.response.to.have.status(200);
@@ -32,22 +34,21 @@ scripts:
         pm.expect(json).to.not.have.property('errors');
       });
 
-      pm.test('data.teacher is an object with id and salary', function () {
+      pm.test('data.student is an object with enrollmentNumber and user', function () {
         const json = pm.response.json();
-        const teacher = json.data.teacher;
-        pm.expect(teacher).to.be.an('object');
-        pm.expect(teacher).to.have.property('id');
-        pm.expect(teacher.id).to.be.a('number');
-        pm.expect(teacher).to.have.property('salary');
-        pm.expect(teacher.salary).to.be.a('number');
+        const student = json.data.student;
+        pm.expect(student).to.be.an('object');
+        pm.expect(student).to.have.property('enrollmentNumber');
+        pm.expect(student.enrollmentNumber).to.be.a('string');
+        pm.expect(student).to.have.property('user');
+        pm.expect(student.user).to.be.an('object');
       });
 
-      pm.test('data.teacher.user has required fields', function () {
+      pm.test('data.student.user has required fields', function () {
         const json = pm.response.json();
-        const user = json.data.teacher.user;
+        const user = json.data.student.user;
         pm.expect(user).to.have.property('id');
         pm.expect(user).to.have.property('email');
         pm.expect(user).to.have.property('first_name');
         pm.expect(user).to.have.property('last_name');
       });
-    language: text/javascript

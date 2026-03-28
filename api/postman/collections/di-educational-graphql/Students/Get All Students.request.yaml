@@ -1,0 +1,53 @@
+$kind: graphql-request
+name: Get All Students
+url: '{{baseUrl}}/graphql'
+order: 1000
+query: |-
+  query GetStudents {
+    students {
+      enrollmentNumber
+      user {
+        id
+        email
+        first_name
+        last_name
+        bio
+        phones {
+          id
+          number
+        }
+      }
+    }
+  }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test('Status code is 200', function () {
+        pm.response.to.have.status(200);
+      });
+
+      pm.test('Response has no GraphQL errors', function () {
+        const json = pm.response.json();
+        pm.expect(json).to.not.have.property('errors');
+      });
+
+      pm.test('data.students is an array', function () {
+        const json = pm.response.json();
+        pm.expect(json.data).to.have.property('students');
+        pm.expect(json.data.students).to.be.an('array');
+      });
+
+      pm.test('Each student has enrollmentNumber and user', function () {
+        const json = pm.response.json();
+        json.data.students.forEach(function (student) {
+          pm.expect(student).to.have.property('enrollmentNumber');
+          pm.expect(student.enrollmentNumber).to.be.a('string');
+          pm.expect(student).to.have.property('user');
+          pm.expect(student.user).to.be.an('object');
+          pm.expect(student.user).to.have.property('id');
+          pm.expect(student.user).to.have.property('email');
+          pm.expect(student.user).to.have.property('first_name');
+          pm.expect(student.user).to.have.property('last_name');
+        });
+      });
