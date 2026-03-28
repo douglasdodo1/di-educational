@@ -78,22 +78,19 @@ export class CoursesRepository {
   }
 
   async createClass(courseId: number, data: CreateClassInput) {
-    await this.prisma.course.update({
-      where: { id: courseId },
+    return await this.prisma.class.create({
       data: {
-        classes: {
+        name: data.name,
+        description: data.description,
+        courseId: courseId,
+        content: {
           create: {
-            name: data.name,
-            description: data.description,
-            content: {
-              create: {
-                type: data.content.type,
-                url: data.content.url,
-              },
-            },
+            type: data.content.type,
+            url: data.content.url,
           },
         },
       },
+      include: { content: true },
     });
   }
 

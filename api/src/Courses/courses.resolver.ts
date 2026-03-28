@@ -58,12 +58,12 @@ export class CoursesResolver {
     return this.coursesService.unrollmentStudents(courseId, ids);
   }
 
-  @Mutation(() => ClassModel)
+  @Mutation(() => ClassModel, { nullable: true })
   createClass(
     @Args('courseId', { type: () => Int }) courseId: number,
 
     @Args('data', { type: () => CreateClassInput }) data: CreateClassInput,
-  ): Promise<boolean> {
+  ): Promise<ClassModel> {
     return this.coursesService.createClass(courseId, data);
   }
 

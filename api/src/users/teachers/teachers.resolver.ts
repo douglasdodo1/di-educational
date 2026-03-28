@@ -21,18 +21,18 @@ export class TeachersResolver {
     return this.teachersService.findById(id);
   }
 
-  @Mutation(() => TeacherModel)
+  @Mutation(() => TeacherModel, { nullable: true })
   createTeacher(
     @Args('data', { type: () => CreateTeacherInput }) data: CreateTeacherInput,
-  ) {
+  ): Promise<TeacherModel> {
     return this.teachersService.create(data);
   }
 
-  @Mutation(() => TeacherModel)
+  @Mutation(() => Boolean)
   updateTeacher(
     @Args('id', { type: () => Int }) id: number,
     @Args('data', { type: () => UpdateTeacherInput }) data: UpdateTeacherInput,
-  ) {
+  ): Promise<boolean> {
     return this.teachersService.update(id, data);
   }
 

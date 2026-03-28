@@ -20,18 +20,18 @@ export class StudentsResolver {
     return this.studentsService.findById(id);
   }
 
-  @Mutation(() => StudentsModel)
+  @Mutation(() => StudentsModel, { nullable: true })
   createStudent(
     @Args('data', { type: () => CreateStudentInput }) data: CreateStudentInput,
-  ) {
+  ): Promise<StudentsModel> {
     return this.studentsService.create(data);
   }
 
-  @Mutation(() => StudentsModel)
+  @Mutation(() => Boolean)
   updateStudent(
     @Args('id', { type: () => Int }) id: number,
     @Args('data', { type: () => UpdateStudentInput }) data: UpdateStudentInput,
-  ) {
+  ): Promise<boolean> {
     return this.studentsService.update(id, data);
   }
 
