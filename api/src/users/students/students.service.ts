@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { CreateStudentInput } from './inputs/create.student.input';
-import { StudentsModel } from './students.model';
 import { StudentsRepository } from './students.repository';
 import { UpdateStudentInput } from './inputs/update.student.input';
+import { StudentsModel } from './students.model';
 
 @Injectable()
 export class StudentsService {
@@ -12,19 +12,17 @@ export class StudentsService {
     return await this.studentsRepository.create(data);
   }
 
-  async findAll(): Promise<StudentsModel[]> {
+  async findAll() {
     return await this.studentsRepository.findAll();
   }
 
-  async findById(id: number): Promise<StudentsModel | null> {
+  async findById(id: number) {
     return await this.studentsRepository.findById(id);
   }
 
-  async update(
-    id: number,
-    data: UpdateStudentInput,
-  ): Promise<StudentsModel | null> {
-    return await this.studentsRepository.update(id, data);
+  async update(id: number, data: UpdateStudentInput): Promise<boolean> {
+    await this.studentsRepository.update(id, data);
+    return true;
   }
 
   async delete(id: number): Promise<boolean> {
