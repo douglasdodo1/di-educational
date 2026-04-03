@@ -1,0 +1,32 @@
+$kind: graphql-request
+name: Register
+url: '{{baseUrl}}/graphql'
+query: |-
+  mutation Register($data: CreateUserInput!) {
+    register(data: $data) {
+      access_token
+      refresh_token
+      user {
+        id
+        email
+        first_name
+        last_name
+        bio
+        avatarUrl
+      }
+    }
+  }
+variables: |-
+  {
+    "data": {
+      "email": "user@example.com",
+      "first_name": "John",
+      "last_name": "Doe",
+      "bio": "A short bio",
+      "phones": ["+5511999999999"],
+      "password": "password123"
+    }
+  }
+schema:
+  source: none
+order: 1775093808049
