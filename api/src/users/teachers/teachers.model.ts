@@ -9,6 +9,6 @@ export class TeacherModel {
   @Field(() => Float)
   salary!: number;
 
-  @Field(() => UserModel)
-  user!: UserModel;
+  @Field(() => UserModel, { nullable: true })
+  user?: UserModel | null;
 }
