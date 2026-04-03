@@ -1,5 +1,7 @@
-import { Field, ObjectType, Int } from '@nestjs/graphql';
+import { Field, ObjectType, Int, HideField } from '@nestjs/graphql';
 import { Phone } from './phone.model';
+import { TeacherModel } from '../teachers/teachers.model';
+import { StudentsModel } from '../students/students.model';
 
 @ObjectType()
 export class UserModel {
@@ -15,6 +17,12 @@ export class UserModel {
   @Field(() => String)
   last_name!: string;
 
+  @Field(() => TeacherModel, { nullable: true })
+  teacher?: TeacherModel | null;
+
+  @Field(() => StudentsModel, { nullable: true })
+  student?: StudentsModel | null;
+
   @Field(() => String, { nullable: true })
   bio?: string | null;
 
@@ -24,6 +32,6 @@ export class UserModel {
   @Field(() => String, { nullable: true })
   avatarUrl?: string | null;
 
-  @Field(() => String)
+  @HideField()
   password!: string;
 }
