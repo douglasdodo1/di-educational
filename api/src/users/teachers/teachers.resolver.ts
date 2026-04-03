@@ -1,5 +1,4 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { Int } from '@nestjs/graphql';
 import { TeacherModel } from './teachers.model';
 import { TeachersService } from './teachers.service';
 import { CreateTeacherInput } from './inputs/create.teacher.input';
@@ -15,9 +14,7 @@ export class TeachersResolver {
   }
 
   @Query(() => TeacherModel, { nullable: true })
-  teacher(
-    @Args('id', { type: () => Int }) id: number,
-  ): Promise<TeacherModel | null> {
+  teacher(@Args('id') id: number): Promise<TeacherModel | null> {
     return this.teachersService.findById(id);
   }
 
@@ -30,14 +27,14 @@ export class TeachersResolver {
 
   @Mutation(() => Boolean)
   updateTeacher(
-    @Args('id', { type: () => Int }) id: number,
+    @Args('id') id: number,
     @Args('data', { type: () => UpdateTeacherInput }) data: UpdateTeacherInput,
   ): Promise<boolean> {
     return this.teachersService.update(id, data);
   }
 
   @Mutation(() => Boolean)
-  deleteTeacher(@Args('id', { type: () => Int }) id: number): Promise<boolean> {
+  deleteTeacher(@Args('id') id: number): Promise<boolean> {
     return this.teachersService.delete(id);
   }
 }
