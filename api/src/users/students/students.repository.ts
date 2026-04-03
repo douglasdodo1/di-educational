@@ -68,6 +68,19 @@ export class StudentsRepository {
   }
 
   async delete(id: number) {
-    await this.prisma.teacher.delete({ where: { id } });
+    await this.prisma.student.delete({ where: { id } });
+  }
+
+  async createWithUserId(
+    userId: number,
+    enrollmentNumber: string,
+  ): Promise<StudentsModel> {
+    return await this.prisma.student.create({
+      data: {
+        id: userId,
+        enrollmentNumber,
+      },
+      include: { user: { include: { phones: true } } },
+    });
   }
 }
