@@ -3,13 +3,28 @@ import { CreateTeacherInput } from './inputs/create.teacher.input';
 import { TeachersRepository } from './teachers.repository';
 import { UpdateTeacherInput } from './inputs/update.teacher.input';
 import { TeacherModel } from './teachers.model';
+import { UsersService } from '../users.service';
 
 @Injectable()
 export class TeachersService {
-  constructor(private teachersRepository: TeachersRepository) {}
+  constructor(
+    private teachersRepository: TeachersRepository,
+    private usersService: UsersService,
+  ) {}
 
   async create(data: CreateTeacherInput): Promise<TeacherModel> {
-    return await this.teachersRepository.create(data);
+    const { email, password, first_name, last_name, bio, phones } = data;
+
+    const user = await this.usersService.create({
+      email,
+      password,
+      first_name,
+      last_name,
+      bio,
+      phones,
+    });
+
+    return await this.teachersRepository.createWithUserId(user.id, data.salary);
   }
 
   async findAll() {
