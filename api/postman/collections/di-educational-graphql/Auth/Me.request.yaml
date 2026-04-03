@@ -1,0 +1,27 @@
+$kind: graphql-request
+name: Me
+url: '{{baseUrl}}/graphql'
+query: |-
+  query Me {
+    me {
+      id
+      email
+      first_name
+      last_name
+      bio
+      avatarUrl
+      phones {
+        id
+        number
+      }
+    }
+  }
+variables: ''
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{access_token}}'
+schema:
+  source: none
+order: 1775093808050

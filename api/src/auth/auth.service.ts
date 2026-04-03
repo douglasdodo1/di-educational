@@ -23,22 +23,26 @@ export class AuthService {
       user.password,
       password,
     );
+
     if (!passwordMatch) {
       throw new UnauthorizedException('Invalid credentials');
     }
 
     const profile = user.student ?? user.teacher;
+
     if (!profile) {
       throw new UnauthorizedException('User profile not found');
     }
 
     const payload = { sub: user.id, email: user.email };
 
-    return {
+    const response: AuthResponse = {
       access_token: this.jwtService.sign(payload),
       refresh_token: this.jwtService.sign(payload, { expiresIn: '7d' }),
       user: user,
-    } satisfies AuthResponse;
+    };
+
+    return response;
   }
 
   async register(data: CreateUserInput) {
