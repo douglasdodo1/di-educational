@@ -70,4 +70,17 @@ export class TeachersRepository {
   async delete(id: number) {
     await this.prisma.teacher.delete({ where: { id } });
   }
+
+  async createWithUserId(
+    userId: number,
+    salary: number,
+  ): Promise<TeacherModel> {
+    return await this.prisma.teacher.create({
+      data: {
+        id: userId,
+        salary,
+      },
+      include: { user: { include: { phones: true } } },
+    });
+  }
 }
