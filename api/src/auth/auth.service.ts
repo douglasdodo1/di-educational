@@ -51,14 +51,7 @@ export class AuthService {
       throw new UnauthorizedException('Email already in use');
     }
 
-    const enrollmentNumber = `${new Date().getFullYear()}${Math.floor(1000 + Math.random() * 9000)}`;
-
-    const newUser = {
-      ...data,
-      enrollmentNumber,
-    };
-
-    const createdUser = await this.studentService.create(newUser);
+    const createdUser = await this.studentService.create(data);
     if (!createdUser || !createdUser.user) {
       throw new UnauthorizedException('Failed to create user');
     }
