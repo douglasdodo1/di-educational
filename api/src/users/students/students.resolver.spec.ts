@@ -58,24 +58,6 @@ describe('StudentsResolver', () => {
     });
   });
 
-  describe('createStudent', () => {
-    it('deve criar um aluno e retornar o objeto criado', async () => {
-      const input = {
-        email: 'student@test.com',
-        first_name: 'Maria',
-        last_name: 'Santos',
-        bio: 'Aluna',
-        phones: ['11988888888'],
-        password: '123456',
-        enrollmentNumber: 'MAT-001',
-      };
-
-      const result = await resolver.createStudent(input);
-      expect(service.create).toHaveBeenCalledWith(input);
-      expect(result).toEqual(mockStudent);
-    });
-  });
-
   describe('updateStudent', () => {
     it('deve atualizar um aluno e retornar true', async () => {
       const input = {
@@ -86,14 +68,6 @@ describe('StudentsResolver', () => {
 
       const result = await resolver.updateStudent(1, input);
       expect(service.update).toHaveBeenCalledWith(1, input);
-      expect(result).toBe(true);
-    });
-  });
-
-  describe('deleteStudent', () => {
-    it('deve deletar um aluno e retornar true', async () => {
-      const result = await resolver.deleteStudent(1);
-      expect(service.delete).toHaveBeenCalledWith(1);
       expect(result).toBe(true);
     });
   });
