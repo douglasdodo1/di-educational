@@ -32,7 +32,6 @@ export default tseslint.config(
       'prettier/prettier': ['error', { endOfLine: 'auto' }],
     },
   },
-  // 👇 bloco novo para arquivos de teste
   {
     files: ['**/*.spec.ts', '**/*.test.ts'],
     plugins: { jest: jestPlugin },
