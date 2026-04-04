@@ -17,6 +17,10 @@ export class UsersService {
     return this.usersRepository.findById(id);
   }
 
+  async findAll() {
+    return this.usersRepository.findAll();
+  }
+
   async create(data: CreateUserInput) {
     const hashedPassword = await argon2.hash(data.password);
     const toCreate = { ...data, password: hashedPassword };
@@ -33,5 +37,10 @@ export class UsersService {
 
   async verifyPassword(hashed: string, plain: string) {
     return argon2.verify(hashed, plain);
+  }
+
+  async delete(id: number): Promise<boolean> {
+    await this.usersRepository.delete(id);
+    return true;
   }
 }

@@ -1,7 +1,6 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { TeacherModel } from './teachers.model';
 import { TeachersService } from './teachers.service';
-import { CreateTeacherInput } from './inputs/create.teacher.input';
 import { UpdateTeacherInput } from './inputs/update.teacher.input';
 
 @Resolver(() => TeacherModel)
@@ -18,23 +17,11 @@ export class TeachersResolver {
     return this.teachersService.findById(id);
   }
 
-  @Mutation(() => TeacherModel, { nullable: true })
-  createTeacher(
-    @Args('data', { type: () => CreateTeacherInput }) data: CreateTeacherInput,
-  ): Promise<TeacherModel> {
-    return this.teachersService.create(data);
-  }
-
   @Mutation(() => Boolean)
   updateTeacher(
     @Args('id') id: number,
     @Args('data', { type: () => UpdateTeacherInput }) data: UpdateTeacherInput,
   ): Promise<boolean> {
     return this.teachersService.update(id, data);
-  }
-
-  @Mutation(() => Boolean)
-  deleteTeacher(@Args('id') id: number): Promise<boolean> {
-    return this.teachersService.delete(id);
   }
 }
