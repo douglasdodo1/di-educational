@@ -13,11 +13,10 @@ export class StudentsService {
   ) {}
 
   async create(data: CreateStudentInput): Promise<StudentsModel> {
-    const { email, role, password, first_name, last_name, bio, phones } = data;
+    const { email, password, first_name, last_name, bio, phones } = data;
 
     const user = await this.usersService.create({
       email,
-      role,
       password,
       first_name,
       last_name,
