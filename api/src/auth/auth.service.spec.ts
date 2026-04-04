@@ -14,6 +14,7 @@ describe('AuthService', () => {
   let service: AuthService;
   let usersService: jest.Mocked<UsersService>;
   let jwtService: jest.Mocked<JwtService>;
+  let studentsService: jest.Mocked<StudentsService>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -45,6 +46,7 @@ describe('AuthService', () => {
     service = module.get<AuthService>(AuthService);
     usersService = module.get(UsersService);
     jwtService = module.get(JwtService);
+    studentsService = module.get(StudentsService);
   });
 
   afterEach(() => jest.clearAllMocks());
@@ -54,6 +56,7 @@ describe('AuthService', () => {
       const mockedUser = {
         id: 1,
         email: 'student@test.com',
+        role: 'student',
         first_name: 'Student',
         last_name: 'Test',
         phones: [],
@@ -146,6 +149,62 @@ describe('AuthService', () => {
       await expect(
         service.login('example@test.com', 'password'),
       ).rejects.toThrow(UnauthorizedException);
+    });
+  });
+
+  describe('register', () => {
+    it('should create a new student and return tokens', async () => {
+      const input = {
+        email: 'student@test.com',
+        first_name: 'Student',
+        last_name: 'Test',
+        phones: [],
+        password: '123456',
+      };
+
+      const mockedUser = {
+        id: 1,
+        email: 'student@test.com',
+        first_name: 'Student',
+        last_name: 'Test',
+        phones: [],
+        password: '123456',
+        student: { id: 1, enrollmentNumber: 'STU1234' },
+      };
+
+      usersService.findByEmail.mockResolvedValue(null);
+
+      const createdStudent = {
+        id: mockedUser.id,
+        enrollmentNumber: mockedUser.student.enrollmentNumber,
+        user: mockedUser,
+      };
+
+      studentsService.create.mockResolvedValue(createdStudent);
+
+      jwtService.sign
+        .mockReturnValueOnce('mock-access-token')
+        .mockReturnValueOnce('mock-refresh-token');
+
+      const result = await service.register(input);
+
+      expect(usersService.findByEmail).toHaveBeenCalledWith('student@test.com');
+
+      expect(studentsService.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          email: input.email,
+          first_name: input.first_name,
+          last_name: input.last_name,
+          phones: input.phones,
+          password: input.password,
+        }),
+      );
+
+      expect(jwtService.sign).toHaveBeenCalledTimes(2);
+
+      expect(result.access_token).toBe('mock-access-token');
+      expect(result.refresh_token).toBe('mock-refresh-token');
+      expect(result.user).toEqual(mockedUser);
     });
   });
 });
