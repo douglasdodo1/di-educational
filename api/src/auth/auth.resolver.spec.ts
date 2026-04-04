@@ -5,6 +5,7 @@ import { CreateUserInput } from 'src/users/inputs/create.user.input';
 import { UserModel } from 'src/users/models/users.model';
 import { JwtAuthGuard } from './guards/jwt.auth.guard';
 import { AuthResolver } from './auth.resolver';
+import { UserRole } from 'src/users/utils/user-role';
 
 describe('AuthResolver', () => {
   let resolver: AuthResolver;
@@ -99,6 +100,7 @@ describe('AuthResolver', () => {
     it('should return auth response when user registers successfully', async () => {
       const data: CreateUserInput = {
         email: 'test@test.com',
+        role: UserRole.STUDENT,
         first_name: 'Test',
         last_name: 'User',
         password: 'password',
