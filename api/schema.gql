@@ -7,26 +7,28 @@ type Phone {
   number: String!
 }
 
+type StudentsModel {
+  id: Int!
+  enrollmentNumber: String!
+  user: UserModel
+}
+
 type UserModel {
   id: Int!
   email: String!
   first_name: String!
   last_name: String!
+  teacher: TeacherModel
+  student: StudentsModel
   bio: String
   phones: [Phone!]!
   avatarUrl: String
-  password: String!
 }
 
 type TeacherModel {
   id: Int!
   salary: Float!
-  user: UserModel!
-}
-
-type StudentsModel {
-  enrollmentNumber: String!
-  user: UserModel!
+  user: UserModel
 }
 
 type ContentsModel {
@@ -70,9 +72,9 @@ type Query {
   Courses: [CoursesModel!]!
   course(id: Int!): CoursesModel!
   teachers: [TeacherModel!]!
-  teacher(id: Int!): TeacherModel
+  teacher(id: Float!): TeacherModel
   students: [StudentsModel!]!
-  student(id: Int!): StudentsModel
+  student(id: Float!): StudentsModel
 }
 
 type Mutation {
@@ -82,16 +84,12 @@ type Mutation {
   enrollmentStudents(courseId: Int!, ids: [Int!]!): Boolean!
   unrollmentStudents(courseId: Int!, ids: [Int!]!): Boolean!
   createClass(courseId: Int!, data: CreateClassInput!): ClassModel
-  updateTeacher(id: Int!, data: UpdateTeacherInput!): Boolean!
+  updateTeacher(id: Float!, data: UpdateTeacherInput!): Boolean!
   updateIsActive(courseId: Int!, state: Boolean!): Boolean!
   updateClass(classId: Int!, data: UpdateClassInput!): Boolean!
   deleteClasses(classesIds: [Int!]!): Boolean!
   updateContent(classId: Int!, data: UpdateContentInput!): Boolean!
-  createTeacher(data: CreateTeacherInput!): TeacherModel
-  deleteTeacher(id: Int!): Boolean!
-  createStudent(data: CreateStudentInput!): StudentsModel
-  updateStudent(id: Int!, data: UpdateStudentInput!): Boolean!
-  deleteStudent(id: Int!): Boolean!
+  updateStudent(id: Float!, data: UpdateStudentInput!): Boolean!
 }
 
 input CreateCourseInput {
@@ -104,7 +102,6 @@ input CreateCourseInput {
 }
 
 input UpdateCourseInput {
-  id: Int!
   name: String
   imageUrl: String
   description: String
@@ -124,8 +121,8 @@ input CreateContentInput {
 }
 
 input UpdateTeacherInput {
-  id: Int!
   email: String
+  role: String
   first_name: String
   last_name: String
   bio: String
@@ -135,40 +132,18 @@ input UpdateTeacherInput {
 }
 
 input UpdateClassInput {
-  id: Int!
   name: String
   description: String
 }
 
 input UpdateContentInput {
-  id: Int!
   type: ContentType
   url: String
 }
 
-input CreateTeacherInput {
-  email: String!
-  first_name: String!
-  last_name: String!
-  bio: String
-  phones: [String!]!
-  password: String!
-  salary: Float!
-}
-
-input CreateStudentInput {
-  email: String!
-  first_name: String!
-  last_name: String!
-  bio: String
-  phones: [String!]!
-  password: String!
-  enrollmentNumber: String!
-}
-
 input UpdateStudentInput {
-  id: Int!
   email: String
+  role: String
   first_name: String
   last_name: String
   bio: String
