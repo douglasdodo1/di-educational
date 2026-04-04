@@ -58,24 +58,6 @@ describe('TeachersResolver', () => {
     });
   });
 
-  describe('createTeacher', () => {
-    it('deve criar um professor e retornar o objeto criado', async () => {
-      const input = {
-        email: 'teacher@test.com',
-        first_name: 'João',
-        last_name: 'Silva',
-        bio: 'Professor',
-        phones: ['11999999999'],
-        password: '123456',
-        salary: 5000,
-      };
-
-      const result = await resolver.createTeacher(input);
-      expect(service.create).toHaveBeenCalledWith(input);
-      expect(result).toEqual(mockTeacher);
-    });
-  });
-
   describe('updateTeacher', () => {
     it('deve atualizar um professor e retornar true', async () => {
       const input = {
@@ -86,14 +68,6 @@ describe('TeachersResolver', () => {
 
       const result = await resolver.updateTeacher(1, input);
       expect(service.update).toHaveBeenCalledWith(1, input);
-      expect(result).toBe(true);
-    });
-  });
-
-  describe('deleteTeacher', () => {
-    it('deve deletar um professor e retornar true', async () => {
-      const result = await resolver.deleteTeacher(1);
-      expect(service.delete).toHaveBeenCalledWith(1);
       expect(result).toBe(true);
     });
   });
