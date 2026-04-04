@@ -13,10 +13,11 @@ export class StudentsService {
   ) {}
 
   async create(data: CreateStudentInput): Promise<StudentsModel> {
-    const { email, password, first_name, last_name, bio, phones } = data;
+    const { email, role, password, first_name, last_name, bio, phones } = data;
 
     const user = await this.usersService.create({
       email,
+      role,
       password,
       first_name,
       last_name,
@@ -40,11 +41,6 @@ export class StudentsService {
 
   async update(id: number, data: UpdateStudentInput): Promise<boolean> {
     await this.studentsRepository.update(id, data);
-    return true;
-  }
-
-  async delete(id: number): Promise<boolean> {
-    await this.studentsRepository.delete(id);
     return true;
   }
 }

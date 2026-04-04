@@ -10,6 +10,7 @@ import { PrismaModule } from './prisma.module';
 import { PrismaExceptionFilter } from './common/filters/prisma.exception.filter';
 import { CoursesModule } from './Courses/courses.module';
 import { ClassesModule } from './classes/classes.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { ClassesModule } from './classes/classes.module';
     }),
     CoursesModule,
     ClassesModule,
+    UsersModule,
     TeachersModule,
     StudentsModule,
     PrismaModule,

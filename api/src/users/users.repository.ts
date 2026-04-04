@@ -25,6 +25,12 @@ export class UsersRepository {
     });
   }
 
+  async findAll() {
+    return await this.prisma.user.findMany({
+      include: { phones: true, student: true, teacher: true },
+    });
+  }
+
   async create(data: CreateUserInput) {
     return await this.prisma.user.create({
       data: {
