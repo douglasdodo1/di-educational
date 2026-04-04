@@ -4,10 +4,15 @@ import { UserModel } from './models/users.model';
 import { UsersRepository } from './users.repository';
 import { CreateUserInput } from './inputs/create.user.input';
 import { UpdateUserInput } from './inputs/update.user.input';
+import { TeachersService } from './teachers/teachers.service';
+import { UserRole } from './utils/user-role';
 
 @Injectable()
 export class UsersService {
-  constructor(private usersRepository: UsersRepository) {}
+  constructor(
+    private usersRepository: UsersRepository,
+    private teachersService: TeachersService,
+  ) {}
 
   async findByEmail(email: string): Promise<UserModel | null> {
     return this.usersRepository.findByEmail(email);
@@ -23,7 +28,19 @@ export class UsersService {
 
   async create(data: CreateUserInput) {
     const hashedPassword = await argon2.hash(data.password);
-    const toCreate = { ...data, password: hashedPassword };
+    if (data.role === UserRole.TEACHER) {
+      return this.teachersService.create({
+        ...data,
+        password: hashedPassword,
+      });
+    }
+
+    const toCreate = {
+      ...data,
+      role: UserRole.STUDENT,
+      password: hashedPassword,
+    };
+
     return this.usersRepository.create(toCreate);
   }
 

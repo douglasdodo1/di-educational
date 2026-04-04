@@ -13,18 +13,12 @@ export class TeachersService {
   ) {}
 
   async create(data: CreateTeacherInput): Promise<TeacherModel> {
-    const { email, password, first_name, last_name, bio, phones } = data;
+    const teacherInput = {
+      ...data,
+      salary: data.salary,
+    };
 
-    const user = await this.usersService.create({
-      email,
-      password,
-      first_name,
-      last_name,
-      bio,
-      phones,
-    });
-
-    return await this.teachersRepository.createWithUserId(user.id, data.salary);
+    return await this.teachersRepository.create(teacherInput);
   }
 
   async findAll() {

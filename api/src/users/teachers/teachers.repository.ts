@@ -15,6 +15,7 @@ export class TeachersRepository {
         user: {
           create: {
             email: data.email,
+            salary: data.salary,
             first_name: data.first_name,
             last_name: data.last_name,
             bio: data.bio,

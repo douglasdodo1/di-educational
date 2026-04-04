@@ -7,7 +7,9 @@ import {
   ArrayNotEmpty,
   IsString,
   IsOptional,
+  IsEnum,
 } from 'class-validator';
+import { UserRole } from '../utils/user-role';
 
 @InputType()
 export class CreateUserInput {
@@ -15,7 +17,12 @@ export class CreateUserInput {
   @IsEmail()
   email!: string;
 
-  @Field()
+  @Field(() => String, { nullable: true })
+  @IsEnum(() => UserRole)
+  @IsOptional()
+  role?: UserRole;
+
+  @Field(() => String)
   @MinLength(3)
   @MaxLength(50)
   first_name!: string;

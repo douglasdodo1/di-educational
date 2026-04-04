@@ -3,31 +3,18 @@ import { CreateStudentInput } from './inputs/create.student.input';
 import { StudentsRepository } from './students.repository';
 import { UpdateStudentInput } from './inputs/update.student.input';
 import { StudentsModel } from './students.model';
-import { UsersService } from '../users.service';
 
 @Injectable()
 export class StudentsService {
-  constructor(
-    private studentsRepository: StudentsRepository,
-    private usersService: UsersService,
-  ) {}
+  constructor(private studentsRepository: StudentsRepository) {}
 
   async create(data: CreateStudentInput): Promise<StudentsModel> {
-    const { email, password, first_name, last_name, bio, phones } = data;
-
-    const user = await this.usersService.create({
-      email,
-      password,
-      first_name,
-      last_name,
-      bio,
-      phones,
-    });
-
-    return await this.studentsRepository.createWithUserId(
-      user.id,
-      data.enrollmentNumber,
-    );
+    const enrollmentNumber = `STU${Math.floor(1000 + Math.random() * 9000)}`;
+    const studentInput = {
+      ...data,
+      enrollmentNumber,
+    };
+    return await this.studentsRepository.create(studentInput);
   }
 
   async findAll() {
