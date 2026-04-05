@@ -3,15 +3,15 @@ import { TeachersService } from './teachers.service';
 import { TeachersResolver } from './teachers.resolver';
 import { PrismaService } from 'src/prisma.service';
 import { TeachersRepository } from './teachers.repository';
-import { UsersModule } from '../users.module';
 
+// teachers.module.ts
 @Module({
-  imports: [UsersModule],
   providers: [
     TeachersService,
     TeachersResolver,
     TeachersRepository,
     PrismaService,
   ],
+  exports: [TeachersService],
 })
 export class TeachersModule {}

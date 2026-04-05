@@ -7,6 +7,44 @@ import { UpdateUserInput } from './inputs/update.user.input';
 export class UsersRepository {
   constructor(private prisma: PrismaService) {}
 
+  async createStudent(data: CreateUserInput, enrollment: string) {
+    return await this.prisma.user.create({
+      data: {
+        email: data.email,
+        first_name: data.first_name,
+        last_name: data.last_name,
+        bio: data.bio,
+        password: data.password,
+        phones: {
+          create: data.phones.map((number) => ({ number })),
+        },
+        student: {
+          create: { enrollmentNumber: enrollment },
+        },
+      },
+      include: { phones: true, student: true, teacher: true },
+    });
+  }
+
+  async createTeacher(data: CreateUserInput, salary: number) {
+    return await this.prisma.user.create({
+      data: {
+        email: data.email,
+        first_name: data.first_name,
+        last_name: data.last_name,
+        bio: data.bio,
+        password: data.password,
+        phones: {
+          create: data.phones.map((number) => ({ number })),
+        },
+        teacher: {
+          create: { salary },
+        },
+      },
+      include: { phones: true, student: true, teacher: true },
+    });
+  }
+
   async findByEmail(email: string) {
     return await this.prisma.user.findUnique({
       where: { email },
@@ -27,22 +65,6 @@ export class UsersRepository {
 
   async findAll() {
     return await this.prisma.user.findMany({
-      include: { phones: true, student: true, teacher: true },
-    });
-  }
-
-  async create(data: CreateUserInput) {
-    return await this.prisma.user.create({
-      data: {
-        email: data.email,
-        first_name: data.first_name,
-        last_name: data.last_name,
-        bio: data.bio,
-        password: data.password,
-        phones: {
-          create: data.phones.map((number) => ({ number })),
-        },
-      },
       include: { phones: true, student: true, teacher: true },
     });
   }

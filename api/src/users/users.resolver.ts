@@ -2,6 +2,8 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { UserModel } from './models/users.model';
 import { CreateUserInput } from './inputs/create.user.input';
+import { TeacherModel } from './teachers/teachers.model';
+import { StudentsModel } from './students/students.model';
 
 @Resolver(() => UserModel)
 export class UsersResolver {
@@ -23,7 +25,9 @@ export class UsersResolver {
   }
 
   @Mutation(() => UserModel)
-  createUser(@Args('data') data: CreateUserInput): Promise<UserModel> {
+  createUser(
+    @Args('data') data: CreateUserInput,
+  ): Promise<StudentsModel | TeacherModel> {
     return this.usersService.create(data);
   }
 
