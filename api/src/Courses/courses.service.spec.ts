@@ -6,7 +6,8 @@ import { UpdateCourseInput } from './inputs/update.course.input';
 import { CreateClassInput } from 'src/classes/inputs/create.class.input';
 import { CoursesModel } from './courses.model';
 import { ClassModel } from 'src/classes/classes.model';
-import { UserRole } from 'src/generated/prisma/enums';
+import { ContentType, UserRole } from 'src/generated/prisma/enums';
+import { UserModel } from 'src/users/models/users.model';
 
 describe('CoursesService', () => {
   let service: CoursesService;
@@ -27,7 +28,7 @@ describe('CoursesService', () => {
             enrollmentStudents: jest.fn(),
             unrollmentStudents: jest.fn(),
             createClass: jest.fn(),
-            updateTeacher: jest.fn(),
+            updateCourseAdmin: jest.fn(),
             updateIsActive: jest.fn(),
           },
         },
@@ -80,7 +81,20 @@ describe('CoursesService', () => {
 
       coursesRepository.create.mockResolvedValue(mockedCourse);
 
-      const user = { id: 1, role: UserRole.TEACHER } as any;
+      const user: UserModel = {
+        id: 1,
+        role: UserRole.TEACHER,
+        teacher: {
+          id: 1,
+          salary: 2000,
+        },
+        email: 'email@test.com',
+        first_name: 'First',
+        last_name: 'Last',
+        password: '123456',
+        bio: null,
+        phones: [],
+      };
 
       const result = await service.create(input, user);
 
@@ -117,7 +131,29 @@ describe('CoursesService', () => {
 
   describe('findById', () => {
     it('should return a course by id', async () => {
-      const course = { id: 1, name: 'Course 1' } as any;
+      const course: CoursesModel = {
+        id: 1,
+        name: 'Course 1',
+        is_active: true,
+        start_date: new Date(),
+        end_date: new Date(),
+        adminCourse: {
+          id: 1,
+          role: UserRole.TEACHER,
+          teacher: {
+            id: 1,
+            salary: 2000,
+          },
+          email: 'email@test.com',
+          first_name: 'First',
+          last_name: 'Last',
+          password: '123456',
+          bio: null,
+          phones: [],
+        },
+        members: [],
+        classes: [],
+      };
       coursesRepository.findById.mockResolvedValue(course);
 
       const result = await service.findById(1);
@@ -131,7 +167,7 @@ describe('CoursesService', () => {
     it('should call repository.update and return true', async () => {
       (coursesRepository.update as jest.Mock).mockResolvedValue(undefined);
 
-      const data: UpdateCourseInput = { name: 'New' } as any;
+      const data: UpdateCourseInput = { name: 'New' };
 
       const result = await service.update(1, data);
 
@@ -185,18 +221,19 @@ describe('CoursesService', () => {
       const classInput: CreateClassInput = {
         name: 'Class 1',
         description: 'desc',
-        content: { type: 'video', url: 'http://example.com' } as any,
-      } as any;
+        content: { type: ContentType.VIDEO, url: 'http://example.com' },
+      };
 
       const mockedClass: ClassModel = {
         id: 1,
         name: classInput.name,
         description: classInput.description,
         content: {
+          id: 1,
           type: classInput.content.type,
           url: classInput.content.url,
-        } as any,
-      } as any;
+        },
+      };
 
       coursesRepository.createClass.mockResolvedValue(mockedClass);
 
@@ -209,9 +246,7 @@ describe('CoursesService', () => {
 
   describe('updateTeacher', () => {
     it('should call repository.updateCourseAdmin and return true', async () => {
-      (coursesRepository.updateCourseAdmin as jest.Mock).mockResolvedValue(
-        undefined,
-      );
+      coursesRepository.updateCourseAdmin.mockResolvedValue(undefined);
 
       const result = await service.updateTeacher(1, 2);
 
@@ -222,9 +257,7 @@ describe('CoursesService', () => {
 
   describe('updateIsActive', () => {
     it('should call repository.updateIsActive and return true', async () => {
-      (coursesRepository.updateIsActive as jest.Mock).mockResolvedValue(
-        undefined,
-      );
+      coursesRepository.updateIsActive.mockResolvedValue(undefined);
 
       const result = await service.updateIsActive(1, true);
 

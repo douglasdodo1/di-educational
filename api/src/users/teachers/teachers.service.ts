@@ -3,7 +3,7 @@ import { CreateTeacherInput } from './inputs/create.teacher.input';
 import { TeachersRepository } from './teachers.repository';
 import { UpdateTeacherInput } from './inputs/update.teacher.input';
 import { UsersService } from '../users.service';
-import { UserModel } from '../models/users.model';
+import { TeacherModel } from './teachers.model';
 
 @Injectable()
 export class TeachersService {
@@ -12,29 +12,24 @@ export class TeachersService {
     private usersService: UsersService,
   ) {}
 
-  async create(data: CreateTeacherInput): Promise<UserModel> {
-    const teacherInput = {
-      ...data,
-      salary: data.salary,
-    };
+  async create(data: CreateTeacherInput): Promise<TeacherModel> {
+    const salary = data.salary || 0;
 
-    const created = await this.teachersRepository.create(teacherInput);
-    return created.user as UserModel;
+    const created = await this.teachersRepository.create(data, salary);
+    return created;
   }
 
-  async findAll(): Promise<UserModel[]> {
-    const teachers = await this.teachersRepository.findAll();
-    return teachers.map((t) => t.user).filter((u): u is UserModel => !!u);
+  async findAll(): Promise<TeacherModel[]> {
+    return await this.teachersRepository.findAll();
   }
 
-  async findById(id: number): Promise<UserModel | null> {
-    const teacher = await this.teachersRepository.findById(id);
-    return teacher?.user ?? null;
+  async findById(id: number): Promise<TeacherModel | null> {
+    return await this.teachersRepository.findById(id);
   }
 
-  async update(id: number, data: UpdateTeacherInput): Promise<UserModel> {
-    const updated = await this.teachersRepository.update(id, data);
-    return updated.user as UserModel;
+  async update(id: number, data: UpdateTeacherInput): Promise<boolean> {
+    await this.teachersRepository.update(id, data);
+    return true;
   }
 
   async delete(id: number): Promise<boolean> {
