@@ -9,7 +9,7 @@ import {
   IsOptional,
   IsEnum,
 } from 'class-validator';
-import { UserRole } from '../utils/user-role';
+import { UserRole } from 'src/generated/prisma/enums';
 
 @InputType()
 export class CreateUserInput {

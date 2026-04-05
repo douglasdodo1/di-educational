@@ -19,6 +19,7 @@ model User {
   avatarUrl  String?
 
   email      String   @unique
+  role       UserRole @default(STUDENT)
   first_name String
   last_name  String
   bio        String?
@@ -28,6 +29,7 @@ model User {
   student    Student?
 
   phones     Phone[]
+  courses Course[] @relation("AdminCourse")
 
   memberCourses  Course[] @relation("CourseMembers")
 }
@@ -37,7 +39,6 @@ model Teacher {
   salary Float
 
   user   User   @relation(fields: [id], references: [id])
-  courses Course[] @relation("TeacherCourses")
 }
 
 model Student {
@@ -66,8 +67,8 @@ model Course {
   start_date  DateTime
   end_date    DateTime
 
-  teacherId   Int
-  teacher     Teacher  @relation("TeacherCourses", fields: [teacherId], references: [id])
+  userId   Int
+  adminCourse     User  @relation("AdminCourse", fields: [userId], references: [id])
 
   members     User[]   @relation("CourseMembers")
 
@@ -94,6 +95,14 @@ model Content {
   classId  Int    @unique
   lesson   Class  @relation(fields: [classId], references: [id])
 }
+
+
+enum UserRole {
+  ADMIN
+  STUDENT
+  TEACHER
+}
+
 
 enum ContentType {
   IMAGE

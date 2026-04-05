@@ -91,8 +91,10 @@ describe('CoursesResolver', () => {
         end_date: new Date('2026-12-31'),
       };
 
-      const result = await resolver.createCourse(input);
-      expect(service.create).toHaveBeenCalledWith(input);
+      const mockUser = { id: 1, role: 'TEACHER' } as any;
+
+      const result = await resolver.createCourse(input, mockUser);
+      expect(service.create).toHaveBeenCalledWith(input, mockUser);
       expect(result).toEqual(mockCourse);
     });
   });

@@ -5,13 +5,22 @@ import { Injectable } from '@nestjs/common';
 import { CoursesRepository } from './courses.repository';
 import { CoursesModel } from './courses.model';
 import { ClassModel } from 'src/classes/classes.model';
+import { UserModel } from 'src/users/models/users.model';
+import { UserRole } from 'src/generated/prisma/enums';
 
 @Injectable()
 export class CoursesService {
   constructor(private coursesRepository: CoursesRepository) {}
 
-  async create(data: CreateCourseInput): Promise<CoursesModel> {
-    return await this.coursesRepository.create(data, 1);
+  async create(
+    data: CreateCourseInput,
+    user: UserModel,
+  ): Promise<CoursesModel> {
+    if (user.role === UserRole.STUDENT) {
+      throw new Error('Students cannot create courses');
+    }
+
+    return await this.coursesRepository.create(data, user.id);
   }
 
   async findAll(): Promise<CoursesModel[]> {
@@ -50,7 +59,7 @@ export class CoursesService {
   }
 
   async updateTeacher(courseId: number, id: number): Promise<boolean> {
-    await this.coursesRepository.updateTeacher(courseId, id);
+    await this.coursesRepository.updateCourseAdmin(courseId, id);
     return true;
   }
 

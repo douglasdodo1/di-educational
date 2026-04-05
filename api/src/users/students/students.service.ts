@@ -1,20 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import { CreateStudentInput } from './inputs/create.student.input';
 import { StudentsRepository } from './students.repository';
 import { UpdateStudentInput } from './inputs/update.student.input';
 import { StudentsModel } from './students.model';
+import { CreateUserInput } from '../inputs/create.user.input';
 
 @Injectable()
 export class StudentsService {
   constructor(private studentsRepository: StudentsRepository) {}
 
-  async create(data: CreateStudentInput): Promise<StudentsModel> {
+  async create(data: CreateUserInput): Promise<StudentsModel> {
     const enrollmentNumber = `STU${Math.floor(1000 + Math.random() * 9000)}`;
-    const studentInput = {
-      ...data,
-      enrollmentNumber,
-    };
-    return await this.studentsRepository.create(studentInput);
+    if (!enrollmentNumber) {
+      throw new Error('Failed to generate enrollment number');
+    }
+
+    return await this.studentsRepository.create(data, enrollmentNumber);
   }
 
   async findAll() {

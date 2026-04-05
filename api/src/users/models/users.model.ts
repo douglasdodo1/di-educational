@@ -2,6 +2,7 @@ import { Field, ObjectType, Int, HideField } from '@nestjs/graphql';
 import { Phone } from './phone.model';
 import { TeacherModel } from '../teachers/teachers.model';
 import { StudentsModel } from '../students/students.model';
+import { UserRole } from 'src/generated/prisma/enums';
 
 @ObjectType()
 export class UserModel {
@@ -10,6 +11,9 @@ export class UserModel {
 
   @Field(() => String)
   email!: string;
+
+  @Field(() => UserRole, { nullable: true })
+  role?: UserRole;
 
   @Field(() => String)
   first_name!: string;

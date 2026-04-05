@@ -5,6 +5,8 @@ import { UpdateCourseInput } from './inputs/update.course.input';
 import { ClassModel } from 'src/classes/classes.model';
 import { CoursesService } from './courses.service';
 import { CreateClassInput } from 'src/classes/inputs/create.class.input';
+import { CurrentUser } from 'src/auth/decorators/current.user.decorator';
+import { UserModel } from 'src/users/models/users.model';
 
 @Resolver(() => CoursesModel)
 export class CoursesResolver {
@@ -13,8 +15,9 @@ export class CoursesResolver {
   @Mutation(() => CoursesModel, { nullable: true })
   createCourse(
     @Args('data', { type: () => CreateCourseInput }) data: CreateCourseInput,
+    @CurrentUser() user: UserModel,
   ): Promise<CoursesModel | null> {
-    return this.coursesService.create(data);
+    return this.coursesService.create(data, user);
   }
 
   @Query(() => [CoursesModel])

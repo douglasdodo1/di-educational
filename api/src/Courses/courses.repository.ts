@@ -3,44 +3,46 @@ import { PrismaService } from 'src/prisma.service';
 import { CreateCourseInput } from './inputs/create.course.input';
 import { UpdateCourseInput } from './inputs/update.course.input';
 import { CreateClassInput } from 'src/classes/inputs/create.class.input';
+import { CoursesModel } from './courses.model';
+import { ClassModel } from 'src/classes/classes.model';
 
 @Injectable()
 export class CoursesRepository {
   constructor(private prisma: PrismaService) {}
 
-  async create(data: CreateCourseInput, teacherId: number) {
+  async create(data: CreateCourseInput, userId: number): Promise<CoursesModel> {
     return await this.prisma.course.create({
-      data: { ...data, teacherId },
+      data: { ...data, userId },
       include: {
-        teacher: { include: { user: { include: { phones: true } } } },
+        adminCourse: { include: { phones: true } },
         members: { include: { phones: true } },
+        classes: { include: { content: true } },
       },
     });
   }
 
-  async findAll() {
+  async findAll(): Promise<CoursesModel[]> {
     return await this.prisma.course.findMany({
       include: {
-        classes: { include: { content: true } },
-        teacher: { include: { user: { include: { phones: true } } } },
+        adminCourse: { include: { phones: true } },
         members: { include: { phones: true } },
+        classes: { include: { content: true } },
       },
     });
   }
 
-  async findById(id: number) {
+  async findById(id: number): Promise<CoursesModel | null> {
     return await this.prisma.course.findUnique({
       where: { id },
-
       include: {
-        classes: { include: { content: true } },
-        teacher: { include: { user: { include: { phones: true } } } },
+        adminCourse: { include: { phones: true } },
         members: { include: { phones: true } },
+        classes: { include: { content: true } },
       },
     });
   }
 
-  async update(data: UpdateCourseInput, id: number) {
+  async update(data: UpdateCourseInput, id: number): Promise<void> {
     await this.prisma.course.update({
       where: { id },
       data: {
@@ -53,7 +55,7 @@ export class CoursesRepository {
     });
   }
 
-  async delete(id: number) {
+  async delete(id: number): Promise<void> {
     await this.prisma.course.delete({ where: { id } });
   }
 
@@ -68,7 +70,7 @@ export class CoursesRepository {
     });
   }
 
-  async unrollmentStudents(courseId: number, ids: number[]) {
+  async unrollmentStudents(courseId: number, ids: number[]): Promise<void> {
     await this.prisma.course.update({
       where: { id: courseId },
       data: {
@@ -77,12 +79,15 @@ export class CoursesRepository {
     });
   }
 
-  async createClass(courseId: number, data: CreateClassInput) {
+  async createClass(
+    courseId: number,
+    data: CreateClassInput,
+  ): Promise<ClassModel> {
     return await this.prisma.class.create({
       data: {
         name: data.name,
         description: data.description,
-        courseId: courseId,
+        courseId,
         content: {
           create: {
             type: data.content.type,
@@ -94,23 +99,21 @@ export class CoursesRepository {
     });
   }
 
-  async updateTeacher(courseId: number, id: number) {
+  async updateCourseAdmin(courseId: number, userId: number): Promise<void> {
     await this.prisma.course.update({
       where: { id: courseId },
       data: {
-        teacher: {
-          connect: { id },
+        adminCourse: {
+          connect: { id: userId },
         },
       },
     });
   }
 
-  async updateIsActive(courseId: number, state: boolean) {
+  async updateIsActive(courseId: number, state: boolean): Promise<void> {
     await this.prisma.course.update({
       where: { id: courseId },
-      data: {
-        is_active: state,
-      },
+      data: { is_active: state },
     });
   }
 }
