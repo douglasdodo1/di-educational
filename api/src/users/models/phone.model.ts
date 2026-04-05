@@ -7,4 +7,7 @@ export class Phone {
 
   @Field(() => String)
   number!: string;
+
+  @Field(() => Int)
+  userId!: number;
 }

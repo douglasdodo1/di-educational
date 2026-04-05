@@ -1,7 +1,6 @@
 import { Field, ObjectType, Int } from '@nestjs/graphql';
 import { ClassModel } from 'src/classes/classes.model';
 import { UserModel } from 'src/users/models/users.model';
-import { TeacherModel } from 'src/users/teachers/teachers.model';
 
 @ObjectType()
 export class CoursesModel {
@@ -26,8 +25,8 @@ export class CoursesModel {
   @Field(() => Date)
   end_date!: Date;
 
-  @Field(() => TeacherModel, { nullable: true })
-  teacher!: TeacherModel;
+  @Field(() => UserModel, { nullable: true })
+  adminCourse!: UserModel;
 
   @Field(() => [UserModel], { nullable: true })
   members!: UserModel[];

@@ -9,6 +9,15 @@
 * 🟢 You can import this file directly.
 */
 
+export const UserRole = {
+  ADMIN: 'ADMIN',
+  STUDENT: 'STUDENT',
+  TEACHER: 'TEACHER'
+} as const
+
+export type UserRole = (typeof UserRole)[keyof typeof UserRole]
+
+
 export const ContentType = {
   IMAGE: 'IMAGE',
   VIDEO: 'VIDEO',

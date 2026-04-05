@@ -1,17 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import { CreateStudentInput } from './inputs/create.student.input';
 import { PrismaService } from 'src/prisma.service';
 import { StudentsModel } from './students.model';
 import { UpdateStudentInput } from './inputs/update.student.input';
+import { CreateUserInput } from '../inputs/create.user.input';
 
 @Injectable()
 export class StudentsRepository {
   constructor(private prisma: PrismaService) {}
 
-  async create(data: CreateStudentInput): Promise<StudentsModel> {
+  async create(
+    data: CreateUserInput,
+    enrollmentNumber: string,
+  ): Promise<StudentsModel> {
     return await this.prisma.student.create({
       data: {
-        enrollmentNumber: data.enrollmentNumber,
+        enrollmentNumber: enrollmentNumber,
         user: {
           create: {
             email: data.email,

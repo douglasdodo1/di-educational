@@ -11,7 +11,6 @@ export class TeachersRepository {
   async create(data: CreateTeacherInput): Promise<TeacherModel> {
     return await this.prisma.teacher.create({
       data: {
-        salary: data.salary,
         user: {
           create: {
             email: data.email,

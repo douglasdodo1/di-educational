@@ -5,7 +5,7 @@ import { UsersRepository } from './users.repository';
 import { CreateUserInput } from './inputs/create.user.input';
 import { UpdateUserInput } from './inputs/update.user.input';
 import { TeachersService } from './teachers/teachers.service';
-import { UserRole } from './utils/user-role';
+import { UserRole } from 'src/generated/prisma/enums';
 
 @Injectable()
 export class UsersService {

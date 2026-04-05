@@ -5,7 +5,7 @@ import { CreateUserInput } from 'src/users/inputs/create.user.input';
 import { UserModel } from 'src/users/models/users.model';
 import { JwtAuthGuard } from './guards/jwt.auth.guard';
 import { AuthResolver } from './auth.resolver';
-import { UserRole } from 'src/users/utils/user-role';
+import { UserRole } from 'src/generated/prisma/enums';
 
 describe('AuthResolver', () => {
   let resolver: AuthResolver;
