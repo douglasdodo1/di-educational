@@ -1,8 +1,18 @@
-import { Field, ObjectType, Int, HideField } from '@nestjs/graphql';
+import {
+  Field,
+  ObjectType,
+  Int,
+  HideField,
+  registerEnumType,
+} from '@nestjs/graphql';
 import { Phone } from './phone.model';
 import { TeacherModel } from '../teachers/teachers.model';
 import { StudentsModel } from '../students/students.model';
 import { UserRole } from 'src/generated/prisma/enums';
+
+registerEnumType(UserRole, {
+  name: 'UserRole',
+});
 
 @ObjectType()
 export class UserModel {

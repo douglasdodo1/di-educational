@@ -6,12 +6,16 @@ import { CreateUserInput } from './inputs/create.user.input';
 import { UpdateUserInput } from './inputs/update.user.input';
 import { TeachersService } from './teachers/teachers.service';
 import { UserRole } from 'src/generated/prisma/enums';
+import { StudentsService } from './students/students.service';
+import { TeacherModel } from './teachers/teachers.model';
+import { StudentsModel } from './students/students.model';
 
 @Injectable()
 export class UsersService {
   constructor(
     private usersRepository: UsersRepository,
     private teachersService: TeachersService,
+    private studentsService: StudentsService,
   ) {}
 
   async findByEmail(email: string): Promise<UserModel | null> {
@@ -26,7 +30,7 @@ export class UsersService {
     return this.usersRepository.findAll();
   }
 
-  async create(data: CreateUserInput) {
+  async create(data: CreateUserInput): Promise<StudentsModel | TeacherModel> {
     const hashedPassword = await argon2.hash(data.password);
     if (data.role === UserRole.TEACHER) {
       return this.teachersService.create({
@@ -41,7 +45,7 @@ export class UsersService {
       password: hashedPassword,
     };
 
-    return this.usersRepository.create(toCreate);
+    return this.studentsService.create(toCreate);
   }
 
   async update(id: number, data: UpdateUserInput) {

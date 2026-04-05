@@ -2,15 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { CreateTeacherInput } from './inputs/create.teacher.input';
 import { TeachersRepository } from './teachers.repository';
 import { UpdateTeacherInput } from './inputs/update.teacher.input';
-import { UsersService } from '../users.service';
 import { TeacherModel } from './teachers.model';
 
 @Injectable()
 export class TeachersService {
-  constructor(
-    private teachersRepository: TeachersRepository,
-    private usersService: UsersService,
-  ) {}
+  constructor(private teachersRepository: TeachersRepository) {}
 
   async create(data: CreateTeacherInput): Promise<TeacherModel> {
     const salary = data.salary || 0;
