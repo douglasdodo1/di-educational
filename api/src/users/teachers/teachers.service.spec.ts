@@ -71,6 +71,7 @@ describe('TeachersService', () => {
       teachersRepository.create.mockResolvedValue(mockedTeacher);
 
       const result = await service.create(input);
+      const salary = input.salary || 0;
 
       expect(teachersRepository.create).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -81,6 +82,7 @@ describe('TeachersService', () => {
           password: input.password,
           salary: input.salary,
         }),
+        salary,
       );
 
       expect(result).toEqual(mockedTeacher);

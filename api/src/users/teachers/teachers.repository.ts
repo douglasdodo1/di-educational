@@ -8,13 +8,17 @@ import { UpdateTeacherInput } from './inputs/update.teacher.input';
 export class TeachersRepository {
   constructor(private prisma: PrismaService) {}
 
-  async create(data: CreateTeacherInput): Promise<TeacherModel> {
+  async create(
+    data: CreateTeacherInput,
+    salary: number,
+  ): Promise<TeacherModel> {
     return await this.prisma.teacher.create({
       data: {
+        salary,
+
         user: {
           create: {
             email: data.email,
-            salary: data.salary,
             first_name: data.first_name,
             last_name: data.last_name,
             bio: data.bio,
