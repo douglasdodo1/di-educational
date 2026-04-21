@@ -3,25 +3,26 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER } from '@nestjs/core';
+import { PrismaExceptionFilter } from './common/filters/prisma.exception.filter';
 
 import { TeachersModule } from './users/teachers/teachers.module';
 import { StudentsModule } from './users/students/students.module';
 import { PrismaModule } from './prisma.module';
-import { PrismaExceptionFilter } from './common/filters/prisma.exception.filter';
 import { CoursesModule } from './Courses/courses.module';
 import { ClassesModule } from './classes/classes.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { GqlContext } from './common/fastify.type';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: 'schema.gql',
+      context: (context: GqlContext): GqlContext => context,
     }),
     AuthModule,
     CoursesModule,

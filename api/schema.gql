@@ -93,8 +93,8 @@ type Query {
 }
 
 type Mutation {
-  login(email: String!, password: String!): AuthResponse!
-  register(data: CreateUserInput!): AuthResponse!
+  login(email: String!, password: String!): UserModel!
+  register(data: CreateUserInput!): UserModel!
   refreshToken: AuthResponse!
   updateTeacher(courseId: Int!, id: Int!): Boolean!
   updateStudent(id: Float!, data: UpdateStudentInput!): Boolean!
