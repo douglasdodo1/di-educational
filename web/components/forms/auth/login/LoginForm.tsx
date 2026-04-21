@@ -2,6 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Button } from "@/components/ui/button";
 import { useLoginForm } from "./useLoginForm";
+import { Spinner } from "@/components/ui/spinner";
 
 export const LoginForm = () => {
   const form = useLoginForm();
@@ -13,7 +14,7 @@ export const LoginForm = () => {
         e.stopPropagation();
         form.handleSubmit();
       }}
-      className="flex flex-col gap-12"
+      className="flex flex-col gap-4"
     >
       <FieldGroup>
         <form.Field name="email">
@@ -39,11 +40,19 @@ export const LoginForm = () => {
         </form.Field>
       </FieldGroup>
 
-      <form.Subscribe selector={(state) => [state.errorMap]}>
-        {([errorMap]) => (errorMap.onSubmit ? <FieldError>{errorMap.onSubmit.toString()}</FieldError> : null)}
-      </form.Subscribe>
+      <div className="min-h-5 mx-auto">
+        <form.Subscribe selector={(state) => [state.errorMap]}>
+          {([errorMap]) => (errorMap.onSubmit ? <FieldError>{errorMap.onSubmit.toString()}</FieldError> : null)}
+        </form.Subscribe>
+      </div>
 
-      <Button className="w-full h-12 bg-[#f05b05]">Entrar</Button>
+      <form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
+        {([canSubmit, isSubmitting]) => (
+          <Button type="submit" disabled={!canSubmit || isSubmitting} className="h-12 bg-[#f05b05]">
+            {isSubmitting ? <Spinner /> : "Entrar"}
+          </Button>
+        )}
+      </form.Subscribe>
     </form>
   );
 };
