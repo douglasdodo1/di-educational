@@ -68,6 +68,7 @@ describe('StudentsService', () => {
           password: input.password,
         }),
         expect.any(String),
+        input.phones,
       );
 
       expect(result).toEqual(mockedStudent);

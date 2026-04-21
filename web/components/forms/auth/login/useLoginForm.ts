@@ -1,11 +1,12 @@
 import { useLoginMutation } from "@/hooks/auth/useLoginMutation";
-import { setTokens } from "@/lib/authCookies";
 import { useAuthStore } from "@/stores/authStore";
 import { useForm } from "@tanstack/react-form";
+import { useRouter } from "next/navigation";
 
 export const useLoginForm = () => {
   const { login } = useLoginMutation();
   const { setUser } = useAuthStore();
+  const router = useRouter();
 
   const form = useForm({
     defaultValues: {
@@ -25,11 +26,9 @@ export const useLoginForm = () => {
 
           if (!response.data) return "Erro ao fazer login";
 
-          const { access_token, refresh_token, user } = response.data.login;
-          setTokens(access_token, refresh_token);
+          const { user } = response.data.login;
           setUser(user);
-
-          return null;
+          router.push("/home");
         } catch {
           return "Credenciais inválidas";
         }

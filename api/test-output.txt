@@ -1,0 +1,404 @@
+﻿
+> di-educational@0.0.1 test
+> jest --verbose --no-coverage
+
+node.exe : (node:22344) 
+Warning: 
+`--localstorage-file` 
+was provided without a 
+valid path
+No linha:1 caractere:1
++ & "C:\nvm4w\nodejs/nod
+e.exe" "C:\nvm4w\nodejs/
+node_modules/npm/bin/np 
+...
++ ~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo      
+        : NotSpecified: 
+((no    de:22344) 
+Wa...ut a va    lid 
+path:String) [], R    
+emoteException
+    + 
+FullyQualifiedErrorI    
+d : NativeCommandError
+ 
+(Use `node 
+--trace-warnings ...` 
+to show where the 
+warning was created)
+PASS src/Courses/courses
+.service.spec.ts
+  CoursesService
+    create
+      ÔêÜ should create 
+a new course and return 
+the created model (26 
+ms)
+    findAll
+      ÔêÜ should return 
+an array of courses (4 
+ms)
+    findById
+      ÔêÜ should return 
+a course by id (7 ms)
+    update
+      ÔêÜ should call 
+repository.update and 
+return true (9 ms)
+    delete
+      ÔêÜ should call 
+repository.delete and 
+return true (4 ms)
+    enrollmentStudents
+      ÔêÜ should call re
+pository.enrollmentStude
+nts and return true (2 
+ms)
+    unrollmentStudents
+      ÔêÜ should call re
+pository.unrollmentStude
+nts and return true (2 
+ms)
+    createClass
+      ÔêÜ should create 
+a class for a course 
+and return the class 
+model (3 ms)
+    updateTeacher
+      ÔêÜ should call re
+pository.updateCourseAdm
+in and return true (2 
+ms)
+    updateIsActive
+      ÔêÜ should call re
+pository.updateIsActive 
+and return true (2 ms)
+
+(node:18864) Warning: 
+`--localstorage-file` 
+was provided without a 
+valid path
+(Use `node 
+--trace-warnings ...` 
+to show where the 
+warning was created)
+PASS src/classes/classes
+.service.spec.ts
+  ClassesService
+    updateClass
+      ÔêÜ should call 
+repository.updateClass 
+and return true (21 ms)
+    deleteClasses
+      ÔêÜ should call re
+pository.deleteClasses 
+and return true (3 ms)
+    updateContent
+      ÔêÜ should call re
+pository.updateContent 
+and return true (4 ms)
+
+(node:10036) Warning: 
+`--localstorage-file` 
+was provided without a 
+valid path
+(Use `node 
+--trace-warnings ...` 
+to show where the 
+warning was created)
+(node:22332) Warning: 
+`--localstorage-file` 
+was provided without a 
+valid path
+(Use `node 
+--trace-warnings ...` 
+to show where the 
+warning was created)
+PASS src/users/teachers/
+teachers.service.spec.ts
+  TeachersService
+    create
+      ÔêÜ should create 
+a new teacher and 
+return the created 
+model (25 ms)
+    findAll
+      ÔêÜ should return 
+an array of teachers (4 
+ms)
+    findById
+      ÔêÜ should return 
+a teacher by id (3 ms)
+    update
+      ÔêÜ should call 
+repository.update and 
+return true (6 ms)
+    delete
+      ÔêÜ should call 
+repository.delete and 
+return true (3 ms)
+
+PASS src/auth/auth.servi
+ce.spec.ts
+  AuthService
+    login
+      ÔêÜ should return 
+tokens on successful 
+login (21 ms)
+      ÔêÜ should throw 
+UnauthorizedException 
+when user not found (25 
+ms)
+      ÔêÜ should throw 
+UnauthorizedException 
+when password is 
+incorrect (5 ms)
+      ÔêÜ should throw 
+UnauthorizedException 
+when user profile not 
+found (3 ms)
+    register
+      ÔêÜ should create 
+a new user and return 
+tokens (3 ms)
+      ÔêÜ should throw 
+ConflictException when 
+email already in use (6 
+ms)
+    refreshToken
+      ÔêÜ should return 
+new tokens for a valid 
+user (3 ms)
+
+(node:21944) Warning: 
+`--localstorage-file` 
+was provided without a 
+valid path
+(Use `node 
+--trace-warnings ...` 
+to show where the 
+warning was created)
+PASS src/users/students/
+students.service.spec.ts
+  StudentsService
+    create
+      ÔêÜ should create 
+a new student and 
+return the created 
+model (33 ms)
+    findAll
+      ÔêÜ should return 
+an array of students (4 
+ms)
+    findById
+      ÔêÜ should return 
+a student by id (3 ms)
+    update
+      ÔêÜ should call 
+repository.update and 
+return true (3 ms)
+
+(node:5764) Warning: 
+`--localstorage-file` 
+was provided without a 
+valid path
+(Use `node 
+--trace-warnings ...` 
+to show where the 
+warning was created)
+(node:22444) Warning: 
+`--localstorage-file` 
+was provided without a 
+valid path
+(Use `node 
+--trace-warnings ...` 
+to show where the 
+warning was created)
+PASS src/users/students/
+students.resolver.spec.t
+s
+  StudentsResolver
+    students
+      ÔêÜ deve retornar 
+uma lista de alunos (12 
+ms)
+    student
+      ÔêÜ deve retornar 
+um aluno pelo id (2 ms)
+    updateStudent
+      ÔêÜ deve 
+atualizar um aluno e 
+retornar true (2 ms)
+
+(node:19744) Warning: 
+`--localstorage-file` 
+was provided without a 
+valid path
+(Use `node 
+--trace-warnings ...` 
+to show where the 
+warning was created)
+PASS src/classes/classes
+.resolver.spec.ts
+  ClassesResolver
+    updateClass
+      ÔêÜ deve 
+atualizar uma aula e 
+retornar true (11 ms)
+    deleteClasses
+      ÔêÜ deve deletar 
+aulas e retornar true 
+(2 ms)
+    updateContent
+      ÔêÜ deve 
+atualizar o conte├║do 
+de uma aula e retornar 
+true (2 ms)
+
+PASS src/users/teachers/
+teachers.resolver.spec.t
+s
+  TeachersResolver
+    teachers
+      ÔêÜ deve retornar 
+uma lista de 
+professores (13 ms)
+    teacher
+      ÔêÜ deve retornar 
+um professor pelo id (2 
+ms)
+    updateTeacher
+      ÔêÜ deve 
+atualizar um professor 
+e retornar true (2 ms)
+
+(node:5728) Warning: 
+`--localstorage-file` 
+was provided without a 
+valid path
+(Use `node 
+--trace-warnings ...` 
+to show where the 
+warning was created)
+PASS src/users/users.res
+olver.spec.ts
+  UsersResolver
+    users
+      ÔêÜ deve retornar 
+uma lista de usu├írios 
+(13 ms)
+    user
+      ÔêÜ deve retornar 
+um usu├írio pelo id (2 
+ms)
+    userByEmail
+      ÔêÜ deve retornar 
+um usu├írio pelo email 
+(2 ms)
+    createUser
+      ÔêÜ deve criar um 
+usu├írio e retornar o 
+objeto criado (2 ms)
+    deleteUser
+      ÔêÜ deve deletar 
+um usu├írio e retornar 
+true (2 ms)
+
+(node:9356) Warning: 
+`--localstorage-file` 
+was provided without a 
+valid path
+(Use `node 
+--trace-warnings ...` 
+to show where the 
+warning was created)
+PASS src/Courses/courses
+.resolver.spec.ts
+  CoursesResolver
+    Courses
+      ÔêÜ deve retornar 
+uma lista de cursos (11 
+ms)
+    course
+      ÔêÜ deve retornar 
+um curso pelo id (2 ms)
+    createCourse
+      ÔêÜ deve criar um 
+curso e retornar o 
+objeto criado (1 ms)
+    updateCourse
+      ÔêÜ deve 
+atualizar um curso e 
+retornar true (2 ms)
+    deleteCourse
+      ÔêÜ deve deletar 
+um curso e retornar 
+true (2 ms)
+    enrollmentStudents
+      ÔêÜ deve 
+matricular alunos e 
+retornar true (1 ms)
+    unrollmentStudents
+      ÔêÜ deve 
+desmatricular alunos e 
+retornar true (1 ms)
+    createClass
+      ÔêÜ deve criar 
+uma aula e retornar o 
+objeto criado (1 ms)
+    updateTeacher
+      ÔêÜ deve 
+atualizar o professor 
+do curso e retornar 
+true (1 ms)
+    updateIsActive
+      ÔêÜ deve 
+atualizar o status 
+ativo do curso e 
+retornar true (1 ms)
+
+(node:5144) Warning: 
+`--localstorage-file` 
+was provided without a 
+valid path
+(Use `node 
+--trace-warnings ...` 
+to show where the 
+warning was created)
+PASS src/auth/auth.resol
+ver.spec.ts
+  AuthResolver
+    ÔêÜ should be 
+defined (10 ms)
+    login
+      ÔêÜ should return 
+user and set cookies 
+when user is a student 
+(3 ms)
+      ÔêÜ should return 
+user and set cookies 
+when user is a teacher 
+(1 ms)
+    register
+      ÔêÜ should return 
+user and set cookies 
+when registration is 
+successful (2 ms)
+    me
+      ÔêÜ should return 
+the current user (1 ms)
+    refreshToken
+      ÔêÜ should return 
+new tokens for the 
+current user (2 ms)
+
+Test Suites: 11 passed, 
+11 total
+Tests:       59 passed, 
+59 total
+Snapshots:   0 total
+Time:        3.218 s
+Ran all test suites.

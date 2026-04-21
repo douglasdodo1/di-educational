@@ -83,6 +83,7 @@ describe('TeachersService', () => {
           salary: input.salary,
         }),
         salary,
+        input.phones,
       );
 
       expect(result).toEqual(mockedTeacher);

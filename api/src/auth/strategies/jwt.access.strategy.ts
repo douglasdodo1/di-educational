@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
+import { FastifyRequest } from 'fastify';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { JwtPayload } from '../interfaces/jwt.payload';
 
@@ -13,7 +14,11 @@ export class JwtAccessStrategy extends PassportStrategy(
     if (!secret) throw new Error('JWT_ACCESS_SECRET não definido');
 
     super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest: ExtractJwt.fromExtractors([
+        (req: FastifyRequest) => {
+          return (req?.cookies as Record<string, string>)?.access_token ?? null;
+        },
+      ]),
       ignoreExpiration: false,
       secretOrKey: secret,
     });

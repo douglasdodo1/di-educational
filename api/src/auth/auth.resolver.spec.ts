@@ -7,6 +7,7 @@ import { JwtAuthGuard } from './guards/jwt.auth.guard';
 import { JwtRefreshGuard } from './guards/jwt.refresh.guard';
 import { AuthResolver } from './auth.resolver';
 import { UserRole } from 'src/generated/prisma/enums';
+import { GqlContext } from 'src/common/fastify.type';
 
 describe('AuthResolver', () => {
   let resolver: AuthResolver;
@@ -16,6 +17,15 @@ describe('AuthResolver', () => {
     register: jest.fn(),
     refreshToken: jest.fn(),
   };
+
+  const mockSetCookie = jest.fn();
+
+  const mockCtx = {
+    req: {} as ReturnType<typeof jest.fn>,
+    res: {
+      setCookie: mockSetCookie,
+    },
+  } as unknown as GqlContext;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -45,63 +55,78 @@ describe('AuthResolver', () => {
   });
 
   describe('login', () => {
-    it('should return auth response with a Student profile when user is a student', async () => {
+    it('should return user and set cookies when user is a student', async () => {
       const email = 'student@test.com';
       const password = 'password';
 
-      const expectedResponse: AuthResponse = {
-        access_token: 'access_token',
-        refresh_token: 'refresh_token',
-        user: {
-          id: 1,
-          email: 'student@test.com',
-          first_name: 'Student',
-          last_name: 'Test',
-          phones: [],
-          password: 'hash',
-          student: { id: 1, enrollmentNumber: 'STU1234' },
-        },
+      const studentUser: UserModel = {
+        id: 1,
+        email: 'student@test.com',
+        first_name: 'Student',
+        last_name: 'Test',
+        phones: [],
+        password: 'hash',
+        student: { id: 1, enrollmentNumber: 'STU1234' },
       };
 
-      mockAuthService.login.mockResolvedValueOnce(expectedResponse);
+      const serviceResponse: AuthResponse = {
+        access_token: 'access_token',
+        refresh_token: 'refresh_token',
+        user: studentUser,
+      };
 
-      const result = await resolver.login(email, password);
+      mockAuthService.login.mockResolvedValueOnce(serviceResponse);
 
-      expect(result).toEqual(expectedResponse);
-      expect(result.user.student).toHaveProperty('enrollmentNumber');
+      const result = await resolver.login(email, password, mockCtx);
+
+      expect(result).toEqual(studentUser);
+      expect(result.student).toHaveProperty('enrollmentNumber');
       expect(mockAuthService.login).toHaveBeenCalledWith(email, password);
+      expect(mockSetCookie).toHaveBeenCalledWith(
+        'access_token',
+        'access_token',
+        expect.objectContaining({ httpOnly: true }),
+      );
+      expect(mockSetCookie).toHaveBeenCalledWith(
+        'refresh_token',
+        'refresh_token',
+        expect.objectContaining({ httpOnly: true }),
+      );
     });
 
-    it('should return auth response with a Teacher profile when user is a teacher', async () => {
+    it('should return user and set cookies when user is a teacher', async () => {
       const email = 'teacher@test.com';
       const password = 'password';
 
-      const expectedResponse: AuthResponse = {
-        access_token: 'access_token',
-        refresh_token: 'refresh_token',
-        user: {
-          id: 2,
-          email: 'teacher@test.com',
-          first_name: 'Teacher',
-          last_name: 'Test',
-          phones: [],
-          password: 'hash',
-          teacher: { id: 2, salary: 5000 },
-        },
+      const teacherUser: UserModel = {
+        id: 2,
+        email: 'teacher@test.com',
+        first_name: 'Teacher',
+        last_name: 'Test',
+        phones: [],
+        password: 'hash',
+        teacher: { id: 2, salary: 5000 },
       };
 
-      mockAuthService.login.mockResolvedValueOnce(expectedResponse);
+      const serviceResponse: AuthResponse = {
+        access_token: 'access_token',
+        refresh_token: 'refresh_token',
+        user: teacherUser,
+      };
 
-      const result = await resolver.login(email, password);
+      mockAuthService.login.mockResolvedValueOnce(serviceResponse);
 
-      expect(result).toEqual(expectedResponse);
-      expect(result.user.teacher).toHaveProperty('salary');
+      const result = await resolver.login(email, password, mockCtx);
+
+      expect(result).toEqual(teacherUser);
+      expect(result.teacher).toHaveProperty('salary');
       expect(mockAuthService.login).toHaveBeenCalledWith(email, password);
+      expect(mockSetCookie).toHaveBeenCalledTimes(2);
     });
   });
 
   describe('register', () => {
-    it('should return auth response when user registers successfully', async () => {
+    it('should return user and set cookies when registration is successful', async () => {
       const data: CreateUserInput = {
         email: 'test@test.com',
         role: UserRole.STUDENT,
@@ -111,26 +136,38 @@ describe('AuthResolver', () => {
         phones: ['123456789'],
       };
 
-      const expectedResponse: AuthResponse = {
-        access_token: 'access',
-        refresh_token: 'refresh',
-        user: {
-          id: 1,
-          email: 'test@test.com',
-          first_name: 'Student',
-          last_name: 'User',
-          phones: [],
-          password: 'hash',
-          student: { id: 1, enrollmentNumber: '123' },
-        },
+      const registeredUser: UserModel = {
+        id: 1,
+        email: 'test@test.com',
+        first_name: 'Test',
+        last_name: 'User',
+        phones: [],
+        password: 'hash',
+        student: { id: 1, enrollmentNumber: '123' },
       };
 
-      mockAuthService.register.mockResolvedValue(expectedResponse);
+      const serviceResponse: AuthResponse = {
+        access_token: 'access',
+        refresh_token: 'refresh',
+        user: registeredUser,
+      };
 
-      const result = await resolver.register(data);
+      mockAuthService.register.mockResolvedValue(serviceResponse);
 
-      expect(result).toEqual(expectedResponse);
+      const result = await resolver.register(data, mockCtx);
+
+      expect(result).toEqual(registeredUser);
       expect(mockAuthService.register).toHaveBeenCalledWith(data);
+      expect(mockSetCookie).toHaveBeenCalledWith(
+        'access_token',
+        'access',
+        expect.objectContaining({ httpOnly: true }),
+      );
+      expect(mockSetCookie).toHaveBeenCalledWith(
+        'refresh_token',
+        'refresh',
+        expect.objectContaining({ httpOnly: true }),
+      );
     });
   });
 
