@@ -40,8 +40,8 @@ export class UserModel {
   @Field(() => String, { nullable: true })
   bio?: string | null;
 
-  @Field(() => [Phone])
-  phones!: Phone[];
+  @Field(() => [Phone], { nullable: true })
+  phones?: Phone[];
 
   @Field(() => String, { nullable: true })
   avatarUrl?: string | null;

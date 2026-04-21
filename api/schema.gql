@@ -29,7 +29,7 @@ type UserModel {
   teacher: TeacherModel
   student: StudentsModel
   bio: String
-  phones: [Phone!]!
+  phones: [Phone!]
   avatarUrl: String
 }
 
@@ -76,28 +76,59 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type AuthResponse {
+  access_token: String!
+  refresh_token: String!
+  user: UserModel!
+}
+
 type Query {
-  Courses: [CoursesModel!]!
-  course(id: Int!): CoursesModel!
+  me: UserModel!
   teachers: [UserModel!]!
   teacher(id: Float!): UserModel
   students: [StudentsModel!]!
   student(id: Float!): StudentsModel
+  Courses: [CoursesModel!]!
+  course(id: Int!): CoursesModel!
 }
 
 type Mutation {
+  login(email: String!, password: String!): AuthResponse!
+  register(data: CreateUserInput!): AuthResponse!
+  refreshToken: AuthResponse!
+  updateTeacher(courseId: Int!, id: Int!): Boolean!
+  updateStudent(id: Float!, data: UpdateStudentInput!): Boolean!
   createCourse(data: CreateCourseInput!): CoursesModel
   updateCourse(id: Int!, data: UpdateCourseInput!): Boolean!
   deleteCourse(id: Int!): Boolean!
   enrollmentStudents(courseId: Int!, ids: [Int!]!): Boolean!
   unrollmentStudents(courseId: Int!, ids: [Int!]!): Boolean!
   createClass(courseId: Int!, data: CreateClassInput!): ClassModel
-  updateTeacher(id: Float!, data: UpdateTeacherInput!): UserModel
   updateIsActive(courseId: Int!, state: Boolean!): Boolean!
   updateClass(classId: Int!, data: UpdateClassInput!): Boolean!
   deleteClasses(classesIds: [Int!]!): Boolean!
   updateContent(classId: Int!, data: UpdateContentInput!): Boolean!
-  updateStudent(id: Float!, data: UpdateStudentInput!): Boolean!
+}
+
+input CreateUserInput {
+  email: String!
+  role: String
+  first_name: String!
+  last_name: String!
+  bio: String
+  phones: [String!]
+  password: String!
+}
+
+input UpdateStudentInput {
+  email: String
+  role: String
+  first_name: String
+  last_name: String
+  bio: String
+  phones: [String!]
+  password: String
+  enrollmentNumber: String
 }
 
 input CreateCourseInput {
@@ -128,17 +159,6 @@ input CreateContentInput {
   url: String!
 }
 
-input UpdateTeacherInput {
-  email: String
-  role: String
-  first_name: String
-  last_name: String
-  bio: String
-  phones: [String!]
-  password: String
-  salary: Float
-}
-
 input UpdateClassInput {
   name: String
   description: String
@@ -147,15 +167,4 @@ input UpdateClassInput {
 input UpdateContentInput {
   type: ContentType
   url: String
-}
-
-input UpdateStudentInput {
-  email: String
-  role: String
-  first_name: String
-  last_name: String
-  bio: String
-  phones: [String!]
-  password: String
-  enrollmentNumber: String
 }

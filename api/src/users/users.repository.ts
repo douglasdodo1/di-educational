@@ -7,7 +7,11 @@ import { UpdateUserInput } from './inputs/update.user.input';
 export class UsersRepository {
   constructor(private prisma: PrismaService) {}
 
-  async createStudent(data: CreateUserInput, enrollment: string) {
+  async createStudent(
+    data: CreateUserInput,
+    enrollment: string,
+    phones: string[],
+  ) {
     return await this.prisma.user.create({
       data: {
         email: data.email,
@@ -16,7 +20,7 @@ export class UsersRepository {
         bio: data.bio,
         password: data.password,
         phones: {
-          create: data.phones.map((number) => ({ number })),
+          create: phones.map((number) => ({ number })),
         },
         student: {
           create: { enrollmentNumber: enrollment },
@@ -26,7 +30,7 @@ export class UsersRepository {
     });
   }
 
-  async createTeacher(data: CreateUserInput, salary: number) {
+  async createTeacher(data: CreateUserInput, salary: number, phones: string[]) {
     return await this.prisma.user.create({
       data: {
         email: data.email,
@@ -35,7 +39,7 @@ export class UsersRepository {
         bio: data.bio,
         password: data.password,
         phones: {
-          create: data.phones.map((number) => ({ number })),
+          create: phones.map((number) => ({ number })),
         },
         teacher: {
           create: { salary },

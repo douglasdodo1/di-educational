@@ -4,6 +4,7 @@ import { AuthResponse } from './inputs/auth.response.input';
 import { CreateUserInput } from 'src/users/inputs/create.user.input';
 import { UserModel } from 'src/users/models/users.model';
 import { JwtAuthGuard } from './guards/jwt.auth.guard';
+import { JwtRefreshGuard } from './guards/jwt.refresh.guard';
 import { AuthResolver } from './auth.resolver';
 import { UserRole } from 'src/generated/prisma/enums';
 
@@ -13,6 +14,7 @@ describe('AuthResolver', () => {
   const mockAuthService = {
     login: jest.fn(),
     register: jest.fn(),
+    refreshToken: jest.fn(),
   };
 
   beforeEach(async () => {
@@ -26,6 +28,8 @@ describe('AuthResolver', () => {
       ],
     })
       .overrideGuard(JwtAuthGuard)
+      .useValue({ canActivate: () => true })
+      .overrideGuard(JwtRefreshGuard)
       .useValue({ canActivate: () => true })
       .compile();
 
@@ -144,6 +148,32 @@ describe('AuthResolver', () => {
       const result = resolver.me(user);
 
       expect(result).toEqual(user);
+    });
+  });
+
+  describe('refreshToken', () => {
+    it('should return new tokens for the current user', () => {
+      const user: UserModel = {
+        id: 1,
+        email: 'test@test.com',
+        first_name: 'Test',
+        last_name: 'User',
+        password: 'hashed',
+        phones: [],
+      };
+
+      const expectedResponse: AuthResponse = {
+        access_token: 'new-access',
+        refresh_token: 'new-refresh',
+        user,
+      };
+
+      mockAuthService.refreshToken.mockReturnValue(expectedResponse);
+
+      const result = resolver.refreshToken(user);
+
+      expect(result).toEqual(expectedResponse);
+      expect(mockAuthService.refreshToken).toHaveBeenCalledWith(user);
     });
   });
 });

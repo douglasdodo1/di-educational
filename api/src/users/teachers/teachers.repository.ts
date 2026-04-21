@@ -11,6 +11,7 @@ export class TeachersRepository {
   async create(
     data: CreateTeacherInput,
     salary: number,
+    phones: string[],
   ): Promise<TeacherModel> {
     return await this.prisma.teacher.create({
       data: {
@@ -23,7 +24,7 @@ export class TeachersRepository {
             last_name: data.last_name,
             bio: data.bio,
             phones: {
-              create: data.phones.map((number) => ({ number })),
+              create: phones.map((number) => ({ number })),
             },
             password: data.password,
           },

@@ -10,11 +10,13 @@ export class StudentsService {
 
   async create(data: CreateUserInput): Promise<StudentsModel> {
     const enrollmentNumber = `STU${Math.floor(1000 + Math.random() * 9000)}`;
+    const phones = data.phones || [];
+
     if (!enrollmentNumber) {
       throw new Error('Failed to generate enrollment number');
     }
 
-    return await this.studentsRepository.create(data, enrollmentNumber);
+    return await this.studentsRepository.create(data, enrollmentNumber, phones);
   }
 
   async findAll() {
