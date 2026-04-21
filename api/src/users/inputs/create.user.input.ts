@@ -4,7 +4,6 @@ import {
   MaxLength,
   MinLength,
   IsArray,
-  ArrayNotEmpty,
   IsString,
   IsOptional,
   IsEnum,
@@ -37,11 +36,11 @@ export class CreateUserInput {
   @MaxLength(200)
   bio?: string;
 
-  @Field(() => [String])
+  @Field(() => [String], { nullable: true })
+  @IsOptional()
   @IsArray()
-  @ArrayNotEmpty()
   @IsString({ each: true })
-  phones!: string[];
+  phones?: string[];
 
   @Field()
   @MinLength(6)

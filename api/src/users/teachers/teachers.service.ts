@@ -10,8 +10,9 @@ export class TeachersService {
 
   async create(data: CreateTeacherInput): Promise<TeacherModel> {
     const salary = data.salary || 0;
+    const phones = data.phones || [];
 
-    const created = await this.teachersRepository.create(data, salary);
+    const created = await this.teachersRepository.create(data, salary, phones);
     return created;
   }
 

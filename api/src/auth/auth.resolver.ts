@@ -6,6 +6,7 @@ import { CurrentUser } from './decorators/current.user.decorator';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from './guards/jwt.auth.guard';
 import { UserModel } from 'src/users/models/users.model';
+import { JwtRefreshGuard } from './guards/jwt.refresh.guard';
 
 @Resolver()
 export class AuthResolver {
@@ -30,5 +31,11 @@ export class AuthResolver {
   @UseGuards(JwtAuthGuard)
   me(@CurrentUser() user: UserModel): UserModel {
     return user;
+  }
+
+  @Mutation(() => AuthResponse)
+  @UseGuards(JwtRefreshGuard)
+  refreshToken(@CurrentUser() user: UserModel): AuthResponse {
+    return this.authService.refreshToken(user);
   }
 }

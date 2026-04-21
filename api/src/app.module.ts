@@ -11,6 +11,7 @@ import { PrismaExceptionFilter } from './common/filters/prisma.exception.filter'
 import { CoursesModule } from './Courses/courses.module';
 import { ClassesModule } from './classes/classes.module';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { UsersModule } from './users/users.module';
       driver: ApolloDriver,
       autoSchemaFile: 'schema.gql',
     }),
+    AuthModule,
     CoursesModule,
     ClassesModule,
     UsersModule,
