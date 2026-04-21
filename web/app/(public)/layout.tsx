@@ -1,14 +1,9 @@
-"use client";
-import { Card } from "@/components/ui/card";
 import Image from "next/image";
+import Link from "next/link";
+import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { LoginForm } from "@/components/forms/auth/login/LoginForm";
-import { RegisterForm } from "@/components/forms/auth/register/RegisterForm";
-import { useViewModel } from "./useViewModel";
 
-export const Auth = () => {
-  const { active, handleSetSection } = useViewModel();
-
+export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="grid grid-cols-4 2xl:grid-cols-3 h-full min-h-screen">
       <div className="absolute inset-0 lg:col-span-2 lg:relative lg:block 2xl:col-span-2">
@@ -22,21 +17,25 @@ export const Auth = () => {
       >
         <Card className="flex flex-col w-full my-auto sm:mx-12 bg-white border rounded-3xl p-12 transition-all duration-500 ease-in-out ">
           <Image src="/logo-withname.png" alt="Logo" width={400} height={100} className="mx-auto mt-4" />
-          <div className="flex-1 min-h-0 mb-4">{active === "login" ? <LoginForm /> : <RegisterForm />}</div>
+          <div className="flex-1 min-h-0 mb-4">{children}</div>
           <div className="flex gap-2 justify-center">
-            {(["login", "register"] as const).map((tab) => (
-              <button
-                key={tab}
-                onClick={() => handleSetSection(tab)}
-                className={cn(
-                  "w-4 h-4 rounded-full transition-all duration-300 bg-[#248ca3]",
-                  active !== tab && "opacity-30",
-                )}
-              />
-            ))}
+            <Link
+              href="/login"
+              aria-label="Login"
+              className={cn("w-4 h-4 rounded-full transition-all duration-300 bg-[#248ca3]")}
+            >
+              <span className="sr-only">Login</span>
+            </Link>
+            <Link
+              href="/register"
+              aria-label="Register"
+              className={cn("w-4 h-4 rounded-full transition-all duration-300 bg-[#248ca3] opacity-30")}
+            >
+              <span className="sr-only">Register</span>
+            </Link>
           </div>
         </Card>
       </div>
     </div>
   );
-};
+}
