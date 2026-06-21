@@ -1,9 +1,13 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
+  const [isLogin, setIsLogin] = useState(true);
+
   return (
     <div className="grid grid-cols-4 2xl:grid-cols-3 h-full min-h-screen">
       <div className="absolute inset-0 lg:col-span-2 lg:relative lg:block 2xl:col-span-2">
@@ -22,14 +26,22 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
             <Link
               href="/login"
               aria-label="Login"
-              className={cn("w-4 h-4 rounded-full transition-all duration-300 bg-[#248ca3]")}
+              onClick={() => setIsLogin(true)}
+              className={cn(
+                "w-4 h-4 rounded-full transition-all duration-300 bg-[#248ca3]",
+                isLogin ? "opacity-100" : "opacity-30",
+              )}
             >
               <span className="sr-only">Login</span>
             </Link>
             <Link
               href="/register"
               aria-label="Register"
-              className={cn("w-4 h-4 rounded-full transition-all duration-300 bg-[#248ca3] opacity-30")}
+              onClick={() => setIsLogin(false)}
+              className={cn(
+                "w-4 h-4 rounded-full transition-all duration-300 bg-[#248ca3]",
+                !isLogin ? "opacity-100" : "opacity-30",
+              )}
             >
               <span className="sr-only">Register</span>
             </Link>
