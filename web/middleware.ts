@@ -7,11 +7,8 @@ const ROUTES = {
 };
 
 export function middleware(req: NextRequest) {
-  console.log("a1");
-
   const token = req.cookies.get("access_token")?.value;
   const { pathname } = req.nextUrl;
-  console.log("a2");
 
   if (pathname === "/") {
     return token ? NextResponse.redirect(new URL("/home", req.url)) : NextResponse.redirect(new URL("/login", req.url));
