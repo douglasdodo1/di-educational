@@ -13,7 +13,7 @@ import { SetAuthCookiesInterceptor } from './interceptors/set-auth-cookies.inter
 export class AuthResolver {
   constructor(private authService: AuthService) {}
 
-  @Mutation(() => UserModel)
+  @Mutation(() => AuthResponse)
   @UseInterceptors(SetAuthCookiesInterceptor)
   async login(
     @Args('email') email: string,
@@ -22,7 +22,7 @@ export class AuthResolver {
     return this.authService.login(email, password);
   }
 
-  @Mutation(() => UserModel)
+  @Mutation(() => AuthResponse)
   @UseInterceptors(SetAuthCookiesInterceptor)
   async register(
     @Args('data', { type: () => CreateUserInput }) data: CreateUserInput,
