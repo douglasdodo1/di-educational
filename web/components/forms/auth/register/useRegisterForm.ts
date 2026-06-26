@@ -1,6 +1,7 @@
 import { useRegisterMutation } from "@/hooks/auth/useRegisterMutation";
 import { registerSchema } from "@/schemas/register-schema";
 import { useForm } from "@tanstack/react-form";
+import { redirect } from "next/navigation";
 
 export const useRegisterForm = () => {
   const { register, loading, error } = useRegisterMutation();
@@ -17,9 +18,10 @@ export const useRegisterForm = () => {
       onChange: registerSchema,
       onSubmit: registerSchema,
     },
+
     onSubmit: async ({ value }) => {
       try {
-        await register({
+        const response = await register({
           variables: {
             data: {
               first_name: value.firstName,
@@ -29,6 +31,10 @@ export const useRegisterForm = () => {
             },
           },
         });
+
+        if (response.data?.register) {
+          redirect("/dashboard");
+        }
       } catch (error) {
         console.error(error);
       }

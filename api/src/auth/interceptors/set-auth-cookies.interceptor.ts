@@ -9,17 +9,16 @@ import { FastifyReply } from 'fastify';
 import { map, Observable } from 'rxjs';
 import { GqlContext } from 'src/common/fastify.type';
 import { AuthResponse } from '../inputs/auth.response.input';
-import { UserModel } from 'src/users/models/users.model';
 
 @Injectable()
 export class SetAuthCookiesInterceptor implements NestInterceptor<
   AuthResponse,
-  UserModel
+  AuthResponse
 > {
   intercept(
     context: ExecutionContext,
     next: CallHandler<AuthResponse>,
-  ): Observable<UserModel> {
+  ): Observable<AuthResponse> {
     const ctx = GqlExecutionContext.create(context);
     const reply: FastifyReply = ctx.getContext<GqlContext>().reply;
 
@@ -41,7 +40,7 @@ export class SetAuthCookiesInterceptor implements NestInterceptor<
           maxAge: 60 * 60 * 24 * 7,
         });
 
-        return data.user;
+        return data;
       }),
     );
   }

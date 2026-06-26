@@ -28,6 +28,7 @@ export const useLoginForm = () => {
 
           const { user } = response.data.login;
           setUser(user);
+          if (!user) return;
           router.push("/home");
         } catch {
           return "Credenciais inválidas";
