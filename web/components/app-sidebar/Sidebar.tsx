@@ -13,6 +13,7 @@ import { LayoutDashboard, MessageSquare, UserCircle2, ClipboardList } from "luci
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { Label } from "../ui/label";
 
 const menu = [
   { id: 1, label: "Painel", to: "/home", icon: LayoutDashboard },
@@ -51,7 +52,7 @@ export default function AppSidebar() {
                 >
                   <Link href={item.to}>
                     <item.icon className="size-4" />
-                    <span>{item.label}</span>
+                    <Label>{item.label}</Label>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -74,7 +75,7 @@ export default function AppSidebar() {
               >
                 <Link href={account[0].to}>
                   <UserCircle2 />
-                  <span>{account[0].label}</span>
+                  <Label>{account[0].label}</Label>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
