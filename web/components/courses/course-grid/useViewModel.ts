@@ -3,11 +3,12 @@ import { useCourses } from '@/hooks/courses/useCourses'
 import { Course } from '@/types/course'
 import { useMemo, useState } from 'react'
 import { categories } from './utils'
+import { useRouter } from 'next/navigation'
 
 export const useViewModel = () => {
   const [query, setQuery] = useState('')
   const [category, setCategory] = useState<(typeof categories)[number]>('Todas categorias')
-
+  const router = useRouter()
   const { data, loading, error } = useCourses()
 
   const courses: Course[] = useMemo(() => {
@@ -37,6 +38,7 @@ export const useViewModel = () => {
 
   const handleClickCourse = (course: Course) => {
     console.log(course)
+    router.push(`/course/${course.id}`)
   }
 
   return {
@@ -47,5 +49,6 @@ export const useViewModel = () => {
     filtered,
     loading,
     error,
+    handleClickCourse,
   }
 }
