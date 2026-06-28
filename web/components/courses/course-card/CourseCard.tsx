@@ -3,12 +3,13 @@ import { BookOpen, Clock, CheckCircle2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Card, CardContent } from '../../ui/card'
 import { Label } from '../../ui/label'
+import { Course } from '@/types/course'
 
 export function CourseCard({
   course,
   onSelect,
 }: {
-  course: any
+  course: Course
   onSelect?: (course: any) => void
 }) {
   const completed = course.progress === 100
@@ -23,13 +24,13 @@ export function CourseCard({
       }}
       role={onSelect ? 'button' : undefined}
       tabIndex={onSelect ? 0 : undefined}
-      aria-label={onSelect ? `Abrir curso ${course.title}` : undefined}
-      className="pt-0"
+      aria-label={onSelect ? `Abrir curso ${course.name}` : undefined}
+      className="cursor-pointer pt-0"
     >
       <div className="relative aspect-[16/10] overflow-hidden px-0">
         <Image
           src={course.image || '/default-course.png'}
-          alt={`Capa do curso ${course.title}`}
+          alt={`Capa do curso ${course.name}`}
           fill
           className="object-cover transition-transform duration-300 group-hover:scale-105"
         />
@@ -47,7 +48,7 @@ export function CourseCard({
         <div className="text-muted-foreground flex items-center gap-4 text-xs">
           <Label className="flex items-center gap-1.5">
             <BookOpen className="size-3.5" />
-            {course.lessons} aulas
+            {course.classes?.length} aulas
           </Label>
           <Label className="flex items-center gap-1.5">
             <Clock className="size-3.5" />
@@ -56,7 +57,7 @@ export function CourseCard({
         </div>
 
         <h3 className="font-heading mt-2 text-lg leading-snug font-semibold text-balance">
-          {course.title}
+          {course.name}
         </h3>
         <p className="text-muted-foreground mt-1.5 line-clamp-2 text-sm leading-relaxed">
           {course.description}

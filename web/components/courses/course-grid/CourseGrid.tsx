@@ -9,7 +9,8 @@ import { CourseListError } from '../course-list-error/CourseListError'
 import { CoursesNotFound } from '../courses-not-found/CoursesNotFound'
 
 export const CourseGrid = ({ onSelectCourse }: { onSelectCourse?: (course: Course) => void }) => {
-  const { query, setQuery, category, setCategory, filtered, loading, error } = useViewModel()
+  const { query, setQuery, category, setCategory, filtered, loading, error, handleClickCourse } =
+    useViewModel()
 
   return (
     <section aria-label="Seus cursos" className="flex flex-col gap-5">
@@ -27,7 +28,7 @@ export const CourseGrid = ({ onSelectCourse }: { onSelectCourse?: (course: Cours
       ) : error ? (
         <CourseListError />
       ) : filtered.length > 0 ? (
-        <CourseList filtered={filtered} onSelectCourse={onSelectCourse} />
+        <CourseList filtered={filtered} onSelectCourse={handleClickCourse} />
       ) : (
         <CoursesNotFound />
       )}

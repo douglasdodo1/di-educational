@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 
 const ROUTES = {
   PUBLIC: ["/login", "/register"],
-  PRIVATE: ["/home"],
+  PRIVATE: ["/home", "/course"],
 };
 
 export function middleware(req: NextRequest) {
