@@ -7,14 +7,12 @@ export const GET_COURSES = gql`
       name
       description
       imageUrl
-      classes {
+      contents {
         id
         name
         description
-        content {
-          type
-          url
-        }
+        type
+        url
       }
     }
   }

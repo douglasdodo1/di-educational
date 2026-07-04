@@ -1,4 +1,4 @@
-import { Class } from './classes'
+import { Content } from './content'
 
 export type Course = {
   id: string
@@ -7,6 +7,6 @@ export type Course = {
   category: string
   image: string
   progress: number
-  classes: Class[]
+  contents: Content[]
   hours: number
 }
