@@ -10,6 +10,7 @@ import type {
   FastifyReply,
   FastifyRequest,
 } from '@nestjs/platform-fastify/node_modules/fastify';
+import './enums';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(

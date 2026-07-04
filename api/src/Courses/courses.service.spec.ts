@@ -3,9 +3,9 @@ import { CoursesService } from './courses.service';
 import { CoursesRepository } from './courses.repository';
 import { CreateCourseInput } from './inputs/create.course.input';
 import { UpdateCourseInput } from './inputs/update.course.input';
-import { CreateClassInput } from 'src/classes/inputs/create.class.input';
+import { CreateClassInput } from 'src/contents/inputs/create.content.input';
 import { CoursesModel } from './courses.model';
-import { ClassModel } from 'src/classes/classes.model';
+import { ContentModel } from 'src/contents/contents.model';
 import { ContentType, UserRole } from 'src/generated/prisma/enums';
 import { UserModel } from 'src/users/models/users.model';
 
@@ -224,7 +224,7 @@ describe('CoursesService', () => {
         content: { type: ContentType.VIDEO, url: 'http://example.com' },
       };
 
-      const mockedClass: ClassModel = {
+      const mockedClass: ContentModel = {
         id: 1,
         name: classInput.name,
         description: classInput.description,

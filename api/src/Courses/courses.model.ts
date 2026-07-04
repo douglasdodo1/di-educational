@@ -1,5 +1,6 @@
 import { Field, ObjectType, Int } from '@nestjs/graphql';
-import { ClassModel } from 'src/classes/classes.model';
+import { AttendenceModel } from 'src/attendence/attendence.model';
+import { ContentModel } from 'src/contents/contents.model';
 import { UserModel } from 'src/users/models/users.model';
 
 @ObjectType()
@@ -31,6 +32,9 @@ export class CoursesModel {
   @Field(() => [UserModel], { nullable: true })
   members!: UserModel[];
 
-  @Field(() => [ClassModel], { nullable: true })
-  classes?: ClassModel[];
+  @Field(() => [ContentModel], { nullable: true })
+  contents?: ContentModel[];
+
+  @Field(() => [AttendenceModel], { nullable: true })
+  attendences?: AttendenceModel[];
 }

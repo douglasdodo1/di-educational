@@ -46,6 +46,7 @@ model Student {
   enrollmentNumber String @unique
 
   user             User   @relation(fields: [id], references: [id])
+  frequencies       Frequency[]
 }
 
 model Phone {
@@ -72,28 +73,44 @@ model Course {
 
   members     User[]   @relation("CourseMembers")
 
-  classes     Class[]
+  contents     Content[]
+
+  attendances  Attendence[]
 }
 
-model Class {
-  id          Int      @id @default(autoincrement())
 
-  name        String
-  description String?
-
-  courseId    Int
-  course      Course   @relation(fields: [courseId], references: [id])
-
-  content     Content?
-}
 
 model Content {
   id       Int    @id @default(autoincrement())
+  name     String
+  description String?
   type     ContentType
   url      String
 
-  classId  Int    @unique
-  lesson   Class  @relation(fields: [classId], references: [id])
+  courseId  Int
+  course   Course  @relation(fields: [courseId], references: [id])
+}
+
+model Attendence {
+  id        Int      @id @default(autoincrement())
+  date      DateTime
+
+  courseId  Int
+  course    Course   @relation(fields: [courseId], references: [id])
+
+  frequencies Frequency[]
+
+}
+
+model Frequency {
+  id        Int      @id @default(autoincrement())
+  is_present Boolean
+
+  attendenceId Int
+  attendence   Attendence @relation(fields: [attendenceId], references: [id])
+
+  studentId Int
+  student   Student  @relation(fields: [studentId], references: [id])
 }
 
 

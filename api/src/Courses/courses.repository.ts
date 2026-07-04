@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreateCourseInput } from './inputs/create.course.input';
 import { UpdateCourseInput } from './inputs/update.course.input';
-import { CreateClassInput } from 'src/classes/inputs/create.class.input';
 import { CoursesModel } from './courses.model';
-import { ClassModel } from 'src/classes/classes.model';
+import { ContentModel } from 'src/contents/contents.model';
+import { CreateContentInput } from 'src/contents/inputs/create.content.input';
 
 @Injectable()
 export class CoursesRepository {
@@ -16,7 +16,6 @@ export class CoursesRepository {
       include: {
         adminCourse: { include: { phones: true } },
         members: { include: { phones: true } },
-        classes: { include: { content: true } },
       },
     });
   }
@@ -26,7 +25,6 @@ export class CoursesRepository {
       include: {
         adminCourse: { include: { phones: true } },
         members: { include: { phones: true } },
-        classes: { include: { content: true } },
       },
     });
   }
@@ -37,7 +35,7 @@ export class CoursesRepository {
       include: {
         adminCourse: { include: { phones: true } },
         members: { include: { phones: true } },
-        classes: { include: { content: true } },
+        contents: true,
       },
     });
   }
@@ -79,23 +77,18 @@ export class CoursesRepository {
     });
   }
 
-  async createClass(
+  async createContent(
     courseId: number,
-    data: CreateClassInput,
-  ): Promise<ClassModel> {
-    return await this.prisma.class.create({
+    data: CreateContentInput,
+  ): Promise<ContentModel> {
+    return await this.prisma.content.create({
       data: {
         name: data.name,
-        description: data.description,
+        description: data?.description,
         courseId,
-        content: {
-          create: {
-            type: data.content.type,
-            url: data.content.url,
-          },
-        },
+        type: data.type,
+        url: data.url,
       },
-      include: { content: true },
     });
   }
 

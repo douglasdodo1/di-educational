@@ -2,23 +2,15 @@ import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CoursesModel } from './courses.model';
 import { CreateCourseInput } from './inputs/create.course.input';
 import { UpdateCourseInput } from './inputs/update.course.input';
-import { ClassModel } from 'src/classes/classes.model';
+import { ContentModel } from 'src/contents/contents.model';
 import { CoursesService } from './courses.service';
-import { CreateClassInput } from 'src/classes/inputs/create.class.input';
 import { CurrentUser } from 'src/auth/decorators/current.user.decorator';
 import { UserModel } from 'src/users/models/users.model';
+import { CreateContentInput } from 'src/contents/inputs/create.content.input';
 
 @Resolver(() => CoursesModel)
 export class CoursesResolver {
   constructor(private coursesService: CoursesService) {}
-
-  @Mutation(() => CoursesModel, { nullable: true })
-  createCourse(
-    @Args('data', { type: () => CreateCourseInput }) data: CreateCourseInput,
-    @CurrentUser() user: UserModel,
-  ): Promise<CoursesModel | null> {
-    return this.coursesService.create(data, user);
-  }
 
   @Query(() => [CoursesModel])
   Courses(): Promise<CoursesModel[]> {
@@ -30,6 +22,14 @@ export class CoursesResolver {
     @Args('id', { type: () => Int }) id: number,
   ): Promise<CoursesModel | null> {
     return this.coursesService.findById(id);
+  }
+
+  @Mutation(() => CoursesModel, { nullable: true })
+  createCourse(
+    @Args('data', { type: () => CreateCourseInput }) data: CreateCourseInput,
+    @CurrentUser() user: UserModel,
+  ): Promise<CoursesModel | null> {
+    return this.coursesService.create(data, user);
   }
 
   @Mutation(() => Boolean)
@@ -61,13 +61,13 @@ export class CoursesResolver {
     return this.coursesService.unrollmentStudents(courseId, ids);
   }
 
-  @Mutation(() => ClassModel, { nullable: true })
-  createClass(
+  @Mutation(() => ContentModel, { nullable: true })
+  createContent(
     @Args('courseId', { type: () => Int }) courseId: number,
 
-    @Args('data', { type: () => CreateClassInput }) data: CreateClassInput,
-  ): Promise<ClassModel> {
-    return this.coursesService.createClass(courseId, data);
+    @Args('data', { type: () => CreateContentInput }) data: CreateContentInput,
+  ): Promise<ContentModel> {
+    return this.coursesService.createContent(courseId, data);
   }
 
   @Mutation(() => Boolean)

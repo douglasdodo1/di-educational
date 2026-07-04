@@ -193,12 +193,14 @@ export type StudentWhereInput = {
   id?: Prisma.IntFilter<"Student"> | number
   enrollmentNumber?: Prisma.StringFilter<"Student"> | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  frequencies?: Prisma.FrequencyListRelationFilter
 }
 
 export type StudentOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   enrollmentNumber?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
+  frequencies?: Prisma.FrequencyOrderByRelationAggregateInput
 }
 
 export type StudentWhereUniqueInput = Prisma.AtLeast<{
@@ -208,6 +210,7 @@ export type StudentWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.StudentWhereInput[]
   NOT?: Prisma.StudentWhereInput | Prisma.StudentWhereInput[]
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  frequencies?: Prisma.FrequencyListRelationFilter
 }, "id" | "enrollmentNumber">
 
 export type StudentOrderByWithAggregationInput = {
@@ -231,21 +234,25 @@ export type StudentScalarWhereWithAggregatesInput = {
 export type StudentCreateInput = {
   enrollmentNumber: string
   user: Prisma.UserCreateNestedOneWithoutStudentInput
+  frequencies?: Prisma.FrequencyCreateNestedManyWithoutStudentInput
 }
 
 export type StudentUncheckedCreateInput = {
   id: number
   enrollmentNumber: string
+  frequencies?: Prisma.FrequencyUncheckedCreateNestedManyWithoutStudentInput
 }
 
 export type StudentUpdateInput = {
   enrollmentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   user?: Prisma.UserUpdateOneRequiredWithoutStudentNestedInput
+  frequencies?: Prisma.FrequencyUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   enrollmentNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  frequencies?: Prisma.FrequencyUncheckedUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentCreateManyInput = {
@@ -290,6 +297,11 @@ export type StudentSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
 }
 
+export type StudentScalarRelationFilter = {
+  is?: Prisma.StudentWhereInput
+  isNot?: Prisma.StudentWhereInput
+}
+
 export type StudentCreateNestedOneWithoutUserInput = {
   create?: Prisma.XOR<Prisma.StudentCreateWithoutUserInput, Prisma.StudentUncheckedCreateWithoutUserInput>
   connectOrCreate?: Prisma.StudentCreateOrConnectWithoutUserInput
@@ -322,12 +334,28 @@ export type StudentUncheckedUpdateOneWithoutUserNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.StudentUpdateToOneWithWhereWithoutUserInput, Prisma.StudentUpdateWithoutUserInput>, Prisma.StudentUncheckedUpdateWithoutUserInput>
 }
 
+export type StudentCreateNestedOneWithoutFrequenciesInput = {
+  create?: Prisma.XOR<Prisma.StudentCreateWithoutFrequenciesInput, Prisma.StudentUncheckedCreateWithoutFrequenciesInput>
+  connectOrCreate?: Prisma.StudentCreateOrConnectWithoutFrequenciesInput
+  connect?: Prisma.StudentWhereUniqueInput
+}
+
+export type StudentUpdateOneRequiredWithoutFrequenciesNestedInput = {
+  create?: Prisma.XOR<Prisma.StudentCreateWithoutFrequenciesInput, Prisma.StudentUncheckedCreateWithoutFrequenciesInput>
+  connectOrCreate?: Prisma.StudentCreateOrConnectWithoutFrequenciesInput
+  upsert?: Prisma.StudentUpsertWithoutFrequenciesInput
+  connect?: Prisma.StudentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StudentUpdateToOneWithWhereWithoutFrequenciesInput, Prisma.StudentUpdateWithoutFrequenciesInput>, Prisma.StudentUncheckedUpdateWithoutFrequenciesInput>
+}
+
 export type StudentCreateWithoutUserInput = {
   enrollmentNumber: string
+  frequencies?: Prisma.FrequencyCreateNestedManyWithoutStudentInput
 }
 
 export type StudentUncheckedCreateWithoutUserInput = {
   enrollmentNumber: string
+  frequencies?: Prisma.FrequencyUncheckedCreateNestedManyWithoutStudentInput
 }
 
 export type StudentCreateOrConnectWithoutUserInput = {
@@ -348,18 +376,87 @@ export type StudentUpdateToOneWithWhereWithoutUserInput = {
 
 export type StudentUpdateWithoutUserInput = {
   enrollmentNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  frequencies?: Prisma.FrequencyUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentUncheckedUpdateWithoutUserInput = {
   enrollmentNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  frequencies?: Prisma.FrequencyUncheckedUpdateManyWithoutStudentNestedInput
 }
 
+export type StudentCreateWithoutFrequenciesInput = {
+  enrollmentNumber: string
+  user: Prisma.UserCreateNestedOneWithoutStudentInput
+}
+
+export type StudentUncheckedCreateWithoutFrequenciesInput = {
+  id: number
+  enrollmentNumber: string
+}
+
+export type StudentCreateOrConnectWithoutFrequenciesInput = {
+  where: Prisma.StudentWhereUniqueInput
+  create: Prisma.XOR<Prisma.StudentCreateWithoutFrequenciesInput, Prisma.StudentUncheckedCreateWithoutFrequenciesInput>
+}
+
+export type StudentUpsertWithoutFrequenciesInput = {
+  update: Prisma.XOR<Prisma.StudentUpdateWithoutFrequenciesInput, Prisma.StudentUncheckedUpdateWithoutFrequenciesInput>
+  create: Prisma.XOR<Prisma.StudentCreateWithoutFrequenciesInput, Prisma.StudentUncheckedCreateWithoutFrequenciesInput>
+  where?: Prisma.StudentWhereInput
+}
+
+export type StudentUpdateToOneWithWhereWithoutFrequenciesInput = {
+  where?: Prisma.StudentWhereInput
+  data: Prisma.XOR<Prisma.StudentUpdateWithoutFrequenciesInput, Prisma.StudentUncheckedUpdateWithoutFrequenciesInput>
+}
+
+export type StudentUpdateWithoutFrequenciesInput = {
+  enrollmentNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  user?: Prisma.UserUpdateOneRequiredWithoutStudentNestedInput
+}
+
+export type StudentUncheckedUpdateWithoutFrequenciesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  enrollmentNumber?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+
+/**
+ * Count Type StudentCountOutputType
+ */
+
+export type StudentCountOutputType = {
+  frequencies: number
+}
+
+export type StudentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  frequencies?: boolean | StudentCountOutputTypeCountFrequenciesArgs
+}
+
+/**
+ * StudentCountOutputType without action
+ */
+export type StudentCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StudentCountOutputType
+   */
+  select?: Prisma.StudentCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * StudentCountOutputType without action
+ */
+export type StudentCountOutputTypeCountFrequenciesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FrequencyWhereInput
+}
 
 
 export type StudentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   enrollmentNumber?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  frequencies?: boolean | Prisma.Student$frequenciesArgs<ExtArgs>
+  _count?: boolean | Prisma.StudentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["student"]>
 
 export type StudentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -382,6 +479,8 @@ export type StudentSelectScalar = {
 export type StudentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "enrollmentNumber", ExtArgs["result"]["student"]>
 export type StudentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  frequencies?: boolean | Prisma.Student$frequenciesArgs<ExtArgs>
+  _count?: boolean | Prisma.StudentCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type StudentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -394,6 +493,7 @@ export type $StudentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   name: "Student"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
+    frequencies: Prisma.$FrequencyPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -793,6 +893,7 @@ readonly fields: StudentFieldRefs;
 export interface Prisma__StudentClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  frequencies<T extends Prisma.Student$frequenciesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$frequenciesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FrequencyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1217,6 +1318,30 @@ export type StudentDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Students to delete.
    */
   limit?: number
+}
+
+/**
+ * Student.frequencies
+ */
+export type Student$frequenciesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Frequency
+   */
+  select?: Prisma.FrequencySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Frequency
+   */
+  omit?: Prisma.FrequencyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FrequencyInclude<ExtArgs> | null
+  where?: Prisma.FrequencyWhereInput
+  orderBy?: Prisma.FrequencyOrderByWithRelationInput | Prisma.FrequencyOrderByWithRelationInput[]
+  cursor?: Prisma.FrequencyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FrequencyScalarFieldEnum | Prisma.FrequencyScalarFieldEnum[]
 }
 
 /**

@@ -28,66 +28,78 @@ export type AggregateContent = {
 
 export type ContentAvgAggregateOutputType = {
   id: number | null
-  classId: number | null
+  courseId: number | null
 }
 
 export type ContentSumAggregateOutputType = {
   id: number | null
-  classId: number | null
+  courseId: number | null
 }
 
 export type ContentMinAggregateOutputType = {
   id: number | null
+  name: string | null
+  description: string | null
   type: $Enums.ContentType | null
   url: string | null
-  classId: number | null
+  courseId: number | null
 }
 
 export type ContentMaxAggregateOutputType = {
   id: number | null
+  name: string | null
+  description: string | null
   type: $Enums.ContentType | null
   url: string | null
-  classId: number | null
+  courseId: number | null
 }
 
 export type ContentCountAggregateOutputType = {
   id: number
+  name: number
+  description: number
   type: number
   url: number
-  classId: number
+  courseId: number
   _all: number
 }
 
 
 export type ContentAvgAggregateInputType = {
   id?: true
-  classId?: true
+  courseId?: true
 }
 
 export type ContentSumAggregateInputType = {
   id?: true
-  classId?: true
+  courseId?: true
 }
 
 export type ContentMinAggregateInputType = {
   id?: true
+  name?: true
+  description?: true
   type?: true
   url?: true
-  classId?: true
+  courseId?: true
 }
 
 export type ContentMaxAggregateInputType = {
   id?: true
+  name?: true
+  description?: true
   type?: true
   url?: true
-  classId?: true
+  courseId?: true
 }
 
 export type ContentCountAggregateInputType = {
   id?: true
+  name?: true
+  description?: true
   type?: true
   url?: true
-  classId?: true
+  courseId?: true
   _all?: true
 }
 
@@ -179,9 +191,11 @@ export type ContentGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 
 export type ContentGroupByOutputType = {
   id: number
+  name: string
+  description: string | null
   type: $Enums.ContentType
   url: string
-  classId: number
+  courseId: number
   _count: ContentCountAggregateOutputType | null
   _avg: ContentAvgAggregateOutputType | null
   _sum: ContentSumAggregateOutputType | null
@@ -209,36 +223,44 @@ export type ContentWhereInput = {
   OR?: Prisma.ContentWhereInput[]
   NOT?: Prisma.ContentWhereInput | Prisma.ContentWhereInput[]
   id?: Prisma.IntFilter<"Content"> | number
+  name?: Prisma.StringFilter<"Content"> | string
+  description?: Prisma.StringNullableFilter<"Content"> | string | null
   type?: Prisma.EnumContentTypeFilter<"Content"> | $Enums.ContentType
   url?: Prisma.StringFilter<"Content"> | string
-  classId?: Prisma.IntFilter<"Content"> | number
-  lesson?: Prisma.XOR<Prisma.ClassScalarRelationFilter, Prisma.ClassWhereInput>
+  courseId?: Prisma.IntFilter<"Content"> | number
+  course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
 }
 
 export type ContentOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
   url?: Prisma.SortOrder
-  classId?: Prisma.SortOrder
-  lesson?: Prisma.ClassOrderByWithRelationInput
+  courseId?: Prisma.SortOrder
+  course?: Prisma.CourseOrderByWithRelationInput
 }
 
 export type ContentWhereUniqueInput = Prisma.AtLeast<{
   id?: number
-  classId?: number
   AND?: Prisma.ContentWhereInput | Prisma.ContentWhereInput[]
   OR?: Prisma.ContentWhereInput[]
   NOT?: Prisma.ContentWhereInput | Prisma.ContentWhereInput[]
+  name?: Prisma.StringFilter<"Content"> | string
+  description?: Prisma.StringNullableFilter<"Content"> | string | null
   type?: Prisma.EnumContentTypeFilter<"Content"> | $Enums.ContentType
   url?: Prisma.StringFilter<"Content"> | string
-  lesson?: Prisma.XOR<Prisma.ClassScalarRelationFilter, Prisma.ClassWhereInput>
-}, "id" | "classId">
+  courseId?: Prisma.IntFilter<"Content"> | number
+  course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
+}, "id">
 
 export type ContentOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
   url?: Prisma.SortOrder
-  classId?: Prisma.SortOrder
+  courseId?: Prisma.SortOrder
   _count?: Prisma.ContentCountOrderByAggregateInput
   _avg?: Prisma.ContentAvgOrderByAggregateInput
   _max?: Prisma.ContentMaxOrderByAggregateInput
@@ -251,162 +273,245 @@ export type ContentScalarWhereWithAggregatesInput = {
   OR?: Prisma.ContentScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ContentScalarWhereWithAggregatesInput | Prisma.ContentScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Content"> | number
+  name?: Prisma.StringWithAggregatesFilter<"Content"> | string
+  description?: Prisma.StringNullableWithAggregatesFilter<"Content"> | string | null
   type?: Prisma.EnumContentTypeWithAggregatesFilter<"Content"> | $Enums.ContentType
   url?: Prisma.StringWithAggregatesFilter<"Content"> | string
-  classId?: Prisma.IntWithAggregatesFilter<"Content"> | number
+  courseId?: Prisma.IntWithAggregatesFilter<"Content"> | number
 }
 
 export type ContentCreateInput = {
+  name: string
+  description?: string | null
   type: $Enums.ContentType
   url: string
-  lesson: Prisma.ClassCreateNestedOneWithoutContentInput
+  course: Prisma.CourseCreateNestedOneWithoutContentsInput
 }
 
 export type ContentUncheckedCreateInput = {
   id?: number
+  name: string
+  description?: string | null
   type: $Enums.ContentType
   url: string
-  classId: number
+  courseId: number
 }
 
 export type ContentUpdateInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
   url?: Prisma.StringFieldUpdateOperationsInput | string
-  lesson?: Prisma.ClassUpdateOneRequiredWithoutContentNestedInput
+  course?: Prisma.CourseUpdateOneRequiredWithoutContentsNestedInput
 }
 
 export type ContentUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
   url?: Prisma.StringFieldUpdateOperationsInput | string
-  classId?: Prisma.IntFieldUpdateOperationsInput | number
+  courseId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ContentCreateManyInput = {
   id?: number
+  name: string
+  description?: string | null
   type: $Enums.ContentType
   url: string
-  classId: number
+  courseId: number
 }
 
 export type ContentUpdateManyMutationInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
   url?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ContentUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
   url?: Prisma.StringFieldUpdateOperationsInput | string
-  classId?: Prisma.IntFieldUpdateOperationsInput | number
+  courseId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
-export type ContentNullableScalarRelationFilter = {
-  is?: Prisma.ContentWhereInput | null
-  isNot?: Prisma.ContentWhereInput | null
+export type ContentListRelationFilter = {
+  every?: Prisma.ContentWhereInput
+  some?: Prisma.ContentWhereInput
+  none?: Prisma.ContentWhereInput
+}
+
+export type ContentOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type ContentCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   type?: Prisma.SortOrder
   url?: Prisma.SortOrder
-  classId?: Prisma.SortOrder
+  courseId?: Prisma.SortOrder
 }
 
 export type ContentAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  classId?: Prisma.SortOrder
+  courseId?: Prisma.SortOrder
 }
 
 export type ContentMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   type?: Prisma.SortOrder
   url?: Prisma.SortOrder
-  classId?: Prisma.SortOrder
+  courseId?: Prisma.SortOrder
 }
 
 export type ContentMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   type?: Prisma.SortOrder
   url?: Prisma.SortOrder
-  classId?: Prisma.SortOrder
+  courseId?: Prisma.SortOrder
 }
 
 export type ContentSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  classId?: Prisma.SortOrder
+  courseId?: Prisma.SortOrder
 }
 
-export type ContentCreateNestedOneWithoutLessonInput = {
-  create?: Prisma.XOR<Prisma.ContentCreateWithoutLessonInput, Prisma.ContentUncheckedCreateWithoutLessonInput>
-  connectOrCreate?: Prisma.ContentCreateOrConnectWithoutLessonInput
-  connect?: Prisma.ContentWhereUniqueInput
+export type ContentCreateNestedManyWithoutCourseInput = {
+  create?: Prisma.XOR<Prisma.ContentCreateWithoutCourseInput, Prisma.ContentUncheckedCreateWithoutCourseInput> | Prisma.ContentCreateWithoutCourseInput[] | Prisma.ContentUncheckedCreateWithoutCourseInput[]
+  connectOrCreate?: Prisma.ContentCreateOrConnectWithoutCourseInput | Prisma.ContentCreateOrConnectWithoutCourseInput[]
+  createMany?: Prisma.ContentCreateManyCourseInputEnvelope
+  connect?: Prisma.ContentWhereUniqueInput | Prisma.ContentWhereUniqueInput[]
 }
 
-export type ContentUncheckedCreateNestedOneWithoutLessonInput = {
-  create?: Prisma.XOR<Prisma.ContentCreateWithoutLessonInput, Prisma.ContentUncheckedCreateWithoutLessonInput>
-  connectOrCreate?: Prisma.ContentCreateOrConnectWithoutLessonInput
-  connect?: Prisma.ContentWhereUniqueInput
+export type ContentUncheckedCreateNestedManyWithoutCourseInput = {
+  create?: Prisma.XOR<Prisma.ContentCreateWithoutCourseInput, Prisma.ContentUncheckedCreateWithoutCourseInput> | Prisma.ContentCreateWithoutCourseInput[] | Prisma.ContentUncheckedCreateWithoutCourseInput[]
+  connectOrCreate?: Prisma.ContentCreateOrConnectWithoutCourseInput | Prisma.ContentCreateOrConnectWithoutCourseInput[]
+  createMany?: Prisma.ContentCreateManyCourseInputEnvelope
+  connect?: Prisma.ContentWhereUniqueInput | Prisma.ContentWhereUniqueInput[]
 }
 
-export type ContentUpdateOneWithoutLessonNestedInput = {
-  create?: Prisma.XOR<Prisma.ContentCreateWithoutLessonInput, Prisma.ContentUncheckedCreateWithoutLessonInput>
-  connectOrCreate?: Prisma.ContentCreateOrConnectWithoutLessonInput
-  upsert?: Prisma.ContentUpsertWithoutLessonInput
-  disconnect?: Prisma.ContentWhereInput | boolean
-  delete?: Prisma.ContentWhereInput | boolean
-  connect?: Prisma.ContentWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ContentUpdateToOneWithWhereWithoutLessonInput, Prisma.ContentUpdateWithoutLessonInput>, Prisma.ContentUncheckedUpdateWithoutLessonInput>
+export type ContentUpdateManyWithoutCourseNestedInput = {
+  create?: Prisma.XOR<Prisma.ContentCreateWithoutCourseInput, Prisma.ContentUncheckedCreateWithoutCourseInput> | Prisma.ContentCreateWithoutCourseInput[] | Prisma.ContentUncheckedCreateWithoutCourseInput[]
+  connectOrCreate?: Prisma.ContentCreateOrConnectWithoutCourseInput | Prisma.ContentCreateOrConnectWithoutCourseInput[]
+  upsert?: Prisma.ContentUpsertWithWhereUniqueWithoutCourseInput | Prisma.ContentUpsertWithWhereUniqueWithoutCourseInput[]
+  createMany?: Prisma.ContentCreateManyCourseInputEnvelope
+  set?: Prisma.ContentWhereUniqueInput | Prisma.ContentWhereUniqueInput[]
+  disconnect?: Prisma.ContentWhereUniqueInput | Prisma.ContentWhereUniqueInput[]
+  delete?: Prisma.ContentWhereUniqueInput | Prisma.ContentWhereUniqueInput[]
+  connect?: Prisma.ContentWhereUniqueInput | Prisma.ContentWhereUniqueInput[]
+  update?: Prisma.ContentUpdateWithWhereUniqueWithoutCourseInput | Prisma.ContentUpdateWithWhereUniqueWithoutCourseInput[]
+  updateMany?: Prisma.ContentUpdateManyWithWhereWithoutCourseInput | Prisma.ContentUpdateManyWithWhereWithoutCourseInput[]
+  deleteMany?: Prisma.ContentScalarWhereInput | Prisma.ContentScalarWhereInput[]
 }
 
-export type ContentUncheckedUpdateOneWithoutLessonNestedInput = {
-  create?: Prisma.XOR<Prisma.ContentCreateWithoutLessonInput, Prisma.ContentUncheckedCreateWithoutLessonInput>
-  connectOrCreate?: Prisma.ContentCreateOrConnectWithoutLessonInput
-  upsert?: Prisma.ContentUpsertWithoutLessonInput
-  disconnect?: Prisma.ContentWhereInput | boolean
-  delete?: Prisma.ContentWhereInput | boolean
-  connect?: Prisma.ContentWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ContentUpdateToOneWithWhereWithoutLessonInput, Prisma.ContentUpdateWithoutLessonInput>, Prisma.ContentUncheckedUpdateWithoutLessonInput>
+export type ContentUncheckedUpdateManyWithoutCourseNestedInput = {
+  create?: Prisma.XOR<Prisma.ContentCreateWithoutCourseInput, Prisma.ContentUncheckedCreateWithoutCourseInput> | Prisma.ContentCreateWithoutCourseInput[] | Prisma.ContentUncheckedCreateWithoutCourseInput[]
+  connectOrCreate?: Prisma.ContentCreateOrConnectWithoutCourseInput | Prisma.ContentCreateOrConnectWithoutCourseInput[]
+  upsert?: Prisma.ContentUpsertWithWhereUniqueWithoutCourseInput | Prisma.ContentUpsertWithWhereUniqueWithoutCourseInput[]
+  createMany?: Prisma.ContentCreateManyCourseInputEnvelope
+  set?: Prisma.ContentWhereUniqueInput | Prisma.ContentWhereUniqueInput[]
+  disconnect?: Prisma.ContentWhereUniqueInput | Prisma.ContentWhereUniqueInput[]
+  delete?: Prisma.ContentWhereUniqueInput | Prisma.ContentWhereUniqueInput[]
+  connect?: Prisma.ContentWhereUniqueInput | Prisma.ContentWhereUniqueInput[]
+  update?: Prisma.ContentUpdateWithWhereUniqueWithoutCourseInput | Prisma.ContentUpdateWithWhereUniqueWithoutCourseInput[]
+  updateMany?: Prisma.ContentUpdateManyWithWhereWithoutCourseInput | Prisma.ContentUpdateManyWithWhereWithoutCourseInput[]
+  deleteMany?: Prisma.ContentScalarWhereInput | Prisma.ContentScalarWhereInput[]
 }
 
 export type EnumContentTypeFieldUpdateOperationsInput = {
   set?: $Enums.ContentType
 }
 
-export type ContentCreateWithoutLessonInput = {
+export type ContentCreateWithoutCourseInput = {
+  name: string
+  description?: string | null
   type: $Enums.ContentType
   url: string
 }
 
-export type ContentUncheckedCreateWithoutLessonInput = {
+export type ContentUncheckedCreateWithoutCourseInput = {
   id?: number
+  name: string
+  description?: string | null
   type: $Enums.ContentType
   url: string
 }
 
-export type ContentCreateOrConnectWithoutLessonInput = {
+export type ContentCreateOrConnectWithoutCourseInput = {
   where: Prisma.ContentWhereUniqueInput
-  create: Prisma.XOR<Prisma.ContentCreateWithoutLessonInput, Prisma.ContentUncheckedCreateWithoutLessonInput>
+  create: Prisma.XOR<Prisma.ContentCreateWithoutCourseInput, Prisma.ContentUncheckedCreateWithoutCourseInput>
 }
 
-export type ContentUpsertWithoutLessonInput = {
-  update: Prisma.XOR<Prisma.ContentUpdateWithoutLessonInput, Prisma.ContentUncheckedUpdateWithoutLessonInput>
-  create: Prisma.XOR<Prisma.ContentCreateWithoutLessonInput, Prisma.ContentUncheckedCreateWithoutLessonInput>
-  where?: Prisma.ContentWhereInput
+export type ContentCreateManyCourseInputEnvelope = {
+  data: Prisma.ContentCreateManyCourseInput | Prisma.ContentCreateManyCourseInput[]
+  skipDuplicates?: boolean
 }
 
-export type ContentUpdateToOneWithWhereWithoutLessonInput = {
-  where?: Prisma.ContentWhereInput
-  data: Prisma.XOR<Prisma.ContentUpdateWithoutLessonInput, Prisma.ContentUncheckedUpdateWithoutLessonInput>
+export type ContentUpsertWithWhereUniqueWithoutCourseInput = {
+  where: Prisma.ContentWhereUniqueInput
+  update: Prisma.XOR<Prisma.ContentUpdateWithoutCourseInput, Prisma.ContentUncheckedUpdateWithoutCourseInput>
+  create: Prisma.XOR<Prisma.ContentCreateWithoutCourseInput, Prisma.ContentUncheckedCreateWithoutCourseInput>
 }
 
-export type ContentUpdateWithoutLessonInput = {
+export type ContentUpdateWithWhereUniqueWithoutCourseInput = {
+  where: Prisma.ContentWhereUniqueInput
+  data: Prisma.XOR<Prisma.ContentUpdateWithoutCourseInput, Prisma.ContentUncheckedUpdateWithoutCourseInput>
+}
+
+export type ContentUpdateManyWithWhereWithoutCourseInput = {
+  where: Prisma.ContentScalarWhereInput
+  data: Prisma.XOR<Prisma.ContentUpdateManyMutationInput, Prisma.ContentUncheckedUpdateManyWithoutCourseInput>
+}
+
+export type ContentScalarWhereInput = {
+  AND?: Prisma.ContentScalarWhereInput | Prisma.ContentScalarWhereInput[]
+  OR?: Prisma.ContentScalarWhereInput[]
+  NOT?: Prisma.ContentScalarWhereInput | Prisma.ContentScalarWhereInput[]
+  id?: Prisma.IntFilter<"Content"> | number
+  name?: Prisma.StringFilter<"Content"> | string
+  description?: Prisma.StringNullableFilter<"Content"> | string | null
+  type?: Prisma.EnumContentTypeFilter<"Content"> | $Enums.ContentType
+  url?: Prisma.StringFilter<"Content"> | string
+  courseId?: Prisma.IntFilter<"Content"> | number
+}
+
+export type ContentCreateManyCourseInput = {
+  id?: number
+  name: string
+  description?: string | null
+  type: $Enums.ContentType
+  url: string
+}
+
+export type ContentUpdateWithoutCourseInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
   url?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type ContentUncheckedUpdateWithoutLessonInput = {
+export type ContentUncheckedUpdateWithoutCourseInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type ContentUncheckedUpdateManyWithoutCourseInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
   url?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -415,56 +520,66 @@ export type ContentUncheckedUpdateWithoutLessonInput = {
 
 export type ContentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  name?: boolean
+  description?: boolean
   type?: boolean
   url?: boolean
-  classId?: boolean
-  lesson?: boolean | Prisma.ClassDefaultArgs<ExtArgs>
+  courseId?: boolean
+  course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["content"]>
 
 export type ContentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  name?: boolean
+  description?: boolean
   type?: boolean
   url?: boolean
-  classId?: boolean
-  lesson?: boolean | Prisma.ClassDefaultArgs<ExtArgs>
+  courseId?: boolean
+  course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["content"]>
 
 export type ContentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  name?: boolean
+  description?: boolean
   type?: boolean
   url?: boolean
-  classId?: boolean
-  lesson?: boolean | Prisma.ClassDefaultArgs<ExtArgs>
+  courseId?: boolean
+  course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["content"]>
 
 export type ContentSelectScalar = {
   id?: boolean
+  name?: boolean
+  description?: boolean
   type?: boolean
   url?: boolean
-  classId?: boolean
+  courseId?: boolean
 }
 
-export type ContentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "type" | "url" | "classId", ExtArgs["result"]["content"]>
+export type ContentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "type" | "url" | "courseId", ExtArgs["result"]["content"]>
 export type ContentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  lesson?: boolean | Prisma.ClassDefaultArgs<ExtArgs>
+  course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
 }
 export type ContentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  lesson?: boolean | Prisma.ClassDefaultArgs<ExtArgs>
+  course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
 }
 export type ContentIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  lesson?: boolean | Prisma.ClassDefaultArgs<ExtArgs>
+  course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
 }
 
 export type $ContentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Content"
   objects: {
-    lesson: Prisma.$ClassPayload<ExtArgs>
+    course: Prisma.$CoursePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
+    name: string
+    description: string | null
     type: $Enums.ContentType
     url: string
-    classId: number
+    courseId: number
   }, ExtArgs["result"]["content"]>
   composites: {}
 }
@@ -859,7 +974,7 @@ readonly fields: ContentFieldRefs;
  */
 export interface Prisma__ContentClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  lesson<T extends Prisma.ClassDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClassDefaultArgs<ExtArgs>>): Prisma.Prisma__ClassClient<runtime.Types.Result.GetResult<Prisma.$ClassPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  course<T extends Prisma.CourseDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseDefaultArgs<ExtArgs>>): Prisma.Prisma__CourseClient<runtime.Types.Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -890,9 +1005,11 @@ export interface Prisma__ContentClient<T, Null = never, ExtArgs extends runtime.
  */
 export interface ContentFieldRefs {
   readonly id: Prisma.FieldRef<"Content", 'Int'>
+  readonly name: Prisma.FieldRef<"Content", 'String'>
+  readonly description: Prisma.FieldRef<"Content", 'String'>
   readonly type: Prisma.FieldRef<"Content", 'ContentType'>
   readonly url: Prisma.FieldRef<"Content", 'String'>
-  readonly classId: Prisma.FieldRef<"Content", 'Int'>
+  readonly courseId: Prisma.FieldRef<"Content", 'Int'>
 }
     
 

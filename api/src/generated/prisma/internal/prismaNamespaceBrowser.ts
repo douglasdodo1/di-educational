@@ -56,8 +56,9 @@ export const ModelName = {
   Student: 'Student',
   Phone: 'Phone',
   Course: 'Course',
-  Class: 'Class',
-  Content: 'Content'
+  Content: 'Content',
+  Attendence: 'Attendence',
+  Frequency: 'Frequency'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -129,24 +130,35 @@ export const CourseScalarFieldEnum = {
 export type CourseScalarFieldEnum = (typeof CourseScalarFieldEnum)[keyof typeof CourseScalarFieldEnum]
 
 
-export const ClassScalarFieldEnum = {
+export const ContentScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description',
+  type: 'type',
+  url: 'url',
   courseId: 'courseId'
 } as const
 
-export type ClassScalarFieldEnum = (typeof ClassScalarFieldEnum)[keyof typeof ClassScalarFieldEnum]
+export type ContentScalarFieldEnum = (typeof ContentScalarFieldEnum)[keyof typeof ContentScalarFieldEnum]
 
 
-export const ContentScalarFieldEnum = {
+export const AttendenceScalarFieldEnum = {
   id: 'id',
-  type: 'type',
-  url: 'url',
-  classId: 'classId'
+  date: 'date',
+  courseId: 'courseId'
 } as const
 
-export type ContentScalarFieldEnum = (typeof ContentScalarFieldEnum)[keyof typeof ContentScalarFieldEnum]
+export type AttendenceScalarFieldEnum = (typeof AttendenceScalarFieldEnum)[keyof typeof AttendenceScalarFieldEnum]
+
+
+export const FrequencyScalarFieldEnum = {
+  id: 'id',
+  is_present: 'is_present',
+  attendenceId: 'attendenceId',
+  studentId: 'studentId'
+} as const
+
+export type FrequencyScalarFieldEnum = (typeof FrequencyScalarFieldEnum)[keyof typeof FrequencyScalarFieldEnum]
 
 
 export const SortOrder = {

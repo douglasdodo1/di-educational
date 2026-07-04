@@ -39,8 +39,30 @@ enum UserRole {
   TEACHER
 }
 
-type ContentsModel {
+type FrequencyModel {
   id: Int!
+  is_present: Boolean!
+  attendenceId: Int!
+  studentId: Int!
+}
+
+type AttendenceModel {
+  id: Int!
+  date: DateTime!
+  courseId: Int!
+  frequency: FrequencyModel
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type ContentModel {
+  id: Int!
+  name: String!
+  description: String
+  courseId: Int!
   type: ContentType!
   url: String!
 }
@@ -49,13 +71,6 @@ enum ContentType {
   IMAGE
   VIDEO
   PDF
-}
-
-type ClassModel {
-  id: Int!
-  name: String!
-  description: String
-  content: ContentsModel
 }
 
 type CoursesModel {
@@ -68,13 +83,9 @@ type CoursesModel {
   end_date: DateTime!
   adminCourse: UserModel
   members: [UserModel!]
-  classes: [ClassModel!]
+  contents: [ContentModel!]
+  attendences: [AttendenceModel!]
 }
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
 
 type AuthResponse {
   access_token: String!
@@ -88,8 +99,11 @@ type Query {
   teacher(id: Float!): UserModel
   students: [StudentsModel!]!
   student(id: Float!): StudentsModel
+  attendences(courseId: Int!): [AttendenceModel!]!
+  frequencies(attendenceId: Int!): [FrequencyModel!]!
   Courses: [CoursesModel!]!
   course(id: Int!): CoursesModel!
+  content(contentId: Int!): ContentModel
 }
 
 type Mutation {
@@ -103,11 +117,10 @@ type Mutation {
   deleteCourse(id: Int!): Boolean!
   enrollmentStudents(courseId: Int!, ids: [Int!]!): Boolean!
   unrollmentStudents(courseId: Int!, ids: [Int!]!): Boolean!
-  createClass(courseId: Int!, data: CreateClassInput!): ClassModel
+  createContent(courseId: Int!, data: CreateContentInput!): ContentModel
   updateIsActive(courseId: Int!, state: Boolean!): Boolean!
-  updateClass(classId: Int!, data: UpdateClassInput!): Boolean!
-  deleteClasses(classesIds: [Int!]!): Boolean!
-  updateContent(classId: Int!, data: UpdateContentInput!): Boolean!
+  updateContent(contentId: Int!, data: UpdateContentInput!): Boolean!
+  deleteContents(contentIds: [Int!]!): Boolean!
 }
 
 input CreateUserInput {
@@ -148,23 +161,16 @@ input UpdateCourseInput {
   end_date: DateTime
 }
 
-input CreateClassInput {
+input CreateContentInput {
   name: String!
   description: String
-  content: CreateContentInput!
-}
-
-input CreateContentInput {
-  type: ContentType!
+  type: String!
   url: String!
 }
 
-input UpdateClassInput {
+input UpdateContentInput {
   name: String
   description: String
-}
-
-input UpdateContentInput {
-  type: ContentType
+  type: String
   url: String
 }

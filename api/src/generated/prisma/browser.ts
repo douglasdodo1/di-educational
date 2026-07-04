@@ -43,12 +43,17 @@ export type Phone = Prisma.PhoneModel
  */
 export type Course = Prisma.CourseModel
 /**
- * Model Class
- * 
- */
-export type Class = Prisma.ClassModel
-/**
  * Model Content
  * 
  */
 export type Content = Prisma.ContentModel
+/**
+ * Model Attendence
+ * 
+ */
+export type Attendence = Prisma.AttendenceModel
+/**
+ * Model Frequency
+ * 
+ */
+export type Frequency = Prisma.FrequencyModel

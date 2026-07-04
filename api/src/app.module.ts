@@ -9,10 +9,12 @@ import { TeachersModule } from './users/teachers/teachers.module';
 import { StudentsModule } from './users/students/students.module';
 import { PrismaModule } from './prisma.module';
 import { CoursesModule } from './Courses/courses.module';
-import { ClassesModule } from './classes/classes.module';
+import { ContentsModule } from './contents/contents.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { GqlContext } from './common/fastify.type';
+import { AttendenceModule } from './attendence/attendence.module';
+import { FrequencyModule } from './frequency/frequency.module';
 
 @Module({
   imports: [
@@ -25,8 +27,10 @@ import { GqlContext } from './common/fastify.type';
       context: (context: GqlContext): GqlContext => context,
     }),
     AuthModule,
+    AttendenceModule,
+    FrequencyModule,
     CoursesModule,
-    ClassesModule,
+    ContentsModule,
     UsersModule,
     TeachersModule,
     StudentsModule,

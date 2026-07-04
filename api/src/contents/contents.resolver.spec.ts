@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ClassesResolver } from './classes.resolver';
-import { ClassesService } from './classes.service';
+import { ClassesResolver } from './contents.resolver';
+import { ClassesService } from './contents.service';
 
 const mockClassesService = {
   updateClass: jest.fn().mockResolvedValue(true),

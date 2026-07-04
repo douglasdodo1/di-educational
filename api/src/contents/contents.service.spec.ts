@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ClassesService } from './classes.service';
-import { classesRepository } from './classes.repository';
-import { UpdateClassInput } from './inputs/update.class.input';
+import { ClassesService } from './contents.service';
+import { classesRepository } from './contents.repository';
+import { UpdateClassInput } from './inputs/update.content.input';
 import { UpdateContentInput } from 'src/contents/inputs/update.content.input';
 
 describe('ClassesService', () => {

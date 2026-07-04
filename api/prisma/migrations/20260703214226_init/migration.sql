@@ -1,4 +1,7 @@
 -- CreateEnum
+CREATE TYPE "UserRole" AS ENUM ('ADMIN', 'STUDENT', 'TEACHER');
+
+-- CreateEnum
 CREATE TYPE "ContentType" AS ENUM ('IMAGE', 'VIDEO', 'PDF');
 
 -- CreateTable
@@ -6,9 +9,11 @@ CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
     "avatarUrl" TEXT,
     "email" TEXT NOT NULL,
+    "role" "UserRole" NOT NULL DEFAULT 'STUDENT',
     "first_name" TEXT NOT NULL,
     "last_name" TEXT NOT NULL,
     "bio" TEXT,
+    "password" TEXT NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -47,29 +52,40 @@ CREATE TABLE "Course" (
     "is_active" BOOLEAN NOT NULL DEFAULT true,
     "start_date" TIMESTAMP(3) NOT NULL,
     "end_date" TIMESTAMP(3) NOT NULL,
-    "teacherId" INTEGER NOT NULL,
+    "userId" INTEGER NOT NULL,
 
     CONSTRAINT "Course_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Class" (
+CREATE TABLE "Content" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT,
+    "type" "ContentType" NOT NULL,
+    "url" TEXT NOT NULL,
     "courseId" INTEGER NOT NULL,
 
-    CONSTRAINT "Class_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Content_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Content" (
+CREATE TABLE "Attendence" (
     "id" SERIAL NOT NULL,
-    "type" "ContentType" NOT NULL,
-    "url" TEXT NOT NULL,
-    "classId" INTEGER NOT NULL,
+    "date" TIMESTAMP(3) NOT NULL,
+    "courseId" INTEGER NOT NULL,
 
-    CONSTRAINT "Content_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Attendence_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Frequency" (
+    "id" SERIAL NOT NULL,
+    "is_present" BOOLEAN NOT NULL,
+    "attendenceId" INTEGER NOT NULL,
+    "studentId" INTEGER NOT NULL,
+
+    CONSTRAINT "Frequency_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -87,12 +103,6 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 CREATE UNIQUE INDEX "Student_enrollmentNumber_key" ON "Student"("enrollmentNumber");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Phone_userId_key" ON "Phone"("userId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Content_classId_key" ON "Content"("classId");
-
--- CreateIndex
 CREATE INDEX "_CourseMembers_B_index" ON "_CourseMembers"("B");
 
 -- AddForeignKey
@@ -105,13 +115,19 @@ ALTER TABLE "Student" ADD CONSTRAINT "Student_id_fkey" FOREIGN KEY ("id") REFERE
 ALTER TABLE "Phone" ADD CONSTRAINT "Phone_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Course" ADD CONSTRAINT "Course_teacherId_fkey" FOREIGN KEY ("teacherId") REFERENCES "Teacher"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Course" ADD CONSTRAINT "Course_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Class" ADD CONSTRAINT "Class_courseId_fkey" FOREIGN KEY ("courseId") REFERENCES "Course"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Content" ADD CONSTRAINT "Content_courseId_fkey" FOREIGN KEY ("courseId") REFERENCES "Course"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Content" ADD CONSTRAINT "Content_classId_fkey" FOREIGN KEY ("classId") REFERENCES "Class"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Attendence" ADD CONSTRAINT "Attendence_courseId_fkey" FOREIGN KEY ("courseId") REFERENCES "Course"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Frequency" ADD CONSTRAINT "Frequency_attendenceId_fkey" FOREIGN KEY ("attendenceId") REFERENCES "Attendence"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Frequency" ADD CONSTRAINT "Frequency_studentId_fkey" FOREIGN KEY ("studentId") REFERENCES "Student"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_CourseMembers" ADD CONSTRAINT "_CourseMembers_A_fkey" FOREIGN KEY ("A") REFERENCES "Course"("id") ON DELETE CASCADE ON UPDATE CASCADE;

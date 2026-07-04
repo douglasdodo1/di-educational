@@ -1,18 +1,23 @@
-import { Field, ObjectType, Int, registerEnumType } from '@nestjs/graphql';
-import { ContentType } from 'src/generated/prisma/enums'; // 👈
-
-registerEnumType(ContentType, {
-  name: 'ContentType',
-});
+import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { ContentType } from 'src/generated/prisma/enums';
 
 @ObjectType()
-export class ContentsModel {
+export class ContentModel {
   @Field(() => Int)
   id!: number;
+
+  @Field()
+  name!: string;
+
+  @Field(() => String, { nullable: true })
+  description!: string | null;
+
+  @Field(() => Int)
+  courseId!: number;
 
   @Field(() => ContentType)
   type!: ContentType;
 
-  @Field(() => String)
+  @Field()
   url!: string;
 }
