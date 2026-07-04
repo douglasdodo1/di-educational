@@ -1,6 +1,10 @@
 import { cn } from '@/lib/utils'
 import { Panel } from '../panel/Panel'
 import { AttendanceStatus, attendanceStatusLabels } from '../utils'
+import { useAttendences } from '@/hooks/attendences/useAttendences'
+import { Card } from '@/components/ui/card'
+import { ClipboardCheck, CalendarDays } from 'lucide-react'
+import { formatDate } from '@/lib/date/formatToDD/MM/YYYY'
 
 const attendanceStyles: Record<AttendanceStatus, string> = {
   presente: 'bg-success/10 text-success',
@@ -15,49 +19,46 @@ interface AttendanceRecord {
   status: AttendanceStatus
 }
 
-interface AttendanceSectionProps {
-  records: AttendanceRecord[]
+interface AttendeceSectionProps {
+  courseId?: string
 }
 
-export function AttendanceSection({ records }: AttendanceSectionProps) {
-  const total = records.length
-  const presentes = records.filter((r) => r.status === 'presente').length
-  const taxa = total > 0 ? Math.round((presentes / total) * 100) : 0
+export function AttendanceSection({ courseId }: AttendeceSectionProps) {
+  const { attendences, loading, error } = useAttendences(courseId)
+
+  const total = (attendences?.length || 0).toString()
+  const presentes = 5
+  const taxa = 0
 
   return (
     <Panel title="Frequência">
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-        <Stat label="Taxa de presença" value={`${taxa}%`} />
+        <Stat label="Total de atas" value={total} />
         <Stat label="Aulas registradas" value={String(total)} />
-        <Stat label="Faltas" value={String(records.filter((r) => r.status === 'falta').length)} />
       </div>
-      <ul className="divide-border border-border bg-card flex flex-col divide-y overflow-hidden rounded-2xl border">
-        {records.map((r) => (
-          <li key={r.id} className="flex items-center justify-between gap-4 px-5 py-4">
-            <div className="flex items-center gap-4">
-              <span className="bg-secondary text-foreground flex size-11 shrink-0 flex-col items-center justify-center rounded-lg text-xs leading-tight font-semibold">
-                {r.date.split(' ').map((part, i) => (
-                  <span key={i}>{part}</span>
-                ))}
-              </span>
-              <p className="text-sm font-medium">{r.topic}</p>
-            </div>
-            <span
-              className={cn(
-                'shrink-0 rounded-full px-3 py-1 text-xs font-medium',
-                attendanceStyles[r.status],
-              )}
+
+      <div className="flex flex-col gap-3">
+        {attendences?.map((attendence) => {
+          const date = formatDate(attendence.date)
+          return (
+            <Card
+              key={attendence.id}
+              className="border-border bg-card flex-row items-center gap-4 rounded-2xl border p-4"
             >
-              {attendanceStatusLabels[r.status]}
-            </span>
-          </li>
-        ))}
-        {records.length === 0 && (
-          <li className="text-muted-foreground px-5 py-10 text-center text-sm">
-            Nenhum registro de frequência disponível.
-          </li>
-        )}
-      </ul>
+              <span className="bg-primary/10 text-primary flex size-10 shrink-0 items-center justify-center rounded-xl">
+                <ClipboardCheck className="size-5" />
+              </span>
+              <div className="flex flex-col">
+                <span className="text-muted-foreground text-xs">Ata do dia</span>
+                <span className="flex items-center gap-1.5 text-sm font-medium">
+                  <CalendarDays className="text-muted-foreground size-3.5" />
+                  {date}
+                </span>
+              </div>
+            </Card>
+          )
+        })}
+      </div>
     </Panel>
   )
 }

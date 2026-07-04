@@ -1,27 +1,22 @@
 'use client'
-import { CourseDetail } from '@/components/courses/course-detail/CourseDetail'
-import { useCourse } from '@/hooks/courses/useCourse'
-import { useRouter } from 'next/navigation'
-import { use } from 'react'
+import { CourseBanner } from '@/components/courses/course-detail/course-banner/CourseBanner'
+import { CourseTabs } from '@/components/courses/course-detail/course-tabs/CourseTabs'
+import { Button } from '@/components/ui/button'
+import { ArrowLeft } from 'lucide-react'
+import { useViewModel } from './useViewModel'
 
-interface PageProps {
-  params: Promise<{ id: string }>
-}
-
-export default function Course({ params }: PageProps) {
-  const { id } = use(params)
-  const { data, loading, error } = useCourse(id)
-  const router = useRouter()
+export default function Course() {
+  const { course, loading, error, handleBack } = useViewModel()
 
   return (
-    <div>
-      {loading ? (
-        <p>Carregando...</p>
-      ) : error ? (
-        <p>{error.message}</p>
-      ) : (
-        <CourseDetail course={data!.course} onBack={() => router.back()} />
-      )}
+    <div className="flex flex-col gap-6">
+      <Button onClick={handleBack} variant="ghost" className="flex w-fit cursor-pointer">
+        <ArrowLeft className="size-4" />
+        <p className="text-sm font-medium">Voltar para meus cursos</p>
+      </Button>
+
+      <CourseBanner course={course} loading={loading} error={error} />
+      <CourseTabs course={course} loading={loading} error={error} />
     </div>
   )
 }

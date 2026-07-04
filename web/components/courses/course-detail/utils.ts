@@ -1,9 +1,9 @@
 import { LayoutGrid, CalendarCheck, ClipboardList, CalendarRange } from 'lucide-react'
 
-export type SectionId = 'visao-geral' | 'frequencia' | 'atividades' | 'cronograma'
+export type SectionId = 'conteudo' | 'frequencia' | 'atividades' | 'cronograma'
 
 export const sections: { id: SectionId; label: string; icon: typeof LayoutGrid }[] = [
-  { id: 'visao-geral', label: 'Visão geral', icon: LayoutGrid },
+  { id: 'conteudo', label: 'Conteúdo', icon: LayoutGrid },
   { id: 'frequencia', label: 'Frequência', icon: CalendarCheck },
   { id: 'atividades', label: 'Atividades', icon: ClipboardList },
   { id: 'cronograma', label: 'Cronograma', icon: CalendarRange },

@@ -34,7 +34,7 @@ export function ScheduleSection({ items }: ScheduleSectionProps) {
           const Icon = scheduleIcon[item.state]
           return (
             <li key={item.id} className="relative">
-              <span className="bg-background absolute -left-[31px] flex size-6 items-center justify-center rounded-full">
+              <span className="bg-background absolute-left-[31px] flex size-6 items-center justify-center rounded-full">
                 <Icon className={cn('size-5', scheduleIconStyle[item.state])} />
               </span>
               <div className="border-border bg-card rounded-2xl border p-5">
