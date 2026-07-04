@@ -14,8 +14,8 @@ interface CourseTabsProps {
 
 export const CourseTabs = ({ course, loading }: CourseTabsProps) => {
   return (
-    <Tabs defaultValue="conteudo" className="flex flex-col gap-6">
-      <TabsList className="border-border bg-card flex h-auto w-full justify-start gap-1 overflow-x-auto rounded-xl border p-1">
+    <Tabs defaultValue="conteudo" className="flex min-h-0 flex-1 flex-col gap-6">
+      <TabsList className="border-border bg-card flex h-auto w-full shrink-0 justify-start gap-1 overflow-x-auto rounded-xl border p-1">
         {sections.map((s) => (
           <TabsTrigger
             key={s.id}
@@ -28,16 +28,16 @@ export const CourseTabs = ({ course, loading }: CourseTabsProps) => {
         ))}
       </TabsList>
 
-      <TabsContent value="conteudo">
+      <TabsContent value="conteudo" className="flex min-h-0 flex-1 flex-col">
         <ContentSection course={course} loading={loading} />
       </TabsContent>
-      <TabsContent value="frequencia">
+      <TabsContent value="frequencia" className="flex min-h-0 flex-1 flex-col">
         <AttendanceSection courseId={course?.id} />
       </TabsContent>
-      <TabsContent value="atividades">
+      <TabsContent value="atividades" className="flex min-h-0 flex-1 flex-col">
         <CourseActivitiesSection activities={[]} />
       </TabsContent>
-      <TabsContent value="cronograma">
+      <TabsContent value="cronograma" className="flex min-h-0 flex-1 flex-col">
         <ScheduleSection items={[]} />
       </TabsContent>
     </Tabs>

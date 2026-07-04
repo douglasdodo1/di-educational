@@ -7,13 +7,15 @@ export default function Content() {
   const { content, loading, error, handleBack } = useViewModel()
 
   return (
-    <div>
+    <div className="flex min-h-0 flex-1 flex-col">
       {error ? (
         <p>{error.message}</p>
       ) : (
-        <section className="flex flex-col gap-4">
+        <section className="flex min-h-0 flex-1 flex-col gap-4">
           <NavigationMenu onBack={handleBack} />
-          <ContentCard content={content} loading={loading} />
+          <div className="flex min-h-0 flex-1 overflow-y-auto">
+            <ContentCard content={content} loading={loading} />
+          </div>
         </section>
       )}
     </div>

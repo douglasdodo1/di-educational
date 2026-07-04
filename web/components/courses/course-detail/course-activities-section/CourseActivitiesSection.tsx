@@ -15,8 +15,9 @@ interface CourseActivitiesSectionProps {
 
 export function CourseActivitiesSection({ activities }: CourseActivitiesSectionProps) {
   return (
-    <Panel title="Atividades do curso">
-      <ul className="flex flex-col gap-3">
+    <Panel title="Atividades do curso" className="flex min-h-0 flex-1 flex-col">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">
+        <ul className="flex flex-col gap-3">
         {activities.map((a) => (
           <li
             key={a.id}
@@ -39,7 +40,8 @@ export function CourseActivitiesSection({ activities }: CourseActivitiesSectionP
             Nenhuma atividade atribuída neste curso.
           </li>
         )}
-      </ul>
+        </ul>
+      </div>
     </Panel>
   )
 }

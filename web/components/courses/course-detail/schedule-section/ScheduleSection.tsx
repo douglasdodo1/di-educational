@@ -28,8 +28,9 @@ interface ScheduleSectionProps {
 
 export function ScheduleSection({ items }: ScheduleSectionProps) {
   return (
-    <Panel title="Cronograma">
-      <ol className="border-border relative flex flex-col gap-6 border-l pl-6">
+    <Panel title="Cronograma" className="flex min-h-0 flex-1 flex-col">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">
+        <ol className="border-border relative flex flex-col gap-6 border-l pl-6">
         {items.map((item) => {
           const Icon = scheduleIcon[item.state]
           return (
@@ -57,7 +58,8 @@ export function ScheduleSection({ items }: ScheduleSectionProps) {
         {items.length === 0 && (
           <li className="text-muted-foreground text-sm">Cronograma ainda não publicado.</li>
         )}
-      </ol>
+        </ol>
+      </div>
     </Panel>
   )
 }

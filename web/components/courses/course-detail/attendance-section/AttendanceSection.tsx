@@ -31,19 +31,14 @@ export function AttendanceSection({ courseId }: AttendeceSectionProps) {
   const taxa = 0
 
   return (
-    <Panel title="Frequência">
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-        <Stat label="Total de atas" value={total} />
-        <Stat label="Aulas registradas" value={String(total)} />
-      </div>
-
-      <div className="flex flex-col gap-3">
+    <Panel title="Frequência" className="flex min-h-0 flex-1 flex-col">
+      <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto">
         {attendences?.map((attendence) => {
           const date = formatDate(attendence.date)
           return (
             <Card
               key={attendence.id}
-              className="border-border bg-card flex-row items-center gap-4 rounded-2xl border p-4"
+              className="border-border bg-card flex-row items-center gap-4 rounded-2xl border p-8"
             >
               <span className="bg-primary/10 text-primary flex size-10 shrink-0 items-center justify-center rounded-xl">
                 <ClipboardCheck className="size-5" />

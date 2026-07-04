@@ -9,8 +9,8 @@ export default function Course() {
   const { course, loading, error, handleBack } = useViewModel()
 
   return (
-    <div className="flex flex-col gap-6">
-      <Button onClick={handleBack} variant="ghost" className="flex w-fit cursor-pointer">
+    <div className="flex min-h-0 flex-1 flex-col gap-6">
+      <Button onClick={handleBack} variant="outline" className="flex w-fit shrink-0 cursor-pointer">
         <ArrowLeft className="size-4" />
         <p className="text-sm font-medium">Voltar para meus cursos</p>
       </Button>
