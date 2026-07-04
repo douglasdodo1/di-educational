@@ -17,7 +17,7 @@ export const ContentCard = ({ content, loading }: ContentCardProps) => {
   }
 
   return (
-    <Card className="p-8">
+    <Card className="flex w-full flex-col p-8">
       <div className="flex flex-wrap items-center gap-2">
         <span className="bg-primary/10 text-primary flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium">
           <Icon className="size-3.5" />
