@@ -27,11 +27,19 @@ export const AttendenHeader = ({
         </p>
       </div>
       <div className="flex flex-wrap gap-2">
-        <Button variant="outline" onClick={onAllPresent} className="gap-2 bg-transparent">
+        <Button
+          variant="outline"
+          onClick={onAllPresent}
+          className="cursor-pointer gap-2 bg-transparent"
+        >
           <UserCheck className="text-success size-4" />
           Todos presentes
         </Button>
-        <Button variant="outline" onClick={onAllAbsent} className="gap-2 bg-transparent">
+        <Button
+          variant="outline"
+          onClick={onAllAbsent}
+          className="cursor-pointer gap-2 bg-transparent"
+        >
           <UserX className="text-destructive size-4" />
           Todos ausentes
         </Button>

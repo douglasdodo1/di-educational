@@ -1,4 +1,6 @@
 import { useFrequencies } from '@/hooks/frequencies/useFrequencies'
+import { useSetFrequencyMutation } from '@/hooks/frequencies/useSetFrequencyMutation'
+import { useSetAllFrequencies } from '@/hooks/frequencies/useSetAllFrequencies'
 import { useParams, useRouter } from 'next/navigation'
 
 export const useViewModel = () => {
@@ -8,21 +10,50 @@ export const useViewModel = () => {
   const id = parseInt(params.id as string)
 
   const { frequencies, loading, error } = useFrequencies({ attendenceId: id })
+  const [setFrequency] = useSetFrequencyMutation()
+  const [setAllFrequencies] = useSetAllFrequencies()
 
   const onBack = () => {
     router.back()
   }
 
-  const onAllPresent = () => {
-    // Lógica para marcar todos como presentes
+  const onAllPresent = async () => {
+    try {
+      await setAllFrequencies({
+        variables: {
+          attendenceId: id,
+          isPresent: true,
+        },
+      })
+    } catch (err) {
+      console.error('Erro ao marcar todos como presentes', err)
+    }
   }
 
-  const onAllAbsent = () => {
-    // Lógica para marcar todos como ausentes
+  const onAllAbsent = async () => {
+    try {
+      await setAllFrequencies({
+        variables: {
+          attendenceId: id,
+          isPresent: false,
+        },
+      })
+    } catch (err) {
+      console.error('Erro ao marcar todos como ausentes', err)
+    }
   }
 
-  const onToggle = (studentId: string) => {
-    // Lógica para alternar presença de um aluno
+  const onToggle = async (frequencyId: string, currentStatus: boolean) => {
+    try {
+      await setFrequency({
+        variables: {
+          frequencyId: parseInt(frequencyId),
+          isPresent: !currentStatus,
+        },
+      })
+    } catch (err) {
+      console.error('Erro ao alterar frequência', err)
+    }
   }
 
   const formatAttendenceDate = (date: Date) => {

@@ -6,7 +6,7 @@ import { FrequencySkeleton } from './FrequencySkeleton'
 interface FrequencyListProps {
   frequencies?: Frequency[]
   isLoading?: boolean
-  onToggle: (studentId: string) => void
+  onToggle: (frequencyId: string, currentStatus: boolean) => void
 }
 
 export const FrequencyList = ({ frequencies, isLoading, onToggle }: FrequencyListProps) => {
@@ -48,10 +48,10 @@ export const FrequencyList = ({ frequencies, isLoading, onToggle }: FrequencyLis
               </span>
               <Switch
                 checked={f.is_present}
-                onCheckedChange={() => onToggle(String(f.student?.id || ''))}
+                onCheckedChange={() => onToggle(f.id, f.is_present)}
                 aria-label={`${f.is_present ? 'Marcar falta' : 'Marcar presenca'} para ${f.student?.user?.first_name || ''}`}
                 className={cn(
-                  'relative h-6 w-11 rounded-full transition-colors',
+                  'relative h-6 w-11 cursor-pointer rounded-full transition-colors',
                   f.is_present ? 'bg-success' : 'bg-destructive',
                 )}
               >
