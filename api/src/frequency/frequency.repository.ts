@@ -19,4 +19,26 @@ export class FrequencyRepository {
       },
     });
   }
+
+  async setFrequency(
+    frequencyId: number,
+    isPresent: boolean,
+  ): Promise<FrequencyModel> {
+    const response = await this.prisma.frequency.update({
+      where: { id: frequencyId },
+      data: { is_present: isPresent },
+    });
+    return response;
+  }
+
+  async setAllFrequencies(
+    attendenceId: number,
+    isPresent: boolean,
+  ): Promise<boolean> {
+    await this.prisma.frequency.updateMany({
+      where: { attendenceId: attendenceId },
+      data: { is_present: isPresent },
+    });
+    return true;
+  }
 }

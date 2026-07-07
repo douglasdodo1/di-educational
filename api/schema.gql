@@ -114,6 +114,8 @@ type Mutation {
   logout: Boolean!
   updateTeacher(courseId: Int!, id: Int!): Boolean!
   updateStudent(id: Float!, data: UpdateStudentInput!): Boolean!
+  setFrequency(frequencyId: Int!, isPresent: Boolean!): FrequencyModel!
+  setAllFrequencies(attendenceId: Int!, isPresent: Boolean!): [Boolean!]!
   createCourse(data: CreateCourseInput!): CoursesModel
   updateCourse(id: Int!, data: UpdateCourseInput!): Boolean!
   deleteCourse(id: Int!): Boolean!

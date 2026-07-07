@@ -9,4 +9,21 @@ export class FrequencyService {
   async findAllByAttendenceId(attendenceId: number): Promise<FrequencyModel[]> {
     return await this.frequencyRepository.findAllByAttendenceId(attendenceId);
   }
+
+  async setFrequency(
+    frequencyId: number,
+    isPresent: boolean,
+  ): Promise<FrequencyModel> {
+    return await this.frequencyRepository.setFrequency(frequencyId, isPresent);
+  }
+
+  async setAllFrequencies(
+    attendenceId: number,
+    isPresent: boolean,
+  ): Promise<boolean> {
+    return await this.frequencyRepository.setAllFrequencies(
+      attendenceId,
+      isPresent,
+    );
+  }
 }
