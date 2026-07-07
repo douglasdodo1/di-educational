@@ -1,12 +1,7 @@
-import Hero from "@/components/hero/Hero";
+import Hero from '@/components/hero/Hero'
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <>
-      <Hero />
-      {children}
-    </>
-  );
-};
+  return <>{children}</>
+}
 
-export default DashboardLayout;
+export default DashboardLayout

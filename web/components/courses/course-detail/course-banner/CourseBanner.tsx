@@ -18,7 +18,7 @@ export const CourseBanner = ({ course, loading }: CourseDetailHeaderProps) => {
 
   return (
     <header className="border-border bg-card relative overflow-hidden rounded-2xl border">
-      <div className="relative h-24 w-full">
+      <div className="relative w-full" style={{ height: '80px' }}>
         <Image
           src={course?.image || '/default-course.png'}
           alt={`Capa do curso ${course?.name}`}

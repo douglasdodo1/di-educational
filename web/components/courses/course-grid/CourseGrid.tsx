@@ -13,7 +13,7 @@ export const CourseGrid = ({ onSelectCourse }: { onSelectCourse?: (course: Cours
     useViewModel()
 
   return (
-    <section aria-label="Seus cursos" className="flex flex-col gap-5">
+    <section aria-label="Seus cursos" className="flex min-h-0 flex-1 flex-col gap-5">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         <CourseSearchBar query={query} setQuery={setQuery} />
         <CourseCategoryFilter category={category} setCategory={setCategory} />

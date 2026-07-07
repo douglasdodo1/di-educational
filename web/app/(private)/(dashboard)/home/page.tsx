@@ -3,7 +3,7 @@ import { StatsRow } from '@/components/stats-row/StatsRow'
 
 export default function home() {
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex min-h-0 flex-1 flex-col gap-10">
       <StatsRow />
       <CourseGrid />
     </div>
