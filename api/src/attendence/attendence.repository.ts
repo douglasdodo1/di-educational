@@ -9,6 +9,9 @@ export class AttendenceRepository {
   async findAllByCourseId(courseId: number): Promise<AttendenceModel[]> {
     return await this.prisma.attendence.findMany({
       where: { courseId: courseId },
+      include: {
+        frequencies: true,
+      },
     });
   }
 }

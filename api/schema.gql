@@ -43,14 +43,15 @@ type FrequencyModel {
   id: Int!
   is_present: Boolean!
   attendenceId: Int!
-  studentId: Int!
+  attendence: AttendenceModel
+  student: StudentsModel
 }
 
 type AttendenceModel {
   id: Int!
   date: DateTime!
   courseId: Int!
-  frequency: FrequencyModel
+  frequencies: [FrequencyModel!]
 }
 
 """

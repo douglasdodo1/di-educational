@@ -12,6 +12,6 @@ export class AttendenceModel {
   @Field(() => Int)
   courseId!: number;
 
-  @Field(() => FrequencyModel, { nullable: true })
-  frequency?: FrequencyModel;
+  @Field(() => [FrequencyModel], { nullable: true })
+  frequencies?: FrequencyModel[];
 }

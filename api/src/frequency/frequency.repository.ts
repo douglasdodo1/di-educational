@@ -9,6 +9,14 @@ export class FrequencyRepository {
   async findAllByAttendenceId(attendenceId: number): Promise<FrequencyModel[]> {
     return await this.prisma.frequency.findMany({
       where: { attendenceId: attendenceId },
+      include: {
+        attendence: true,
+        student: {
+          include: {
+            user: true,
+          },
+        },
+      },
     });
   }
 }
