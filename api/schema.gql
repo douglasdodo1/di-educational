@@ -111,6 +111,7 @@ type Mutation {
   login(email: String!, password: String!): AuthResponse!
   register(data: CreateUserInput!): AuthResponse!
   refreshToken: AuthResponse!
+  logout: Boolean!
   updateTeacher(courseId: Int!, id: Int!): Boolean!
   updateStudent(id: Float!, data: UpdateStudentInput!): Boolean!
   createCourse(data: CreateCourseInput!): CoursesModel

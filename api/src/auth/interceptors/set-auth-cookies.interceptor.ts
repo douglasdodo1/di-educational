@@ -26,6 +26,9 @@ export class SetAuthCookiesInterceptor implements NestInterceptor<
       map((data: AuthResponse) => {
         if (data == null) return data;
 
+        reply?.clearCookie('access_token', { path: '/' });
+        reply?.clearCookie('refresh_token', { path: '/' });
+
         reply?.setCookie('access_token', data.access_token, {
           httpOnly: true,
           sameSite: 'lax',

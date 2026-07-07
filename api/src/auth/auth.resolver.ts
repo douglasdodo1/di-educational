@@ -1,4 +1,4 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UseGuards, UseInterceptors } from '@nestjs/common';
 import { AuthResponse } from './inputs/auth.response.input';
 import { AuthService } from './auth.service';
@@ -8,6 +8,7 @@ import { JwtAuthGuard } from './guards/jwt.auth.guard';
 import { JwtRefreshGuard } from './guards/jwt.refresh.guard';
 import { UserModel } from 'src/users/models/users.model';
 import { SetAuthCookiesInterceptor } from './interceptors/set-auth-cookies.interceptor';
+import type { GqlContext } from 'src/common/fastify.type';
 
 @Resolver()
 export class AuthResolver {
@@ -40,5 +41,13 @@ export class AuthResolver {
   @UseGuards(JwtRefreshGuard)
   refreshToken(@CurrentUser() user: UserModel): AuthResponse {
     return this.authService.refreshToken(user);
+  }
+
+  @Mutation(() => Boolean)
+  logout(@Context() ctx: Record<string, any>): boolean {
+    const { reply } = ctx as GqlContext;
+    reply.clearCookie('access_token', { path: '/' });
+    reply.clearCookie('refresh_token', { path: '/' });
+    return true;
   }
 }
