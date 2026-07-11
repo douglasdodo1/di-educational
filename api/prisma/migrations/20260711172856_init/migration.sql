@@ -89,6 +89,17 @@ CREATE TABLE "Frequency" (
 );
 
 -- CreateTable
+CREATE TABLE "Timeline" (
+    "id" SERIAL NOT NULL,
+    "is_done" BOOLEAN NOT NULL DEFAULT false,
+    "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "courseId" INTEGER NOT NULL,
+    "contentId" INTEGER,
+
+    CONSTRAINT "Timeline_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "_CourseMembers" (
     "A" INTEGER NOT NULL,
     "B" INTEGER NOT NULL,
@@ -128,6 +139,12 @@ ALTER TABLE "Frequency" ADD CONSTRAINT "Frequency_attendenceId_fkey" FOREIGN KEY
 
 -- AddForeignKey
 ALTER TABLE "Frequency" ADD CONSTRAINT "Frequency_studentId_fkey" FOREIGN KEY ("studentId") REFERENCES "Student"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Timeline" ADD CONSTRAINT "Timeline_courseId_fkey" FOREIGN KEY ("courseId") REFERENCES "Course"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Timeline" ADD CONSTRAINT "Timeline_contentId_fkey" FOREIGN KEY ("contentId") REFERENCES "Content"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_CourseMembers" ADD CONSTRAINT "_CourseMembers_A_fkey" FOREIGN KEY ("A") REFERENCES "Course"("id") ON DELETE CASCADE ON UPDATE CASCADE;

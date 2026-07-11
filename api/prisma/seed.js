@@ -16,15 +16,16 @@ async function main() {
   console.log('🌱 Iniciando seed do banco de dados...\n');
 
   // ─── Limpar dados existentes ─────────────────────────────────────────────
-
+  // Timeline referencia Course e Content, então precisa ser limpa antes deles
+  await prisma.timeline.deleteMany();
+  await prisma.frequency.deleteMany();
+  await prisma.attendence.deleteMany();
   await prisma.content.deleteMany();
   await prisma.course.deleteMany();
   await prisma.phone.deleteMany();
   await prisma.student.deleteMany();
   await prisma.teacher.deleteMany();
   await prisma.user.deleteMany();
-  await prisma.frequency.deleteMany();
-  await prisma.attendence.deleteMany();
   console.log('✅ Banco limpo\n');
 
   const password = await argon2.hash('senha@123');
@@ -372,6 +373,40 @@ async function main() {
 
     console.log(
       `🗓️  ${attendanceDates.length} chamadas criadas para "${course.name}" (${courseData.members.length} alunos cada)`,
+    );
+
+    // ─── Timeline do curso ───────────────────────────────────────────────
+    const createdContents = await prisma.content.findMany({
+      where: { courseId: course.id },
+      orderBy: { id: 'asc' },
+    });
+
+    const timelineEntries = createdContents.map((content, index) => {
+      // Espalha as datas ao longo das últimas semanas, simulando o
+      // cronograma de liberação/andamento do conteúdo
+      const daysOffset = (createdContents.length - index) * 5;
+      const date = new Date(now.getTime() - daysOffset * 24 * 60 * 60 * 1000);
+
+      return {
+        date,
+        is_done: index < Math.ceil(createdContents.length / 2), // ~metade concluída
+        courseId: course.id,
+        contentId: content.id,
+      };
+    });
+
+    // Marco inicial sem conteúdo vinculado (ex: "início do curso")
+    timelineEntries.unshift({
+      date: course.start_date,
+      is_done: true,
+      courseId: course.id,
+      contentId: null,
+    });
+
+    await prisma.timeline.createMany({ data: timelineEntries });
+
+    console.log(
+      `🕒 ${timelineEntries.length} eventos de timeline criados para "${course.name}"`,
     );
   }
 

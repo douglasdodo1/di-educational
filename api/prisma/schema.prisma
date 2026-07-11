@@ -76,9 +76,9 @@ model Course {
   contents     Content[]
 
   attendances  Attendence[]
+
+  timelines   Timeline[]
 }
-
-
 
 model Content {
   id       Int    @id @default(autoincrement())
@@ -89,6 +89,8 @@ model Content {
 
   courseId  Int
   course   Course  @relation(fields: [courseId], references: [id])
+
+  timelines Timeline[]
 }
 
 model Attendence {
@@ -111,6 +113,19 @@ model Frequency {
 
   studentId Int
   student   Student  @relation(fields: [studentId], references: [id])
+}
+
+model Timeline {
+  id          Int      @id @default(autoincrement())
+
+  is_done     Boolean  @default(false)
+  date        DateTime @default(now())
+
+  courseId    Int
+  course      Course   @relation(fields: [courseId], references: [id])
+
+  contentId   Int?
+  content     Content? @relation(fields: [contentId], references: [id])
 }
 
 
