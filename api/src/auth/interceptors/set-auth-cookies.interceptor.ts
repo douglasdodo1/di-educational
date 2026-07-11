@@ -33,7 +33,7 @@ export class SetAuthCookiesInterceptor implements NestInterceptor<
           httpOnly: true,
           sameSite: 'lax',
           path: '/',
-          maxAge: 60 * 60,
+          maxAge: 60 * 60 * 24 * 7,
         });
 
         reply?.setCookie('refresh_token', data.refresh_token, {
