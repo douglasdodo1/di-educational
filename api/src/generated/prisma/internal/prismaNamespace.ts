@@ -391,7 +391,8 @@ export const ModelName = {
   Course: 'Course',
   Content: 'Content',
   Attendence: 'Attendence',
-  Frequency: 'Frequency'
+  Frequency: 'Frequency',
+  Timeline: 'Timeline'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -407,7 +408,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "teacher" | "student" | "phone" | "course" | "content" | "attendence" | "frequency"
+    modelProps: "user" | "teacher" | "student" | "phone" | "course" | "content" | "attendence" | "frequency" | "timeline"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1003,6 +1004,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Timeline: {
+      payload: Prisma.$TimelinePayload<ExtArgs>
+      fields: Prisma.TimelineFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TimelineFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimelinePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TimelineFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimelinePayload>
+        }
+        findFirst: {
+          args: Prisma.TimelineFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimelinePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TimelineFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimelinePayload>
+        }
+        findMany: {
+          args: Prisma.TimelineFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimelinePayload>[]
+        }
+        create: {
+          args: Prisma.TimelineCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimelinePayload>
+        }
+        createMany: {
+          args: Prisma.TimelineCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TimelineCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimelinePayload>[]
+        }
+        delete: {
+          args: Prisma.TimelineDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimelinePayload>
+        }
+        update: {
+          args: Prisma.TimelineUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimelinePayload>
+        }
+        deleteMany: {
+          args: Prisma.TimelineDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TimelineUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TimelineUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimelinePayload>[]
+        }
+        upsert: {
+          args: Prisma.TimelineUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimelinePayload>
+        }
+        aggregate: {
+          args: Prisma.TimelineAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTimeline>
+        }
+        groupBy: {
+          args: Prisma.TimelineGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TimelineGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TimelineCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TimelineCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1124,6 +1199,17 @@ export const FrequencyScalarFieldEnum = {
 } as const
 
 export type FrequencyScalarFieldEnum = (typeof FrequencyScalarFieldEnum)[keyof typeof FrequencyScalarFieldEnum]
+
+
+export const TimelineScalarFieldEnum = {
+  id: 'id',
+  is_done: 'is_done',
+  date: 'date',
+  courseId: 'courseId',
+  contentId: 'contentId'
+} as const
+
+export type TimelineScalarFieldEnum = (typeof TimelineScalarFieldEnum)[keyof typeof TimelineScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1349,6 +1435,7 @@ export type GlobalOmitConfig = {
   content?: Prisma.ContentOmit
   attendence?: Prisma.AttendenceOmit
   frequency?: Prisma.FrequencyOmit
+  timeline?: Prisma.TimelineOmit
 }
 
 /* Types for Logging */

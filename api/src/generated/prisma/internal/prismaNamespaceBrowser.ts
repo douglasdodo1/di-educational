@@ -58,7 +58,8 @@ export const ModelName = {
   Course: 'Course',
   Content: 'Content',
   Attendence: 'Attendence',
-  Frequency: 'Frequency'
+  Frequency: 'Frequency',
+  Timeline: 'Timeline'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -159,6 +160,17 @@ export const FrequencyScalarFieldEnum = {
 } as const
 
 export type FrequencyScalarFieldEnum = (typeof FrequencyScalarFieldEnum)[keyof typeof FrequencyScalarFieldEnum]
+
+
+export const TimelineScalarFieldEnum = {
+  id: 'id',
+  is_done: 'is_done',
+  date: 'date',
+  courseId: 'courseId',
+  contentId: 'contentId'
+} as const
+
+export type TimelineScalarFieldEnum = (typeof TimelineScalarFieldEnum)[keyof typeof TimelineScalarFieldEnum]
 
 
 export const SortOrder = {

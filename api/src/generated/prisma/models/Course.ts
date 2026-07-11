@@ -248,6 +248,7 @@ export type CourseWhereInput = {
   members?: Prisma.UserListRelationFilter
   contents?: Prisma.ContentListRelationFilter
   attendances?: Prisma.AttendenceListRelationFilter
+  timelines?: Prisma.TimelineListRelationFilter
 }
 
 export type CourseOrderByWithRelationInput = {
@@ -263,6 +264,7 @@ export type CourseOrderByWithRelationInput = {
   members?: Prisma.UserOrderByRelationAggregateInput
   contents?: Prisma.ContentOrderByRelationAggregateInput
   attendances?: Prisma.AttendenceOrderByRelationAggregateInput
+  timelines?: Prisma.TimelineOrderByRelationAggregateInput
 }
 
 export type CourseWhereUniqueInput = Prisma.AtLeast<{
@@ -281,6 +283,7 @@ export type CourseWhereUniqueInput = Prisma.AtLeast<{
   members?: Prisma.UserListRelationFilter
   contents?: Prisma.ContentListRelationFilter
   attendances?: Prisma.AttendenceListRelationFilter
+  timelines?: Prisma.TimelineListRelationFilter
 }, "id">
 
 export type CourseOrderByWithAggregationInput = {
@@ -324,6 +327,7 @@ export type CourseCreateInput = {
   members?: Prisma.UserCreateNestedManyWithoutMemberCoursesInput
   contents?: Prisma.ContentCreateNestedManyWithoutCourseInput
   attendances?: Prisma.AttendenceCreateNestedManyWithoutCourseInput
+  timelines?: Prisma.TimelineCreateNestedManyWithoutCourseInput
 }
 
 export type CourseUncheckedCreateInput = {
@@ -338,6 +342,7 @@ export type CourseUncheckedCreateInput = {
   members?: Prisma.UserUncheckedCreateNestedManyWithoutMemberCoursesInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutCourseInput
   attendances?: Prisma.AttendenceUncheckedCreateNestedManyWithoutCourseInput
+  timelines?: Prisma.TimelineUncheckedCreateNestedManyWithoutCourseInput
 }
 
 export type CourseUpdateInput = {
@@ -351,6 +356,7 @@ export type CourseUpdateInput = {
   members?: Prisma.UserUpdateManyWithoutMemberCoursesNestedInput
   contents?: Prisma.ContentUpdateManyWithoutCourseNestedInput
   attendances?: Prisma.AttendenceUpdateManyWithoutCourseNestedInput
+  timelines?: Prisma.TimelineUpdateManyWithoutCourseNestedInput
 }
 
 export type CourseUncheckedUpdateInput = {
@@ -365,6 +371,7 @@ export type CourseUncheckedUpdateInput = {
   members?: Prisma.UserUncheckedUpdateManyWithoutMemberCoursesNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutCourseNestedInput
   attendances?: Prisma.AttendenceUncheckedUpdateManyWithoutCourseNestedInput
+  timelines?: Prisma.TimelineUncheckedUpdateManyWithoutCourseNestedInput
 }
 
 export type CourseCreateManyInput = {
@@ -572,6 +579,20 @@ export type CourseUpdateOneRequiredWithoutAttendancesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CourseUpdateToOneWithWhereWithoutAttendancesInput, Prisma.CourseUpdateWithoutAttendancesInput>, Prisma.CourseUncheckedUpdateWithoutAttendancesInput>
 }
 
+export type CourseCreateNestedOneWithoutTimelinesInput = {
+  create?: Prisma.XOR<Prisma.CourseCreateWithoutTimelinesInput, Prisma.CourseUncheckedCreateWithoutTimelinesInput>
+  connectOrCreate?: Prisma.CourseCreateOrConnectWithoutTimelinesInput
+  connect?: Prisma.CourseWhereUniqueInput
+}
+
+export type CourseUpdateOneRequiredWithoutTimelinesNestedInput = {
+  create?: Prisma.XOR<Prisma.CourseCreateWithoutTimelinesInput, Prisma.CourseUncheckedCreateWithoutTimelinesInput>
+  connectOrCreate?: Prisma.CourseCreateOrConnectWithoutTimelinesInput
+  upsert?: Prisma.CourseUpsertWithoutTimelinesInput
+  connect?: Prisma.CourseWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CourseUpdateToOneWithWhereWithoutTimelinesInput, Prisma.CourseUpdateWithoutTimelinesInput>, Prisma.CourseUncheckedUpdateWithoutTimelinesInput>
+}
+
 export type CourseCreateWithoutAdminCourseInput = {
   imageUrl?: string | null
   name: string
@@ -582,6 +603,7 @@ export type CourseCreateWithoutAdminCourseInput = {
   members?: Prisma.UserCreateNestedManyWithoutMemberCoursesInput
   contents?: Prisma.ContentCreateNestedManyWithoutCourseInput
   attendances?: Prisma.AttendenceCreateNestedManyWithoutCourseInput
+  timelines?: Prisma.TimelineCreateNestedManyWithoutCourseInput
 }
 
 export type CourseUncheckedCreateWithoutAdminCourseInput = {
@@ -595,6 +617,7 @@ export type CourseUncheckedCreateWithoutAdminCourseInput = {
   members?: Prisma.UserUncheckedCreateNestedManyWithoutMemberCoursesInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutCourseInput
   attendances?: Prisma.AttendenceUncheckedCreateNestedManyWithoutCourseInput
+  timelines?: Prisma.TimelineUncheckedCreateNestedManyWithoutCourseInput
 }
 
 export type CourseCreateOrConnectWithoutAdminCourseInput = {
@@ -617,6 +640,7 @@ export type CourseCreateWithoutMembersInput = {
   adminCourse: Prisma.UserCreateNestedOneWithoutCoursesInput
   contents?: Prisma.ContentCreateNestedManyWithoutCourseInput
   attendances?: Prisma.AttendenceCreateNestedManyWithoutCourseInput
+  timelines?: Prisma.TimelineCreateNestedManyWithoutCourseInput
 }
 
 export type CourseUncheckedCreateWithoutMembersInput = {
@@ -630,6 +654,7 @@ export type CourseUncheckedCreateWithoutMembersInput = {
   userId: number
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutCourseInput
   attendances?: Prisma.AttendenceUncheckedCreateNestedManyWithoutCourseInput
+  timelines?: Prisma.TimelineUncheckedCreateNestedManyWithoutCourseInput
 }
 
 export type CourseCreateOrConnectWithoutMembersInput = {
@@ -693,6 +718,7 @@ export type CourseCreateWithoutContentsInput = {
   adminCourse: Prisma.UserCreateNestedOneWithoutCoursesInput
   members?: Prisma.UserCreateNestedManyWithoutMemberCoursesInput
   attendances?: Prisma.AttendenceCreateNestedManyWithoutCourseInput
+  timelines?: Prisma.TimelineCreateNestedManyWithoutCourseInput
 }
 
 export type CourseUncheckedCreateWithoutContentsInput = {
@@ -706,6 +732,7 @@ export type CourseUncheckedCreateWithoutContentsInput = {
   userId: number
   members?: Prisma.UserUncheckedCreateNestedManyWithoutMemberCoursesInput
   attendances?: Prisma.AttendenceUncheckedCreateNestedManyWithoutCourseInput
+  timelines?: Prisma.TimelineUncheckedCreateNestedManyWithoutCourseInput
 }
 
 export type CourseCreateOrConnectWithoutContentsInput = {
@@ -734,6 +761,7 @@ export type CourseUpdateWithoutContentsInput = {
   adminCourse?: Prisma.UserUpdateOneRequiredWithoutCoursesNestedInput
   members?: Prisma.UserUpdateManyWithoutMemberCoursesNestedInput
   attendances?: Prisma.AttendenceUpdateManyWithoutCourseNestedInput
+  timelines?: Prisma.TimelineUpdateManyWithoutCourseNestedInput
 }
 
 export type CourseUncheckedUpdateWithoutContentsInput = {
@@ -747,6 +775,7 @@ export type CourseUncheckedUpdateWithoutContentsInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   members?: Prisma.UserUncheckedUpdateManyWithoutMemberCoursesNestedInput
   attendances?: Prisma.AttendenceUncheckedUpdateManyWithoutCourseNestedInput
+  timelines?: Prisma.TimelineUncheckedUpdateManyWithoutCourseNestedInput
 }
 
 export type CourseCreateWithoutAttendancesInput = {
@@ -759,6 +788,7 @@ export type CourseCreateWithoutAttendancesInput = {
   adminCourse: Prisma.UserCreateNestedOneWithoutCoursesInput
   members?: Prisma.UserCreateNestedManyWithoutMemberCoursesInput
   contents?: Prisma.ContentCreateNestedManyWithoutCourseInput
+  timelines?: Prisma.TimelineCreateNestedManyWithoutCourseInput
 }
 
 export type CourseUncheckedCreateWithoutAttendancesInput = {
@@ -772,6 +802,7 @@ export type CourseUncheckedCreateWithoutAttendancesInput = {
   userId: number
   members?: Prisma.UserUncheckedCreateNestedManyWithoutMemberCoursesInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutCourseInput
+  timelines?: Prisma.TimelineUncheckedCreateNestedManyWithoutCourseInput
 }
 
 export type CourseCreateOrConnectWithoutAttendancesInput = {
@@ -800,6 +831,7 @@ export type CourseUpdateWithoutAttendancesInput = {
   adminCourse?: Prisma.UserUpdateOneRequiredWithoutCoursesNestedInput
   members?: Prisma.UserUpdateManyWithoutMemberCoursesNestedInput
   contents?: Prisma.ContentUpdateManyWithoutCourseNestedInput
+  timelines?: Prisma.TimelineUpdateManyWithoutCourseNestedInput
 }
 
 export type CourseUncheckedUpdateWithoutAttendancesInput = {
@@ -813,6 +845,77 @@ export type CourseUncheckedUpdateWithoutAttendancesInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   members?: Prisma.UserUncheckedUpdateManyWithoutMemberCoursesNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutCourseNestedInput
+  timelines?: Prisma.TimelineUncheckedUpdateManyWithoutCourseNestedInput
+}
+
+export type CourseCreateWithoutTimelinesInput = {
+  imageUrl?: string | null
+  name: string
+  description?: string | null
+  is_active?: boolean
+  start_date: Date | string
+  end_date: Date | string
+  adminCourse: Prisma.UserCreateNestedOneWithoutCoursesInput
+  members?: Prisma.UserCreateNestedManyWithoutMemberCoursesInput
+  contents?: Prisma.ContentCreateNestedManyWithoutCourseInput
+  attendances?: Prisma.AttendenceCreateNestedManyWithoutCourseInput
+}
+
+export type CourseUncheckedCreateWithoutTimelinesInput = {
+  id?: number
+  imageUrl?: string | null
+  name: string
+  description?: string | null
+  is_active?: boolean
+  start_date: Date | string
+  end_date: Date | string
+  userId: number
+  members?: Prisma.UserUncheckedCreateNestedManyWithoutMemberCoursesInput
+  contents?: Prisma.ContentUncheckedCreateNestedManyWithoutCourseInput
+  attendances?: Prisma.AttendenceUncheckedCreateNestedManyWithoutCourseInput
+}
+
+export type CourseCreateOrConnectWithoutTimelinesInput = {
+  where: Prisma.CourseWhereUniqueInput
+  create: Prisma.XOR<Prisma.CourseCreateWithoutTimelinesInput, Prisma.CourseUncheckedCreateWithoutTimelinesInput>
+}
+
+export type CourseUpsertWithoutTimelinesInput = {
+  update: Prisma.XOR<Prisma.CourseUpdateWithoutTimelinesInput, Prisma.CourseUncheckedUpdateWithoutTimelinesInput>
+  create: Prisma.XOR<Prisma.CourseCreateWithoutTimelinesInput, Prisma.CourseUncheckedCreateWithoutTimelinesInput>
+  where?: Prisma.CourseWhereInput
+}
+
+export type CourseUpdateToOneWithWhereWithoutTimelinesInput = {
+  where?: Prisma.CourseWhereInput
+  data: Prisma.XOR<Prisma.CourseUpdateWithoutTimelinesInput, Prisma.CourseUncheckedUpdateWithoutTimelinesInput>
+}
+
+export type CourseUpdateWithoutTimelinesInput = {
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  adminCourse?: Prisma.UserUpdateOneRequiredWithoutCoursesNestedInput
+  members?: Prisma.UserUpdateManyWithoutMemberCoursesNestedInput
+  contents?: Prisma.ContentUpdateManyWithoutCourseNestedInput
+  attendances?: Prisma.AttendenceUpdateManyWithoutCourseNestedInput
+}
+
+export type CourseUncheckedUpdateWithoutTimelinesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  members?: Prisma.UserUncheckedUpdateManyWithoutMemberCoursesNestedInput
+  contents?: Prisma.ContentUncheckedUpdateManyWithoutCourseNestedInput
+  attendances?: Prisma.AttendenceUncheckedUpdateManyWithoutCourseNestedInput
 }
 
 export type CourseCreateManyAdminCourseInput = {
@@ -835,6 +938,7 @@ export type CourseUpdateWithoutAdminCourseInput = {
   members?: Prisma.UserUpdateManyWithoutMemberCoursesNestedInput
   contents?: Prisma.ContentUpdateManyWithoutCourseNestedInput
   attendances?: Prisma.AttendenceUpdateManyWithoutCourseNestedInput
+  timelines?: Prisma.TimelineUpdateManyWithoutCourseNestedInput
 }
 
 export type CourseUncheckedUpdateWithoutAdminCourseInput = {
@@ -848,6 +952,7 @@ export type CourseUncheckedUpdateWithoutAdminCourseInput = {
   members?: Prisma.UserUncheckedUpdateManyWithoutMemberCoursesNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutCourseNestedInput
   attendances?: Prisma.AttendenceUncheckedUpdateManyWithoutCourseNestedInput
+  timelines?: Prisma.TimelineUncheckedUpdateManyWithoutCourseNestedInput
 }
 
 export type CourseUncheckedUpdateManyWithoutAdminCourseInput = {
@@ -870,6 +975,7 @@ export type CourseUpdateWithoutMembersInput = {
   adminCourse?: Prisma.UserUpdateOneRequiredWithoutCoursesNestedInput
   contents?: Prisma.ContentUpdateManyWithoutCourseNestedInput
   attendances?: Prisma.AttendenceUpdateManyWithoutCourseNestedInput
+  timelines?: Prisma.TimelineUpdateManyWithoutCourseNestedInput
 }
 
 export type CourseUncheckedUpdateWithoutMembersInput = {
@@ -883,6 +989,7 @@ export type CourseUncheckedUpdateWithoutMembersInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   contents?: Prisma.ContentUncheckedUpdateManyWithoutCourseNestedInput
   attendances?: Prisma.AttendenceUncheckedUpdateManyWithoutCourseNestedInput
+  timelines?: Prisma.TimelineUncheckedUpdateManyWithoutCourseNestedInput
 }
 
 export type CourseUncheckedUpdateManyWithoutMembersInput = {
@@ -905,12 +1012,14 @@ export type CourseCountOutputType = {
   members: number
   contents: number
   attendances: number
+  timelines: number
 }
 
 export type CourseCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   members?: boolean | CourseCountOutputTypeCountMembersArgs
   contents?: boolean | CourseCountOutputTypeCountContentsArgs
   attendances?: boolean | CourseCountOutputTypeCountAttendancesArgs
+  timelines?: boolean | CourseCountOutputTypeCountTimelinesArgs
 }
 
 /**
@@ -944,6 +1053,13 @@ export type CourseCountOutputTypeCountAttendancesArgs<ExtArgs extends runtime.Ty
   where?: Prisma.AttendenceWhereInput
 }
 
+/**
+ * CourseCountOutputType without action
+ */
+export type CourseCountOutputTypeCountTimelinesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TimelineWhereInput
+}
+
 
 export type CourseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -958,6 +1074,7 @@ export type CourseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   members?: boolean | Prisma.Course$membersArgs<ExtArgs>
   contents?: boolean | Prisma.Course$contentsArgs<ExtArgs>
   attendances?: boolean | Prisma.Course$attendancesArgs<ExtArgs>
+  timelines?: boolean | Prisma.Course$timelinesArgs<ExtArgs>
   _count?: boolean | Prisma.CourseCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["course"]>
 
@@ -1002,6 +1119,7 @@ export type CourseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   members?: boolean | Prisma.Course$membersArgs<ExtArgs>
   contents?: boolean | Prisma.Course$contentsArgs<ExtArgs>
   attendances?: boolean | Prisma.Course$attendancesArgs<ExtArgs>
+  timelines?: boolean | Prisma.Course$timelinesArgs<ExtArgs>
   _count?: boolean | Prisma.CourseCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CourseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1018,6 +1136,7 @@ export type $CoursePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     members: Prisma.$UserPayload<ExtArgs>[]
     contents: Prisma.$ContentPayload<ExtArgs>[]
     attendances: Prisma.$AttendencePayload<ExtArgs>[]
+    timelines: Prisma.$TimelinePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1426,6 +1545,7 @@ export interface Prisma__CourseClient<T, Null = never, ExtArgs extends runtime.T
   members<T extends Prisma.Course$membersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$membersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   contents<T extends Prisma.Course$contentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$contentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   attendances<T extends Prisma.Course$attendancesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$attendancesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttendencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  timelines<T extends Prisma.Course$timelinesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$timelinesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TimelinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1928,6 +2048,30 @@ export type Course$attendancesArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.AttendenceScalarFieldEnum | Prisma.AttendenceScalarFieldEnum[]
+}
+
+/**
+ * Course.timelines
+ */
+export type Course$timelinesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Timeline
+   */
+  select?: Prisma.TimelineSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Timeline
+   */
+  omit?: Prisma.TimelineOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TimelineInclude<ExtArgs> | null
+  where?: Prisma.TimelineWhereInput
+  orderBy?: Prisma.TimelineOrderByWithRelationInput | Prisma.TimelineOrderByWithRelationInput[]
+  cursor?: Prisma.TimelineWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TimelineScalarFieldEnum | Prisma.TimelineScalarFieldEnum[]
 }
 
 /**

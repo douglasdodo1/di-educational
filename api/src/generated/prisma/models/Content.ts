@@ -229,6 +229,7 @@ export type ContentWhereInput = {
   url?: Prisma.StringFilter<"Content"> | string
   courseId?: Prisma.IntFilter<"Content"> | number
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
+  timelines?: Prisma.TimelineListRelationFilter
 }
 
 export type ContentOrderByWithRelationInput = {
@@ -239,6 +240,7 @@ export type ContentOrderByWithRelationInput = {
   url?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
   course?: Prisma.CourseOrderByWithRelationInput
+  timelines?: Prisma.TimelineOrderByRelationAggregateInput
 }
 
 export type ContentWhereUniqueInput = Prisma.AtLeast<{
@@ -252,6 +254,7 @@ export type ContentWhereUniqueInput = Prisma.AtLeast<{
   url?: Prisma.StringFilter<"Content"> | string
   courseId?: Prisma.IntFilter<"Content"> | number
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
+  timelines?: Prisma.TimelineListRelationFilter
 }, "id">
 
 export type ContentOrderByWithAggregationInput = {
@@ -286,6 +289,7 @@ export type ContentCreateInput = {
   type: $Enums.ContentType
   url: string
   course: Prisma.CourseCreateNestedOneWithoutContentsInput
+  timelines?: Prisma.TimelineCreateNestedManyWithoutContentInput
 }
 
 export type ContentUncheckedCreateInput = {
@@ -295,6 +299,7 @@ export type ContentUncheckedCreateInput = {
   type: $Enums.ContentType
   url: string
   courseId: number
+  timelines?: Prisma.TimelineUncheckedCreateNestedManyWithoutContentInput
 }
 
 export type ContentUpdateInput = {
@@ -303,6 +308,7 @@ export type ContentUpdateInput = {
   type?: Prisma.EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
   url?: Prisma.StringFieldUpdateOperationsInput | string
   course?: Prisma.CourseUpdateOneRequiredWithoutContentsNestedInput
+  timelines?: Prisma.TimelineUpdateManyWithoutContentNestedInput
 }
 
 export type ContentUncheckedUpdateInput = {
@@ -312,6 +318,7 @@ export type ContentUncheckedUpdateInput = {
   type?: Prisma.EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
   url?: Prisma.StringFieldUpdateOperationsInput | string
   courseId?: Prisma.IntFieldUpdateOperationsInput | number
+  timelines?: Prisma.TimelineUncheckedUpdateManyWithoutContentNestedInput
 }
 
 export type ContentCreateManyInput = {
@@ -386,6 +393,11 @@ export type ContentSumOrderByAggregateInput = {
   courseId?: Prisma.SortOrder
 }
 
+export type ContentNullableScalarRelationFilter = {
+  is?: Prisma.ContentWhereInput | null
+  isNot?: Prisma.ContentWhereInput | null
+}
+
 export type ContentCreateNestedManyWithoutCourseInput = {
   create?: Prisma.XOR<Prisma.ContentCreateWithoutCourseInput, Prisma.ContentUncheckedCreateWithoutCourseInput> | Prisma.ContentCreateWithoutCourseInput[] | Prisma.ContentUncheckedCreateWithoutCourseInput[]
   connectOrCreate?: Prisma.ContentCreateOrConnectWithoutCourseInput | Prisma.ContentCreateOrConnectWithoutCourseInput[]
@@ -432,11 +444,28 @@ export type EnumContentTypeFieldUpdateOperationsInput = {
   set?: $Enums.ContentType
 }
 
+export type ContentCreateNestedOneWithoutTimelinesInput = {
+  create?: Prisma.XOR<Prisma.ContentCreateWithoutTimelinesInput, Prisma.ContentUncheckedCreateWithoutTimelinesInput>
+  connectOrCreate?: Prisma.ContentCreateOrConnectWithoutTimelinesInput
+  connect?: Prisma.ContentWhereUniqueInput
+}
+
+export type ContentUpdateOneWithoutTimelinesNestedInput = {
+  create?: Prisma.XOR<Prisma.ContentCreateWithoutTimelinesInput, Prisma.ContentUncheckedCreateWithoutTimelinesInput>
+  connectOrCreate?: Prisma.ContentCreateOrConnectWithoutTimelinesInput
+  upsert?: Prisma.ContentUpsertWithoutTimelinesInput
+  disconnect?: Prisma.ContentWhereInput | boolean
+  delete?: Prisma.ContentWhereInput | boolean
+  connect?: Prisma.ContentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ContentUpdateToOneWithWhereWithoutTimelinesInput, Prisma.ContentUpdateWithoutTimelinesInput>, Prisma.ContentUncheckedUpdateWithoutTimelinesInput>
+}
+
 export type ContentCreateWithoutCourseInput = {
   name: string
   description?: string | null
   type: $Enums.ContentType
   url: string
+  timelines?: Prisma.TimelineCreateNestedManyWithoutContentInput
 }
 
 export type ContentUncheckedCreateWithoutCourseInput = {
@@ -445,6 +474,7 @@ export type ContentUncheckedCreateWithoutCourseInput = {
   description?: string | null
   type: $Enums.ContentType
   url: string
+  timelines?: Prisma.TimelineUncheckedCreateNestedManyWithoutContentInput
 }
 
 export type ContentCreateOrConnectWithoutCourseInput = {
@@ -485,6 +515,56 @@ export type ContentScalarWhereInput = {
   courseId?: Prisma.IntFilter<"Content"> | number
 }
 
+export type ContentCreateWithoutTimelinesInput = {
+  name: string
+  description?: string | null
+  type: $Enums.ContentType
+  url: string
+  course: Prisma.CourseCreateNestedOneWithoutContentsInput
+}
+
+export type ContentUncheckedCreateWithoutTimelinesInput = {
+  id?: number
+  name: string
+  description?: string | null
+  type: $Enums.ContentType
+  url: string
+  courseId: number
+}
+
+export type ContentCreateOrConnectWithoutTimelinesInput = {
+  where: Prisma.ContentWhereUniqueInput
+  create: Prisma.XOR<Prisma.ContentCreateWithoutTimelinesInput, Prisma.ContentUncheckedCreateWithoutTimelinesInput>
+}
+
+export type ContentUpsertWithoutTimelinesInput = {
+  update: Prisma.XOR<Prisma.ContentUpdateWithoutTimelinesInput, Prisma.ContentUncheckedUpdateWithoutTimelinesInput>
+  create: Prisma.XOR<Prisma.ContentCreateWithoutTimelinesInput, Prisma.ContentUncheckedCreateWithoutTimelinesInput>
+  where?: Prisma.ContentWhereInput
+}
+
+export type ContentUpdateToOneWithWhereWithoutTimelinesInput = {
+  where?: Prisma.ContentWhereInput
+  data: Prisma.XOR<Prisma.ContentUpdateWithoutTimelinesInput, Prisma.ContentUncheckedUpdateWithoutTimelinesInput>
+}
+
+export type ContentUpdateWithoutTimelinesInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  course?: Prisma.CourseUpdateOneRequiredWithoutContentsNestedInput
+}
+
+export type ContentUncheckedUpdateWithoutTimelinesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  courseId?: Prisma.IntFieldUpdateOperationsInput | number
+}
+
 export type ContentCreateManyCourseInput = {
   id?: number
   name: string
@@ -498,6 +578,7 @@ export type ContentUpdateWithoutCourseInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
   url?: Prisma.StringFieldUpdateOperationsInput | string
+  timelines?: Prisma.TimelineUpdateManyWithoutContentNestedInput
 }
 
 export type ContentUncheckedUpdateWithoutCourseInput = {
@@ -506,6 +587,7 @@ export type ContentUncheckedUpdateWithoutCourseInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
   url?: Prisma.StringFieldUpdateOperationsInput | string
+  timelines?: Prisma.TimelineUncheckedUpdateManyWithoutContentNestedInput
 }
 
 export type ContentUncheckedUpdateManyWithoutCourseInput = {
@@ -517,6 +599,35 @@ export type ContentUncheckedUpdateManyWithoutCourseInput = {
 }
 
 
+/**
+ * Count Type ContentCountOutputType
+ */
+
+export type ContentCountOutputType = {
+  timelines: number
+}
+
+export type ContentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  timelines?: boolean | ContentCountOutputTypeCountTimelinesArgs
+}
+
+/**
+ * ContentCountOutputType without action
+ */
+export type ContentCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ContentCountOutputType
+   */
+  select?: Prisma.ContentCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ContentCountOutputType without action
+ */
+export type ContentCountOutputTypeCountTimelinesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TimelineWhereInput
+}
+
 
 export type ContentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -526,6 +637,8 @@ export type ContentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   url?: boolean
   courseId?: boolean
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
+  timelines?: boolean | Prisma.Content$timelinesArgs<ExtArgs>
+  _count?: boolean | Prisma.ContentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["content"]>
 
 export type ContentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -560,6 +673,8 @@ export type ContentSelectScalar = {
 export type ContentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "type" | "url" | "courseId", ExtArgs["result"]["content"]>
 export type ContentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
+  timelines?: boolean | Prisma.Content$timelinesArgs<ExtArgs>
+  _count?: boolean | Prisma.ContentCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ContentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
@@ -572,6 +687,7 @@ export type $ContentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   name: "Content"
   objects: {
     course: Prisma.$CoursePayload<ExtArgs>
+    timelines: Prisma.$TimelinePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -975,6 +1091,7 @@ readonly fields: ContentFieldRefs;
 export interface Prisma__ContentClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   course<T extends Prisma.CourseDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseDefaultArgs<ExtArgs>>): Prisma.Prisma__CourseClient<runtime.Types.Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  timelines<T extends Prisma.Content$timelinesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Content$timelinesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TimelinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1403,6 +1520,30 @@ export type ContentDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Contents to delete.
    */
   limit?: number
+}
+
+/**
+ * Content.timelines
+ */
+export type Content$timelinesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Timeline
+   */
+  select?: Prisma.TimelineSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Timeline
+   */
+  omit?: Prisma.TimelineOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TimelineInclude<ExtArgs> | null
+  where?: Prisma.TimelineWhereInput
+  orderBy?: Prisma.TimelineOrderByWithRelationInput | Prisma.TimelineOrderByWithRelationInput[]
+  cursor?: Prisma.TimelineWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TimelineScalarFieldEnum | Prisma.TimelineScalarFieldEnum[]
 }
 
 /**

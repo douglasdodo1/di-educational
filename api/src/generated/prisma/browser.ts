@@ -57,3 +57,8 @@ export type Attendence = Prisma.AttendenceModel
  * 
  */
 export type Frequency = Prisma.FrequencyModel
+/**
+ * Model Timeline
+ * 
+ */
+export type Timeline = Prisma.TimelineModel
