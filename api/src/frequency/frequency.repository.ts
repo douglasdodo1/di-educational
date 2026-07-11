@@ -34,11 +34,12 @@ export class FrequencyRepository {
   async setAllFrequencies(
     attendenceId: number,
     isPresent: boolean,
-  ): Promise<boolean> {
+  ): Promise<FrequencyModel[]> {
     await this.prisma.frequency.updateMany({
       where: { attendenceId: attendenceId },
       data: { is_present: isPresent },
     });
-    return true;
+
+    return await this.findAllByAttendenceId(attendenceId);
   }
 }

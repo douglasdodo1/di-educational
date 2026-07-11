@@ -21,11 +21,11 @@ export class FrequencyResolver {
     return this.frequencyService.setFrequency(frequencyId, isPresent);
   }
 
-  @Mutation(() => [Boolean])
+  @Mutation(() => [FrequencyModel])
   setAllFrequencies(
     @Args('attendenceId', { type: () => Int }) attendenceId: number,
     @Args('isPresent', { type: () => Boolean }) isPresent: boolean,
-  ): Promise<boolean> {
+  ): Promise<FrequencyModel[]> {
     return this.frequencyService.setAllFrequencies(attendenceId, isPresent);
   }
 }

@@ -20,7 +20,7 @@ export class FrequencyService {
   async setAllFrequencies(
     attendenceId: number,
     isPresent: boolean,
-  ): Promise<boolean> {
+  ): Promise<FrequencyModel[]> {
     return await this.frequencyRepository.setAllFrequencies(
       attendenceId,
       isPresent,
