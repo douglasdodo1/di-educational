@@ -15,6 +15,7 @@ import { AuthModule } from './auth/auth.module';
 import { GqlContext } from './common/fastify.type';
 import { AttendenceModule } from './attendence/attendence.module';
 import { FrequencyModule } from './frequency/frequency.module';
+import { TimelineModule } from './timeline/timeline.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { FrequencyModule } from './frequency/frequency.module';
     AuthModule,
     AttendenceModule,
     FrequencyModule,
+    TimelineModule,
     CoursesModule,
     ContentsModule,
     UsersModule,

@@ -94,6 +94,16 @@ type AuthResponse {
   user: UserModel!
 }
 
+type TimelineModel {
+  id: Int!
+  is_done: Boolean!
+  date: DateTime!
+  courseId: Int!
+  contentId: Int
+  course: CoursesModel
+  content: ContentModel
+}
+
 type Query {
   me: UserModel!
   teachers: [UserModel!]!
@@ -102,6 +112,7 @@ type Query {
   student(id: Float!): StudentsModel
   attendences(courseId: Int!): [AttendenceModel!]!
   frequencies(attendenceId: Int!): [FrequencyModel!]!
+  timelinesByCourseId(courseId: Int!): [TimelineModel!]!
   Courses: [CoursesModel!]!
   course(id: Int!): CoursesModel!
   content(contentId: Int!): ContentModel
