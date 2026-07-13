@@ -92,7 +92,7 @@ CREATE TABLE "Frequency" (
 CREATE TABLE "Timeline" (
     "id" SERIAL NOT NULL,
     "is_done" BOOLEAN NOT NULL DEFAULT false,
-    "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "date" DATE NOT NULL,
     "courseId" INTEGER NOT NULL,
     "contentId" INTEGER,
 

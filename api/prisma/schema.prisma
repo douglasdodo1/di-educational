@@ -119,8 +119,7 @@ model Timeline {
   id          Int      @id @default(autoincrement())
 
   is_done     Boolean  @default(false)
-  date        DateTime @default(now())
-
+  date DateTime @db.Date
   courseId    Int
   course      Course   @relation(fields: [courseId], references: [id])
 

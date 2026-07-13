@@ -12,6 +12,23 @@ export class TimelineRepository {
       include: {
         content: true,
       },
+      orderBy: {
+        date: 'asc',
+      },
+    });
+  }
+
+  async create(data: {
+    date: Date;
+    is_done: boolean;
+    courseId: number;
+    contentId?: number | null;
+  }): Promise<TimelineModel> {
+    return await this.prisma.timeline.create({
+      data,
+      include: {
+        content: true,
+      },
     });
   }
 }

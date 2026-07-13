@@ -127,6 +127,7 @@ type Mutation {
   updateStudent(id: Float!, data: UpdateStudentInput!): Boolean!
   setFrequency(frequencyId: Int!, isPresent: Boolean!): FrequencyModel!
   setAllFrequencies(attendenceId: Int!, isPresent: Boolean!): [FrequencyModel!]!
+  createTimeline(data: CreateTimelineInput!): TimelineModel!
   createCourse(data: CreateCourseInput!): CoursesModel
   updateCourse(id: Int!, data: UpdateCourseInput!): Boolean!
   deleteCourse(id: Int!): Boolean!
@@ -157,6 +158,13 @@ input UpdateStudentInput {
   phones: [String!]
   password: String
   enrollmentNumber: String
+}
+
+input CreateTimelineInput {
+  date: DateTime!
+  is_done: Boolean!
+  courseId: Int!
+  contentId: Int
 }
 
 input CreateCourseInput {
