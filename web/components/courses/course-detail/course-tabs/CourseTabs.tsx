@@ -4,7 +4,7 @@ import { sections } from '../../utils'
 import { ContentSection } from '../content-section/ContentSection'
 import { CourseActivitiesSection } from '../course-activities-section/CourseActivitiesSection'
 import { AttendanceSection } from '../attendance-section/AttendanceSection'
-import { Timeline } from '@/components/timeline/Timeline'
+import { Timeline } from '@/components/courses/timeline/Timeline'
 
 interface CourseTabsProps {
   course?: Course
@@ -38,7 +38,7 @@ export const CourseTabs = ({ course, loading }: CourseTabsProps) => {
         <CourseActivitiesSection activities={[]} />
       </TabsContent>
       <TabsContent value={sections[3].id} className="flex min-h-0 flex-1 flex-col">
-        <Timeline items={[]} />
+        <Timeline courseId={course?.id} contents={course?.contents} />
       </TabsContent>
     </Tabs>
   )
