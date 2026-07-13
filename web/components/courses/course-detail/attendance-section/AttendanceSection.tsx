@@ -1,24 +1,11 @@
 import { cn } from '@/lib/utils'
 import { Panel } from '../panel/Panel'
-import { AttendanceStatus, attendanceStatusLabels } from '../utils'
+import { AttendanceStatus, attendanceStatusLabels, sections } from '../../utils'
 import { useAttendences } from '@/hooks/attendences/useAttendences'
 import { Card } from '@/components/ui/card'
 import { ClipboardCheck, CalendarDays } from 'lucide-react'
 import { formatDate } from '@/lib/date/formatToDD/MM/YYYY'
 import Link from 'next/link'
-
-const attendanceStyles: Record<AttendanceStatus, string> = {
-  presente: 'bg-success/10 text-success',
-  falta: 'bg-destructive/10 text-destructive',
-  justificada: 'bg-warning/10 text-warning',
-}
-
-interface AttendanceRecord {
-  id: string
-  date: string
-  topic: string
-  status: AttendanceStatus
-}
 
 interface AttendeceSectionProps {
   courseId?: string
@@ -26,13 +13,14 @@ interface AttendeceSectionProps {
 
 export function AttendanceSection({ courseId }: AttendeceSectionProps) {
   const { attendences, loading, error } = useAttendences(courseId)
+  const sectionTitle = sections[2].label
 
   const total = (attendences?.length || 0).toString()
   const presentes = 5
   const taxa = 0
 
   return (
-    <Panel title="Frequência" className="flex min-h-0 flex-1 flex-col">
+    <Panel title={sectionTitle} className="flex min-h-0 flex-1 flex-col">
       <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto">
         {attendences?.map((attendence) => {
           const date = formatDate(attendence.date)
@@ -55,14 +43,5 @@ export function AttendanceSection({ courseId }: AttendeceSectionProps) {
         })}
       </div>
     </Panel>
-  )
-}
-
-function Stat({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="border-border bg-card flex flex-col gap-1 rounded-2xl border p-4">
-      <span className="font-heading text-2xl font-semibold">{value}</span>
-      <span className="text-muted-foreground text-xs">{label}</span>
-    </div>
   )
 }

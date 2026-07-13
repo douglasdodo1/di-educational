@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Card } from '@/components/ui/card'
 import { contentIcon } from './utils'
 import { ContentSectionSkeleton } from './ContentSectionSkeleton'
+import { sections } from '../../utils'
 
 interface OverviewSectionProps {
   course?: Course
@@ -12,17 +13,18 @@ interface OverviewSectionProps {
 
 export function ContentSection({ course, loading }: OverviewSectionProps) {
   const contents = course?.contents
+  const sectionTitle = sections[0].label
 
   if (loading) {
     return (
-      <Panel title="Conteúdo">
+      <Panel title={sectionTitle}>
         <ContentSectionSkeleton />
       </Panel>
     )
   }
 
   return (
-    <Panel title="Conteúdo" className="flex min-h-0 flex-1 flex-col">
+    <Panel title={sectionTitle} className="flex min-h-0 flex-1 flex-col">
       <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto">
         {contents?.map((content, index) => {
           const Icon = contentIcon(content.type)
