@@ -3,7 +3,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 export function CourseDetailHeaderSkeleton() {
   return (
     <header className="border-border bg-card relative overflow-hidden rounded-2xl border">
-      <div className="relative h-36 w-full sm:h-44">
+      <div className="relative w-full" style={{ height: '80px' }}>
         <Skeleton className="h-full w-full" />
         <div className="absolute right-5 bottom-4 left-5 text-white">
           <Skeleton className="h-6 w-24 rounded-md bg-white/90" />
