@@ -4,19 +4,17 @@ import { useForm } from '@tanstack/react-form'
 interface TimelineFormValues {
   date: Date
   is_done: boolean
-  courseId: string | null
-  contentId: string | null
+  contentId: string
 }
 
-export const useTimeline = () => {
+export const useTimeline = (courseId?: string) => {
   const { createTimeline } = useCreateTimelineMutation()
 
   const form = useForm({
     defaultValues: {
       date: new Date(),
       is_done: false,
-      courseId: null,
-      contentId: null,
+      contentId: '',
     } as TimelineFormValues,
 
     validators: {
@@ -26,7 +24,7 @@ export const useTimeline = () => {
             variables: {
               date: value.date,
               is_done: value.is_done,
-              courseId: value.courseId,
+              courseId: courseId,
               contentId: value.contentId,
             },
           })

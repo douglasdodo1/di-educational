@@ -1,8 +1,8 @@
 import { Field, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { useTimeline } from './useTimeline'
 import { Input } from '@/components/ui/input'
-import { Select } from '@/components/ui/select'
 import { Content } from '@/types/content'
+import { SelectFormContent } from './SelectContent/SelectContent'
 
 interface CreatetTimelineProps {
   courseId?: string
@@ -10,7 +10,7 @@ interface CreatetTimelineProps {
 }
 
 export const CreateTimelineForm = ({ courseId, contents }: CreatetTimelineProps) => {
-  const form = useTimeline()
+  const form = useTimeline(courseId)
 
   return (
     <form
@@ -38,13 +38,11 @@ export const CreateTimelineForm = ({ courseId, contents }: CreatetTimelineProps)
           {(field) => (
             <Field>
               <FieldLabel>Conteúdo relacionado</FieldLabel>
-              <Select
-                options={contents?.map((content) => ({
-                  value: content.id.toString(),
-                  label: content.name,
-                }))}
-                value={field.state.value?.toString()}
-                onValueChange={(value) => field.handleChange(value)}
+
+              <SelectFormContent
+                contents={contents}
+                value={field.state.value}
+                onValueChange={field.handleChange}
               />
             </Field>
           )}
