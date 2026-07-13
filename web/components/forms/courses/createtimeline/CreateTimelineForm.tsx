@@ -3,14 +3,17 @@ import { useTimeline } from './useTimeline'
 import { Input } from '@/components/ui/input'
 import { Content } from '@/types/content'
 import { SelectFormContent } from './SelectContent/SelectContent'
+import { Button } from '@/components/ui/button'
+import { Spinner } from '@/components/ui/spinner'
 
 interface CreatetTimelineProps {
   courseId?: string
+  handleClose: () => void
   contents?: Content[]
 }
 
-export const CreateTimelineForm = ({ courseId, contents }: CreatetTimelineProps) => {
-  const form = useTimeline(courseId)
+export const CreateTimelineForm = ({ courseId, handleClose, contents }: CreatetTimelineProps) => {
+  const form = useTimeline({ courseId, handleClose })
 
   return (
     <form
@@ -48,6 +51,18 @@ export const CreateTimelineForm = ({ courseId, contents }: CreatetTimelineProps)
           )}
         </form.Field>
       </FieldGroup>
+
+      <form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
+        {([canSubmit, isSubmitting]) => (
+          <Button
+            type="submit"
+            disabled={!canSubmit || isSubmitting}
+            className="mt-4 w-full cursor-pointer"
+          >
+            {isSubmitting ? <Spinner /> : 'Criar'}
+          </Button>
+        )}
+      </form.Subscribe>
     </form>
   )
 }

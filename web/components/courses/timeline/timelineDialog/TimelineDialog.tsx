@@ -15,8 +15,7 @@ export const TimelineDialog = ({ isOpen, onClose, courseId, contents }: Timeline
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent>
         <DialogTitle>Adicionar cronograma</DialogTitle>
-        <CreateTimelineForm courseId={courseId} contents={contents} />
-        <Button>Salvar</Button>
+        <CreateTimelineForm courseId={courseId} handleClose={onClose} contents={contents} />
       </DialogContent>
     </Dialog>
   )

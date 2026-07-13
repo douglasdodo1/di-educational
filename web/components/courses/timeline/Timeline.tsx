@@ -1,4 +1,4 @@
-import { CheckCircle, Clock, FileText, Icon, Video } from 'lucide-react'
+import { CheckCircle, Clock, Edit, FileText, Icon, Video } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Panel } from '../course-detail/panel/Panel'
 import { useTimelinesByCourseId } from '@/hooks/timelines/useTimelinesByCourseId'
@@ -32,7 +32,12 @@ export const Timeline = ({ courseId, contents }: TimelineProps) => {
       className="flex min-h-0 flex-1 flex-col"
       openModal={handleOpenCreateModal}
     >
-      <TimelineDialog isOpen={openModal} onClose={handleCloseCreateModal} contents={contents} />
+      <TimelineDialog
+        courseId={courseId}
+        isOpen={openModal}
+        onClose={handleCloseCreateModal}
+        contents={contents}
+      />
       <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-2">
         <ol className="border-border relative flex flex-col gap-6 border-l pl-6">
           {timelines?.map((item) => {
@@ -63,9 +68,14 @@ export const Timeline = ({ courseId, contents }: TimelineProps) => {
                       <p className="font-heading font-semibold">{name}</p>
                       <p className="text-muted-foreground text-sm">{description}</p>
                     </div>
-                    <span className="text-muted-foreground shrink-0 text-xl font-medium whitespace-nowrap">
-                      {date}
-                    </span>
+                    <div className="flex flex-row items-center gap-4">
+                      <span className="text-muted-foreground shrink-0 text-xl font-medium whitespace-nowrap">
+                        {date}
+                      </span>
+                      <span className="cursor-pointer">
+                        <Edit />
+                      </span>
+                    </div>
                   </div>
                 </Card>
               </li>

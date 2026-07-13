@@ -7,8 +7,13 @@ interface TimelineFormValues {
   contentId: string
 }
 
-export const useTimeline = (courseId?: string) => {
-  const { createTimeline } = useCreateTimelineMutation()
+interface TimeLineProps {
+  courseId?: string
+  handleClose: () => void
+}
+
+export const useTimeline = ({ courseId, handleClose }: TimeLineProps) => {
+  const { createTimeline } = useCreateTimelineMutation(courseId)
 
   const form = useForm({
     defaultValues: {
@@ -20,14 +25,21 @@ export const useTimeline = (courseId?: string) => {
     validators: {
       onSubmitAsync: async ({ value }) => {
         try {
-          await createTimeline({
+          const response = await createTimeline({
             variables: {
-              date: value.date,
-              is_done: value.is_done,
-              courseId: courseId,
-              contentId: value.contentId,
+              data: {
+                date: value.date,
+                is_done: value.is_done,
+                courseId: Number(courseId),
+                contentId: value.contentId ? Number(value.contentId) : null,
+              },
             },
           })
+
+          if (response.data) {
+            handleClose()
+            form.reset()
+          }
         } catch (e) {
           return 'Erro ao criar cronograma'
         }
