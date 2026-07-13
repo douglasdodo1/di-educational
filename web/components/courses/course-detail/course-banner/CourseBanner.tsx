@@ -35,7 +35,7 @@ export const CourseBanner = ({ course, loading }: CourseDetailHeaderProps) => {
         <div className="flex flex-1 gap-x-6">
           <span className="flex items-center gap-1.5">
             <BookOpen className="size-4" />
-            {course?.contents.length} aulas
+            {course?.contents?.length} aulas
           </span>
           <span className="flex items-center gap-1.5">
             <Clock className="size-4" />

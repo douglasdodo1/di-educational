@@ -14,16 +14,16 @@ interface CourseTabsProps {
 
 export const CourseTabs = ({ course, loading }: CourseTabsProps) => {
   return (
-    <Tabs defaultValue={sections[0].id} className="flex min-h-0 flex-1 flex-col gap-6">
-      <TabsList className="border-border bg-card flex w-full shrink-0 justify-start gap-1 rounded-xl border">
+    <Tabs defaultValue={sections[0].id} className="flex min-h-0 w-full flex-1 flex-col gap-6">
+      <TabsList className="border-border bg-card w-full gap-1 rounded-xl border">
         {sections.map((s) => (
           <TabsTrigger
             key={s.id}
             value={s.id}
-            className="data-active:bg-primary data-active:text-primary-foreground text-muted-foreground hover:bg-secondary hover:text-foreground dark:data-active:bg-primary dark:data-active:text-primary-foreground flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-colors data-active:shadow-sm"
+            className="data-active:bg-primary data-active:text-primary-foreground text-muted-foreground hover:bg-secondary hover:text-foreground dark:data-active:bg-primary dark:data-active:text-primary-foreground cursor-pointer items-center rounded-lg px-4 py-2.5 text-sm font-medium transition-colors data-active:shadow-sm"
           >
             <s.icon className="size-4.5" />
-            {s.label}
+            <span className="hidden sm:inline">{s.label}</span>
           </TabsTrigger>
         ))}
       </TabsList>
