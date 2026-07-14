@@ -1,18 +1,19 @@
 import { useCreateTimelineMutation } from '@/hooks/timelines/useCreateTimelineMutation'
 import { useForm } from '@tanstack/react-form'
+import { toast } from 'sonner'
 
-interface TimelineFormValues {
+interface CreateTimelineFormValues {
   date: Date
   is_done: boolean
   contentId: string
 }
 
-interface TimeLineProps {
+interface CreateTimelineProps {
   courseId?: string
   handleClose: () => void
 }
 
-export const useTimeline = ({ courseId, handleClose }: TimeLineProps) => {
+export const useCreateTimeline = ({ courseId, handleClose }: CreateTimelineProps) => {
   const { createTimeline } = useCreateTimelineMutation(courseId)
 
   const form = useForm({
@@ -20,7 +21,7 @@ export const useTimeline = ({ courseId, handleClose }: TimeLineProps) => {
       date: new Date(),
       is_done: false,
       contentId: '',
-    } as TimelineFormValues,
+    } as CreateTimelineFormValues,
 
     validators: {
       onSubmitAsync: async ({ value }) => {
@@ -36,12 +37,14 @@ export const useTimeline = ({ courseId, handleClose }: TimeLineProps) => {
             },
           })
 
-          if (response.data) {
+          if (response?.data) {
             handleClose()
             form.reset()
+            toast.success('Cronograma criado com sucesso')
           }
         } catch (e) {
-          return 'Erro ao criar cronograma'
+          console.error(e)
+          toast.error('Erro ao criar cronograma')
         }
       },
     },

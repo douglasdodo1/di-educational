@@ -1,21 +1,41 @@
 import { CreateTimelineForm } from '@/components/forms/courses/createtimeline/CreateTimelineForm'
-import { Button } from '@/components/ui/button'
+import { UpdateTimelineForm } from '@/components/forms/courses/createtimeline/UpdateTimelineForm'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 import { Content } from '@/types/content'
+import { TimelineModel } from '@/types/timelineModel'
 
 interface TimelineDialogProps {
   isOpen: boolean
   onClose: () => void
   courseId?: string
   contents?: Content[]
+  editingItem?: TimelineModel
 }
 
-export const TimelineDialog = ({ isOpen, onClose, courseId, contents }: TimelineDialogProps) => {
+export const TimelineDialog = ({
+  isOpen,
+  onClose,
+  courseId,
+  contents,
+  editingItem,
+}: TimelineDialogProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent>
-        <DialogTitle>Adicionar cronograma</DialogTitle>
-        <CreateTimelineForm courseId={courseId} handleClose={onClose} contents={contents} />
+        <DialogTitle>{editingItem ? 'Editar cronograma' : 'Adicionar cronograma'}</DialogTitle>
+        {editingItem ? (
+          <UpdateTimelineForm
+            editingItem={editingItem}
+            handleClose={onClose}
+            contents={contents}
+          />
+        ) : (
+          <CreateTimelineForm
+            courseId={courseId}
+            handleClose={onClose}
+            contents={contents}
+          />
+        )}
       </DialogContent>
     </Dialog>
   )
