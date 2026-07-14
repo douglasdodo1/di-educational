@@ -3,6 +3,7 @@ import { Montserrat } from 'next/font/google'
 import './globals.css'
 import { AppApolloProvider } from '@/providers/ApolloProvider'
 import { ThemeProvider } from '@/components/theme-provider/ThemeProvider'
+import { Toaster } from '@/components/ui/sonner'
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -32,6 +33,7 @@ export default function RootLayout({
           >
             {children}
           </ThemeProvider>
+          <Toaster richColors closeButton />
         </AppApolloProvider>
       </body>
     </html>
