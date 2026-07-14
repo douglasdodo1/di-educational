@@ -4,7 +4,7 @@ import { sections } from '../../utils'
 import { ContentSection } from '../content-section/ContentSection'
 import { CourseActivitiesSection } from '../course-activities-section/CourseActivitiesSection'
 import { AttendanceSection } from '../attendance-section/AttendanceSection'
-import { Timeline } from '@/components/courses/timeline/Timeline'
+import { Timeline } from '../../timeline/Timeline'
 
 interface CourseTabsProps {
   course?: Course
