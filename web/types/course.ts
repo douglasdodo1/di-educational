@@ -1,4 +1,4 @@
-import { Content } from './content'
+import { ContentModel } from './content'
 
 export type Course = {
   id: string
@@ -7,6 +7,6 @@ export type Course = {
   category: string
   image: string
   progress: number
-  contents: Content[]
+  contents: ContentModel[]
   hours: number
 }

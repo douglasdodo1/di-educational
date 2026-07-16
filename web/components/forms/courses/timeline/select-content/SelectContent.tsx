@@ -6,10 +6,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Content } from '@/types/content'
+import { ContentModel } from '@/types/content'
 
 interface SelectFormContentProps {
-  contents?: Content[]
+  contents?: ContentModel[]
   value?: string
   onValueChange: (value: string) => void
 }

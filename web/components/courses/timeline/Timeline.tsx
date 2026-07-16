@@ -1,13 +1,13 @@
 import { Panel } from '../course-detail/panel/Panel'
 import { TimelineDialog } from './timelineDialog/TimelineDialog'
-import { Content } from '@/types/content'
+import { ContentModel } from '@/types/content'
 import { TimelineSkeletonList } from './TimelineSkeletonList/TimelineSkeletonList'
 import { useViewModel } from './useViewModel'
 import { TimelineCardList } from './timelineCardList/TimelineCardList'
 
 interface TimelineProps {
   courseId?: string
-  contents?: Content[]
+  contents?: ContentModel[]
 }
 
 export const Timeline = ({ courseId, contents }: TimelineProps) => {

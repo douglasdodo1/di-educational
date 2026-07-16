@@ -1,8 +1,8 @@
-import { Content } from './content'
+import { ContentModel } from './content'
 
 export type TimelineModel = {
   id: number
   is_done: boolean
   date: Date
-  content?: Content | null
+  content?: ContentModel | null
 }

@@ -1,8 +1,8 @@
-import { Content } from '@/types/content'
+import { ContentModel } from '@/types/content'
 import Image from 'next/image'
 
 interface LessonContentProps {
-  content?: Content
+  content?: ContentModel
 }
 
 export const LessonContent = ({ content }: LessonContentProps) => {

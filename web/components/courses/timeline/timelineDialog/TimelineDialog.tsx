@@ -1,14 +1,14 @@
 import { CreateTimelineForm } from '@/components/forms/courses/timeline/create-timeline/CreateTimelineForm'
 import { UpdateTimelineForm } from '@/components/forms/courses/timeline/update-timeline/UpdateTimelineForm'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
-import { Content } from '@/types/content'
+import { ContentModel } from '@/types/content'
 import { TimelineModel } from '@/types/timelineModel'
 
 interface TimelineDialogProps {
   isOpen: boolean
   onClose: () => void
   courseId?: string
-  contents?: Content[]
+  contents?: ContentModel[]
   editingItem?: TimelineModel
 }
 

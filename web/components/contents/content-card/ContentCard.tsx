@@ -2,10 +2,10 @@ import { Card } from '@/components/ui/card'
 import { ImageIcon } from 'lucide-react'
 import { ContentSkeleton } from '../content-viewer/ContentSkeleton'
 import { LessonContent } from '../lesson-content/LessonContent'
-import { Content } from '@/types/content'
+import { ContentModel } from '@/types/content'
 
 interface ContentCardProps {
-  content?: Content
+  content?: ContentModel
   loading: boolean
 }
 

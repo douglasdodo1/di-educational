@@ -1,6 +1,6 @@
 import { Field, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
-import { Content } from '@/types/content'
+import { ContentModel } from '@/types/content'
 import { SelectFormContent } from '../select-content/SelectContent'
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
@@ -10,7 +10,7 @@ import { useUpdateTimeline } from './useUpdateTimeline'
 interface UpdateTimelineFormProps {
   editingItem: TimelineModel
   handleClose: () => void
-  contents?: Content[]
+  contents?: ContentModel[]
 }
 
 export const UpdateTimelineForm = ({
