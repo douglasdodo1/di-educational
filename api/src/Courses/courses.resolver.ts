@@ -2,11 +2,9 @@ import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CoursesModel } from './courses.model';
 import { CreateCourseInput } from './inputs/create.course.input';
 import { UpdateCourseInput } from './inputs/update.course.input';
-import { ContentModel } from 'src/contents/contents.model';
 import { CoursesService } from './courses.service';
 import { CurrentUser } from 'src/auth/decorators/current.user.decorator';
 import { UserModel } from 'src/users/models/users.model';
-import { CreateContentInput } from 'src/contents/inputs/create.content.input';
 
 @Resolver(() => CoursesModel)
 export class CoursesResolver {
@@ -59,15 +57,6 @@ export class CoursesResolver {
     @Args('ids', { type: () => [Int] }) ids: number[],
   ): Promise<boolean> {
     return this.coursesService.unrollmentStudents(courseId, ids);
-  }
-
-  @Mutation(() => ContentModel, { nullable: true })
-  createContent(
-    @Args('courseId', { type: () => Int }) courseId: number,
-
-    @Args('data', { type: () => CreateContentInput }) data: CreateContentInput,
-  ): Promise<ContentModel> {
-    return this.coursesService.createContent(courseId, data);
   }
 
   @Mutation(() => Boolean)

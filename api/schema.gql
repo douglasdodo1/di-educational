@@ -137,9 +137,9 @@ type Mutation {
   deleteCourse(id: Int!): Boolean!
   enrollmentStudents(courseId: Int!, ids: [Int!]!): Boolean!
   unrollmentStudents(courseId: Int!, ids: [Int!]!): Boolean!
-  createContent(courseId: Int!, data: CreateContentInput!): ContentModel
   updateIsActive(courseId: Int!, state: Boolean!): Boolean!
-  updateContent(contentId: Int!, data: UpdateContentInput!): Boolean!
+  createContent(data: CreateContentInput!): ContentModel!
+  updateContent(data: UpdateContentInput!): ContentModel!
   deleteContents(contentIds: [Int!]!): Boolean!
 }
 
@@ -210,13 +210,15 @@ input UpdateCourseInput {
 input CreateContentInput {
   name: String!
   description: String
-  type: String!
+  courseId: Int!
+  type: ContentType!
   url: String!
 }
 
 input UpdateContentInput {
+  id: Int!
   name: String
   description: String
-  type: String
+  type: ContentType
   url: String
 }

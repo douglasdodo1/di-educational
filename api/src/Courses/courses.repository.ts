@@ -3,8 +3,6 @@ import { PrismaService } from 'src/prisma.service';
 import { CreateCourseInput } from './inputs/create.course.input';
 import { UpdateCourseInput } from './inputs/update.course.input';
 import { CoursesModel } from './courses.model';
-import { ContentModel } from 'src/contents/contents.model';
-import { CreateContentInput } from 'src/contents/inputs/create.content.input';
 
 @Injectable()
 export class CoursesRepository {
@@ -73,21 +71,6 @@ export class CoursesRepository {
       where: { id: courseId },
       data: {
         members: { disconnect: ids.map((id) => ({ id })) },
-      },
-    });
-  }
-
-  async createContent(
-    courseId: number,
-    data: CreateContentInput,
-  ): Promise<ContentModel> {
-    return await this.prisma.content.create({
-      data: {
-        name: data.name,
-        description: data?.description,
-        courseId,
-        type: data.type,
-        url: data.url,
       },
     });
   }

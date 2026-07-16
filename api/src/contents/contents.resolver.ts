@@ -1,6 +1,7 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { ContentModel } from './contents.model';
 import { ContentsService } from './contents.service';
+import { CreateContentInput } from './inputs/create.content.input';
 import { UpdateContentInput } from './inputs/update.content.input';
 
 @Resolver(() => ContentModel)
@@ -14,12 +15,21 @@ export class ContentsResolver {
     return this.contentsService.getContentByID(contentId);
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => ContentModel)
+  createContent(
+    @Args('data', { type: () => CreateContentInput }) data: CreateContentInput,
+  ): Promise<ContentModel> {
+    console.log('data:', data);
+    return this.contentsService.create(data);
+  }
+
+  @Mutation(() => ContentModel)
   updateContent(
-    @Args('contentId', { type: () => Int }) contentId: number,
     @Args('data', { type: () => UpdateContentInput }) data: UpdateContentInput,
-  ): Promise<boolean> {
-    return this.contentsService.updateContent(contentId, data);
+  ): Promise<ContentModel> {
+    console.log('resolver', data);
+
+    return this.contentsService.updateContent(data);
   }
 
   @Mutation(() => Boolean)

@@ -3,10 +3,8 @@ import { UpdateCourseInput } from './inputs/update.course.input';
 import { Injectable } from '@nestjs/common';
 import { CoursesRepository } from './courses.repository';
 import { CoursesModel } from './courses.model';
-import { ContentModel } from 'src/contents/contents.model';
 import { UserModel } from 'src/users/models/users.model';
 import { UserRole } from 'src/generated/prisma/enums';
-import { CreateContentInput } from 'src/contents/inputs/create.content.input';
 
 @Injectable()
 export class CoursesService {
@@ -49,13 +47,6 @@ export class CoursesService {
   async unrollmentStudents(courseId: number, ids: number[]): Promise<boolean> {
     await this.coursesRepository.unrollmentStudents(courseId, ids);
     return true;
-  }
-
-  async createContent(
-    courseId: number,
-    data: CreateContentInput,
-  ): Promise<ContentModel> {
-    return await this.coursesRepository.createContent(courseId, data);
   }
 
   async updateTeacher(courseId: number, id: number): Promise<boolean> {
