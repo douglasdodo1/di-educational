@@ -5,9 +5,6 @@ export const GET_ATTENDENCES = gql`
     attendences(courseId: $courseId) {
       id
       date
-      frequencies {
-        id
-      }
     }
   }
 `
