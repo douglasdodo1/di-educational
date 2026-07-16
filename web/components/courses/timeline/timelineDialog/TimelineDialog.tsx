@@ -1,5 +1,5 @@
-import { CreateTimelineForm } from '@/components/forms/courses/createtimeline/CreateTimelineForm'
-import { UpdateTimelineForm } from '@/components/forms/courses/createtimeline/UpdateTimelineForm'
+import { CreateTimelineForm } from '@/components/forms/courses/timeline/create-timeline/CreateTimelineForm'
+import { UpdateTimelineForm } from '@/components/forms/courses/timeline/update-timeline/UpdateTimelineForm'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 import { Content } from '@/types/content'
 import { TimelineModel } from '@/types/timelineModel'
@@ -24,17 +24,9 @@ export const TimelineDialog = ({
       <DialogContent>
         <DialogTitle>{editingItem ? 'Editar cronograma' : 'Adicionar cronograma'}</DialogTitle>
         {editingItem ? (
-          <UpdateTimelineForm
-            editingItem={editingItem}
-            handleClose={onClose}
-            contents={contents}
-          />
+          <UpdateTimelineForm editingItem={editingItem} handleClose={onClose} contents={contents} />
         ) : (
-          <CreateTimelineForm
-            courseId={courseId}
-            handleClose={onClose}
-            contents={contents}
-          />
+          <CreateTimelineForm courseId={courseId} handleClose={onClose} contents={contents} />
         )}
       </DialogContent>
     </Dialog>

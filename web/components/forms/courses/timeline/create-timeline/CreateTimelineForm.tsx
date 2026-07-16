@@ -1,24 +1,23 @@
 import { Field, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { Content } from '@/types/content'
-import { SelectFormContent } from './SelectContent/SelectContent'
+import { SelectFormContent } from '../select-content/SelectContent'
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
-import { TimelineModel } from '@/types/timelineModel'
-import { useUpdateTimeline } from './useUpdateTimeline'
+import { useCreateTimeline } from './useCreateTimeline'
 
-interface UpdateTimelineFormProps {
-  editingItem: TimelineModel
+interface CreateTimelineFormProps {
+  courseId?: string
   handleClose: () => void
   contents?: Content[]
 }
 
-export const UpdateTimelineForm = ({
-  editingItem,
+export const CreateTimelineForm = ({
+  courseId,
   handleClose,
   contents,
-}: UpdateTimelineFormProps) => {
-  const form = useUpdateTimeline({ editingItem, handleClose })
+}: CreateTimelineFormProps) => {
+  const form = useCreateTimeline({ courseId, handleClose })
 
   const toInputDateValue = (value: unknown) =>
     value instanceof Date ? value.toISOString().split('T')[0] : ''
@@ -67,7 +66,7 @@ export const UpdateTimelineForm = ({
             disabled={!canSubmit || isSubmitting}
             className="mt-4 w-full cursor-pointer"
           >
-            {isSubmitting ? <Spinner /> : 'Atualizar'}
+            {isSubmitting ? <Spinner /> : 'Criar'}
           </Button>
         )}
       </form.Subscribe>

@@ -51,18 +51,20 @@ export const TimelineCardList = ({
                     <span className="text-muted-foreground shrink-0 text-xl font-medium whitespace-nowrap">
                       {date}
                     </span>
-                    <Button
-                      variant="ghost"
-                      onClick={() => handleOpenEditModal(item)}
-                      className="cursor-pointer"
-                    >
-                      <Edit className="text-primary" />
-                    </Button>
-                    <Checkbox
-                      className="cursor-pointer"
-                      checked={item?.is_done}
-                      onCheckedChange={(checked) => handleChecked(item?.id, !!checked)}
-                    />
+                    <div className="flex flex-row items-center gap-2">
+                      <Button
+                        variant="ghost"
+                        onClick={() => handleOpenEditModal(item)}
+                        className="cursor-pointer"
+                      >
+                        <Edit className="text-primary" />
+                      </Button>
+                      <Checkbox
+                        className="cursor-pointer"
+                        checked={item?.is_done}
+                        onCheckedChange={(checked) => handleChecked(item?.id, !!checked)}
+                      />
+                    </div>
                   </div>
                 </div>
               </Card>
