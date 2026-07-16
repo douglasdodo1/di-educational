@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { AttendenceModel } from './attendence.model';
+import { CreateAttendenceInput } from './inputs/create.attendence.input';
+import { UpdateAttendenceInput } from './inputs/update.attendence.input';
 
 @Injectable()
 export class AttendenceRepository {
@@ -12,6 +14,23 @@ export class AttendenceRepository {
       include: {
         frequencies: true,
       },
+    });
+  }
+
+  async create(
+    createAttendenceInput: CreateAttendenceInput,
+  ): Promise<AttendenceModel> {
+    return await this.prisma.attendence.create({
+      data: createAttendenceInput,
+    });
+  }
+
+  async update(
+    editAttendenceInput: UpdateAttendenceInput,
+  ): Promise<AttendenceModel> {
+    return await this.prisma.attendence.update({
+      where: { id: editAttendenceInput.id },
+      data: editAttendenceInput,
     });
   }
 }
