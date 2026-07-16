@@ -8,11 +8,10 @@ interface PanelProps {
   title: string
   children: React.ReactNode
   className?: string
-  onAdd?: () => void
   openModal?: () => void
 }
 
-export function Panel({ title, children, className, onAdd, openModal }: PanelProps) {
+export function Panel({ title, children, className, openModal }: PanelProps) {
   const addLabel = ADD_LABELS[title]
 
   return (

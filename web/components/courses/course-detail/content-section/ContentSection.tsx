@@ -5,6 +5,10 @@ import { Card } from '@/components/ui/card'
 import { contentIcon } from './utils'
 import { ContentSectionSkeleton } from './ContentSectionSkeleton'
 import { sections } from '../../utils'
+import { ContentDialog } from './content-dialog/ContentDialog'
+import { useState } from 'react'
+import { ContentModel } from '@/types/content'
+import { ContentCardList } from './content-card-list/ContentCardList'
 
 interface OverviewSectionProps {
   course?: Course
@@ -14,6 +18,23 @@ interface OverviewSectionProps {
 export function ContentSection({ course, loading }: OverviewSectionProps) {
   const contents = course?.contents
   const sectionTitle = sections[0].label
+  const [open, setIsOpen] = useState(false)
+  const [editingItem, setEditingItem] = useState<ContentModel>()
+
+  const handleOpenDialog = () => {
+    setIsOpen(true)
+  }
+
+  const handleCloseDialog = () => {
+    setIsOpen(false)
+    setEditingItem(undefined)
+  }
+
+  const handleEditContent = (event: React.MouseEvent<HTMLButtonElement>, content: ContentModel) => {
+    event.preventDefault()
+    setEditingItem(content)
+    setIsOpen(true)
+  }
 
   if (loading) {
     return (
@@ -24,26 +45,18 @@ export function ContentSection({ course, loading }: OverviewSectionProps) {
   }
 
   return (
-    <Panel title={sectionTitle} className="flex min-h-0 flex-1 flex-col">
-      <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto">
-        {contents?.map((content, index) => {
-          const Icon = contentIcon(content.type)
-          return (
-            <Link key={index} href={`/content/${content.id}`} className="block cursor-pointer">
-              <Card className="hover:bg-accent/50 flex cursor-pointer flex-row items-center justify-between gap-4 p-6">
-                <div className="flex min-w-0 flex-1 flex-col">
-                  <p className="text-lg font-bold">{content.name}</p>
-                  <p className="text-md text-muted-foreground">{content.description}</p>
-                </div>
-
-                <div className="bg-muted text-muted-foreground flex items-center justify-center rounded-full">
-                  <Icon className="text-primary" />
-                </div>
-              </Card>
-            </Link>
-          )
-        })}
-      </div>
+    <Panel
+      title={sectionTitle}
+      className="flex min-h-0 flex-1 flex-col"
+      openModal={handleOpenDialog}
+    >
+      <ContentDialog
+        courseId={course?.id}
+        editingItem={editingItem}
+        isOpen={open}
+        onClose={handleCloseDialog}
+      />
+      <ContentCardList contents={contents} onEdit={handleEditContent} />
     </Panel>
   )
 }
