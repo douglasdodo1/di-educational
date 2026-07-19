@@ -10,27 +10,33 @@ interface UpdateTimelineFormValues {
 
 interface UpdateTimelineProps {
   editingItem: TimelineModel
+  setIsLoadingEdit: (isLoading: boolean) => void
   handleClose: () => void
 }
 
-export const useUpdateTimeline = ({ editingItem, handleClose }: UpdateTimelineProps) => {
+export const useUpdateTimeline = ({
+  editingItem,
+  setIsLoadingEdit,
+  handleClose,
+}: UpdateTimelineProps) => {
   const { updateTimeline } = useUpdateTimelineMutation()
 
   const form = useForm({
     defaultValues: {
       date: editingItem?.date ? new Date(editingItem.date) : new Date(),
-      contentId: editingItem?.content?.id?.toString() || '',
+      contentId: editingItem?.contentId?.toString() || '',
     } as UpdateTimelineFormValues,
 
     validators: {
       onSubmitAsync: async ({ value }) => {
+        setIsLoadingEdit(true)
         try {
           const response = await updateTimeline({
             variables: {
               id: editingItem.id,
               data: {
                 date: value.date,
-                contentId: value.contentId ? Number(value.contentId) : null,
+                contentId: Number(value.contentId),
               },
             },
           })
@@ -43,6 +49,8 @@ export const useUpdateTimeline = ({ editingItem, handleClose }: UpdateTimelinePr
         } catch (e) {
           console.error(e)
           toast.error('Erro ao atualizar cronograma')
+        } finally {
+          setIsLoadingEdit(false)
         }
       },
     },

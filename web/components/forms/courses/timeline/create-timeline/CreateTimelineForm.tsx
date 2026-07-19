@@ -17,7 +17,8 @@ export const CreateTimelineForm = ({
   handleClose,
   contents,
 }: CreateTimelineFormProps) => {
-  const form = useCreateTimeline({ courseId, handleClose })
+  const defaultContentId = contents?.[0]?.id?.toString()
+  const form = useCreateTimeline({ courseId, handleClose, defaultContentId })
 
   const toInputDateValue = (value: unknown) =>
     value instanceof Date ? value.toISOString().split('T')[0] : ''

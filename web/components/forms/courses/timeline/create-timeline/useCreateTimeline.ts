@@ -11,16 +11,17 @@ interface CreateTimelineFormValues {
 interface CreateTimelineProps {
   courseId?: string
   handleClose: () => void
+  defaultContentId?: string
 }
 
-export const useCreateTimeline = ({ courseId, handleClose }: CreateTimelineProps) => {
+export const useCreateTimeline = ({ courseId, handleClose, defaultContentId }: CreateTimelineProps) => {
   const { createTimeline } = useCreateTimelineMutation(courseId)
 
   const form = useForm({
     defaultValues: {
       date: new Date(),
       is_done: false,
-      contentId: '',
+      contentId: defaultContentId || '',
     } as CreateTimelineFormValues,
 
     validators: {
@@ -31,8 +32,7 @@ export const useCreateTimeline = ({ courseId, handleClose }: CreateTimelineProps
               data: {
                 date: value.date,
                 is_done: value.is_done,
-                courseId: Number(courseId),
-                contentId: value.contentId ? Number(value.contentId) : null,
+                contentId: Number(value.contentId),
               },
             },
           })

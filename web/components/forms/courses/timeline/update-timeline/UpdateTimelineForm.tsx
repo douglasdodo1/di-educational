@@ -11,14 +11,16 @@ interface UpdateTimelineFormProps {
   editingItem: TimelineModel
   handleClose: () => void
   contents?: ContentModel[]
+  setIsLoadingEdit: (isLoading: boolean) => void
 }
 
 export const UpdateTimelineForm = ({
   editingItem,
   handleClose,
   contents,
+  setIsLoadingEdit,
 }: UpdateTimelineFormProps) => {
-  const form = useUpdateTimeline({ editingItem, handleClose })
+  const form = useUpdateTimeline({ editingItem, handleClose, setIsLoadingEdit })
 
   const toInputDateValue = (value: unknown) =>
     value instanceof Date ? value.toISOString().split('T')[0] : ''
