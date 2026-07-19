@@ -25,7 +25,7 @@ export function CourseCard({
       role={onSelect ? 'button' : undefined}
       tabIndex={onSelect ? 0 : undefined}
       aria-label={onSelect ? `Abrir curso ${course.name}` : undefined}
-      className="min-h-96 cursor-pointer pt-0"
+      className="cursor-pointer pt-0"
     >
       <div className="relative aspect-[16/10] overflow-hidden px-0">
         <Image
