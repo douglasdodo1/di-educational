@@ -13,10 +13,15 @@ interface UpdateContentFormValues {
 
 interface UpdateContentProps {
   editingItem: ContentModel
+  setIsLoadingEdit: (isLoading: boolean) => void
   handleClose: () => void
 }
 
-export const useUpdateContent = ({ editingItem, handleClose }: UpdateContentProps) => {
+export const useUpdateContent = ({
+  editingItem,
+  setIsLoadingEdit,
+  handleClose,
+}: UpdateContentProps) => {
   const { updateContent } = useUpdateContentMutation()
 
   const form = useForm({
@@ -29,6 +34,7 @@ export const useUpdateContent = ({ editingItem, handleClose }: UpdateContentProp
 
     validators: {
       onSubmitAsync: async ({ value }) => {
+        setIsLoadingEdit(true)
         try {
           const response = await updateContent({
             variables: {
@@ -50,6 +56,8 @@ export const useUpdateContent = ({ editingItem, handleClose }: UpdateContentProp
         } catch (error) {
           console.error(error)
           toast.error('Erro ao atualizar conteúdo')
+        } finally {
+          setIsLoadingEdit(false)
         }
       },
     },

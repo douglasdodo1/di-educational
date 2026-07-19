@@ -15,11 +15,16 @@ import { ContentModel } from '@/types/content'
 
 interface UpdateContentProps {
   editingItem: ContentModel
+  setIsLoadingEdit: (isLoading: boolean) => void
   handleClose: () => void
 }
 
-export const UpdateContentForm = ({ editingItem, handleClose }: UpdateContentProps) => {
-  const form = useUpdateContent({ editingItem, handleClose })
+export const UpdateContentForm = ({
+  editingItem,
+  setIsLoadingEdit,
+  handleClose,
+}: UpdateContentProps) => {
+  const form = useUpdateContent({ editingItem, setIsLoadingEdit, handleClose })
 
   return (
     <form

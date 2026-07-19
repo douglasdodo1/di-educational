@@ -16,10 +16,13 @@ export const Timeline = ({ courseId, contents }: TimelineProps) => {
     loading,
     openModal,
     editingItem,
+    isLoading,
+    setIsLoadingEdit,
     handleOpenCreateModal,
     handleCloseCreateModal,
     handleOpenEditModal,
     handleChecked,
+    handleDeleteTimeline,
   } = useViewModel({ courseId })
 
   return (
@@ -34,6 +37,7 @@ export const Timeline = ({ courseId, contents }: TimelineProps) => {
         onClose={handleCloseCreateModal}
         contents={contents}
         editingItem={editingItem}
+        setIsLoadingEdit={setIsLoadingEdit}
       />
       {loading ? (
         <TimelineSkeletonList />
@@ -42,6 +46,8 @@ export const Timeline = ({ courseId, contents }: TimelineProps) => {
           timelines={timelines}
           handleOpenEditModal={handleOpenEditModal}
           handleChecked={handleChecked}
+          onDelete={handleDeleteTimeline}
+          isLoading={isLoading}
         />
       )}
     </Panel>

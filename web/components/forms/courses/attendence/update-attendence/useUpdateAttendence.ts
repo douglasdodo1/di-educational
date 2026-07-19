@@ -9,10 +9,15 @@ interface UpdateAttendenceFormValues {
 
 interface UpdateAttendenceProps {
   editingItem: AttendenceModel
+  setIsLoadingEdit: (isLoading: boolean) => void
   handleClose: () => void
 }
 
-export const useUpdateAttendence = ({ editingItem, handleClose }: UpdateAttendenceProps) => {
+export const useUpdateAttendence = ({
+  editingItem,
+  setIsLoadingEdit,
+  handleClose,
+}: UpdateAttendenceProps) => {
   const { updateAttendence } = useUpdateAttendenceMutation()
 
   const form = useForm({
@@ -22,6 +27,7 @@ export const useUpdateAttendence = ({ editingItem, handleClose }: UpdateAttenden
 
     validators: {
       onSubmitAsync: async ({ value }) => {
+        setIsLoadingEdit(true)
         try {
           const response = await updateAttendence({
             variables: {
@@ -40,6 +46,8 @@ export const useUpdateAttendence = ({ editingItem, handleClose }: UpdateAttenden
         } catch (error) {
           console.error(error)
           toast.error('Erro ao atualizar ata')
+        } finally {
+          setIsLoadingEdit(false)
         }
       },
     },

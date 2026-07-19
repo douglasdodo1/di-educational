@@ -15,9 +15,12 @@ export function AttendanceSection({ courseId }: AttendeceSectionProps) {
     loading,
     openDialog,
     editingItem,
+    isLoading,
+    setIsLoadingEdit,
     handleOpenCreateDialog,
     handleOpenEditDialog,
     handleCloseDialog,
+    handleDeleteAttendence,
   } = useViewModel({ courseId })
 
   return (
@@ -31,11 +34,17 @@ export function AttendanceSection({ courseId }: AttendeceSectionProps) {
         editingItem={editingItem}
         isOpen={openDialog}
         onClose={handleCloseDialog}
+        setIsLoadingEdit={setIsLoadingEdit}
       />
       {loading ? (
         <AttendenceCardSkeleton />
       ) : (
-        <AttendenceCardList attendences={attendences} handleOpenEditDialog={handleOpenEditDialog} />
+        <AttendenceCardList
+          attendences={attendences}
+          handleOpenEditDialog={handleOpenEditDialog}
+          onDelete={handleDeleteAttendence}
+          isLoading={isLoading}
+        />
       )}
     </Panel>
   )

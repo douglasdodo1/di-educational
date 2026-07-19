@@ -1,3 +1,4 @@
+import { useDeleteTimelineMutation } from '@/hooks/timelines/useDeleteTimelineMutation'
 import { useTimelinesByCourseId } from '@/hooks/timelines/useTimelinesByCourseId'
 import { useUpdateIsdoneTimelineMutation } from '@/hooks/timelines/useUpdateIsdoneTimelineMutation'
 import { TimelineModel } from '@/types/timelineModel'
@@ -11,8 +12,11 @@ interface useViewModelProps {
 export const useViewModel = ({ courseId }: useViewModelProps) => {
   const { timelines, loading, error } = useTimelinesByCourseId(courseId)
   const { updateIsdoneTimeline } = useUpdateIsdoneTimelineMutation()
+  const [deleteTimeline, { loading: deleteLoading }] = useDeleteTimelineMutation(courseId)
   const [openModal, setOpenModal] = useState(false)
   const [editingItem, setEditingItem] = useState<TimelineModel>()
+  const [isLoadingEdit, setIsLoadingEdit] = useState(false)
+  const isLoading = isLoadingEdit || deleteLoading
 
   const handleOpenCreateModal = () => {
     setOpenModal(true)
@@ -45,15 +49,24 @@ export const useViewModel = ({ courseId }: useViewModelProps) => {
     }
   }
 
+  const handleDeleteTimeline = (event: React.MouseEvent<HTMLButtonElement>, id: number) => {
+    event.preventDefault()
+    event.stopPropagation()
+    deleteTimeline({ variables: { id } })
+  }
+
   return {
     timelines,
     loading,
     error,
     openModal,
     editingItem,
+    isLoading,
+    setIsLoadingEdit,
     handleOpenCreateModal,
     handleCloseCreateModal,
     handleOpenEditModal,
     handleChecked,
+    handleDeleteTimeline,
   }
 }

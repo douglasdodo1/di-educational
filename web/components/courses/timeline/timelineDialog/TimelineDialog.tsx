@@ -10,6 +10,7 @@ interface TimelineDialogProps {
   courseId?: string
   contents?: ContentModel[]
   editingItem?: TimelineModel
+  setIsLoadingEdit: (isLoading: boolean) => void
 }
 
 export const TimelineDialog = ({
@@ -18,13 +19,19 @@ export const TimelineDialog = ({
   courseId,
   contents,
   editingItem,
+  setIsLoadingEdit,
 }: TimelineDialogProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent>
         <DialogTitle>{editingItem ? 'Editar cronograma' : 'Adicionar cronograma'}</DialogTitle>
         {editingItem ? (
-          <UpdateTimelineForm editingItem={editingItem} handleClose={onClose} contents={contents} />
+          <UpdateTimelineForm
+            editingItem={editingItem}
+            handleClose={onClose}
+            contents={contents}
+            setIsLoadingEdit={setIsLoadingEdit}
+          />
         ) : (
           <CreateTimelineForm courseId={courseId} handleClose={onClose} contents={contents} />
         )}

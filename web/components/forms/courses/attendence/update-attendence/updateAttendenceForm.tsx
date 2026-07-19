@@ -8,10 +8,15 @@ import { Button } from '@/components/ui/button'
 interface UpdateAttendenceProps {
   handleClose: () => void
   editingItem: AttendenceModel
+  setIsLoadingEdit: (isLoading: boolean) => void
 }
 
-export const UpdateAttendenceForm = ({ handleClose, editingItem }: UpdateAttendenceProps) => {
-  const form = useUpdateAttendence({ editingItem, handleClose })
+export const UpdateAttendenceForm = ({
+  handleClose,
+  editingItem,
+  setIsLoadingEdit,
+}: UpdateAttendenceProps) => {
+  const form = useUpdateAttendence({ editingItem, handleClose, setIsLoadingEdit })
 
   const toInputDateValue = (value: unknown) =>
     value instanceof Date ? value.toISOString().split('T')[0] : ''

@@ -8,6 +8,7 @@ interface AttendenceDialogProps {
   editingItem?: AttendenceModel
   isOpen: boolean
   onClose: () => void
+  setIsLoadingEdit: (isLoading: boolean) => void
 }
 
 export const AttendenceDialog = ({
@@ -15,13 +16,18 @@ export const AttendenceDialog = ({
   editingItem,
   isOpen,
   onClose,
+  setIsLoadingEdit,
 }: AttendenceDialogProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent>
         <DialogTitle>{editingItem ? 'Editar Ata' : 'Adicionar Ata'}</DialogTitle>
         {editingItem ? (
-          <UpdateAttendenceForm editingItem={editingItem} handleClose={onClose} />
+          <UpdateAttendenceForm
+            editingItem={editingItem}
+            handleClose={onClose}
+            setIsLoadingEdit={setIsLoadingEdit}
+          />
         ) : (
           <CreateAttendenceForm courseId={courseId} handleClose={onClose} />
         )}

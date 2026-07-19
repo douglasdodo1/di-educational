@@ -4,19 +4,23 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { formatDate } from '@/lib/date/formatToDD/MM/YYYY'
 import { cn } from '@/lib/utils'
 import { ContentType } from '@/types/contentType'
-import { CheckCircle, Clock, Edit, FileText, Video } from 'lucide-react'
+import { CheckCircle, Clock, Edit, FileText, Trash2, Video } from 'lucide-react'
 import { TimelineModel } from '@/types/timelineModel'
 
 interface TimelineCardListProps {
   timelines?: TimelineModel[]
   handleOpenEditModal: (item: TimelineModel) => void
   handleChecked: (id: number, is_done: boolean) => Promise<void>
+  onDelete: (event: React.MouseEvent<HTMLButtonElement>, id: number) => void
+  isLoading: boolean
 }
 
 export const TimelineCardList = ({
   timelines,
   handleOpenEditModal,
   handleChecked,
+  onDelete,
+  isLoading,
 }: TimelineCardListProps) => {
   return (
     <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-2">
@@ -56,8 +60,17 @@ export const TimelineCardList = ({
                         variant="ghost"
                         onClick={() => handleOpenEditModal(item)}
                         className="cursor-pointer"
+                        disabled={isLoading}
                       >
                         <Edit className="text-primary" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        className="text-destructive cursor-pointer"
+                        disabled={isLoading}
+                        onClick={(event) => onDelete(event, item.id)}
+                      >
+                        <Trash2 />
                       </Button>
                       <Checkbox
                         className="cursor-pointer"

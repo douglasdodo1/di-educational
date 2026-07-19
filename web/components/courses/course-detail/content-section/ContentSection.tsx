@@ -1,14 +1,10 @@
 import { Course } from '@/types/course'
 import { Panel } from '../panel/Panel'
-import Link from 'next/link'
-import { Card } from '@/components/ui/card'
-import { contentIcon } from './utils'
 import { ContentSectionSkeleton } from './ContentSectionSkeleton'
 import { sections } from '../../utils'
 import { ContentDialog } from './content-dialog/ContentDialog'
-import { useState } from 'react'
-import { ContentModel } from '@/types/content'
 import { ContentCardList } from './content-card-list/ContentCardList'
+import { useViewModel } from './useViewmodel'
 
 interface OverviewSectionProps {
   course?: Course
@@ -16,25 +12,19 @@ interface OverviewSectionProps {
 }
 
 export function ContentSection({ course, loading }: OverviewSectionProps) {
-  const contents = course?.contents
+  const {
+    contents,
+    open,
+    editingItem,
+    isLoading,
+    setIsLoadingEdit,
+    handleDeleteContent,
+    handleOpenDialog,
+    handleCloseDialog,
+    handleEditContent,
+  } = useViewModel(course)
+
   const sectionTitle = sections[0].label
-  const [open, setIsOpen] = useState(false)
-  const [editingItem, setEditingItem] = useState<ContentModel>()
-
-  const handleOpenDialog = () => {
-    setIsOpen(true)
-  }
-
-  const handleCloseDialog = () => {
-    setIsOpen(false)
-    setEditingItem(undefined)
-  }
-
-  const handleEditContent = (event: React.MouseEvent<HTMLButtonElement>, content: ContentModel) => {
-    event.preventDefault()
-    setEditingItem(content)
-    setIsOpen(true)
-  }
 
   if (loading) {
     return (
@@ -54,9 +44,15 @@ export function ContentSection({ course, loading }: OverviewSectionProps) {
         courseId={course?.id}
         editingItem={editingItem}
         isOpen={open}
+        setIsLoadingEdit={setIsLoadingEdit}
         onClose={handleCloseDialog}
       />
-      <ContentCardList contents={contents} onEdit={handleEditContent} />
+      <ContentCardList
+        contents={contents}
+        onEdit={handleEditContent}
+        onDelete={handleDeleteContent}
+        isLoading={isLoading}
+      />
     </Panel>
   )
 }

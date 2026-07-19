@@ -7,16 +7,27 @@ interface ContentDialogProps {
   courseId?: string
   editingItem?: ContentModel
   isOpen: boolean
+  setIsLoadingEdit: (isLoading: boolean) => void
   onClose: () => void
 }
 
-export const ContentDialog = ({ courseId, editingItem, isOpen, onClose }: ContentDialogProps) => {
+export const ContentDialog = ({
+  courseId,
+  editingItem,
+  isOpen,
+  setIsLoadingEdit,
+  onClose,
+}: ContentDialogProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent>
         <DialogTitle>{editingItem ? 'Editar Conteúdo' : 'Adicionar Conteúdo'}</DialogTitle>
         {editingItem ? (
-          <UpdateContentForm editingItem={editingItem} handleClose={onClose} />
+          <UpdateContentForm
+            editingItem={editingItem}
+            handleClose={onClose}
+            setIsLoadingEdit={setIsLoadingEdit}
+          />
         ) : (
           <CreateContentForm courseId={courseId} handleClose={onClose} />
         )}

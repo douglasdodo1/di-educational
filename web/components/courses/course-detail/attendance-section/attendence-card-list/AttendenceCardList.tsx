@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { CalendarDays, ClipboardCheck, Edit } from 'lucide-react'
+import { CalendarDays, ClipboardCheck, Edit, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import { AttendenceModel } from '@/types/attendence'
 import { formatDate } from '@/lib/date/formatToDD/MM/YYYY'
@@ -8,11 +8,15 @@ import { formatDate } from '@/lib/date/formatToDD/MM/YYYY'
 interface AttendenceCardListProps {
   attendences?: AttendenceModel[]
   handleOpenEditDialog: (event: React.MouseEvent<HTMLButtonElement>, attendence: AttendenceModel) => void
+  onDelete: (event: React.MouseEvent<HTMLButtonElement>, id: number) => void
+  isLoading: boolean
 }
 
 export const AttendenceCardList = ({
   attendences,
   handleOpenEditDialog,
+  onDelete,
+  isLoading,
 }: AttendenceCardListProps) => {
   return (
     <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto">
@@ -32,13 +36,24 @@ export const AttendenceCardList = ({
                 </span>
               </div>
 
-              <Button
-                onClick={(event) => handleOpenEditDialog(event, attendence)}
-                variant="ghost"
-                className="absolute top-4 right-4 cursor-pointer"
-              >
-                <Edit className="text-primary" />
-              </Button>
+              <div className="absolute top-4 right-4 flex gap-1">
+                <Button
+                  onClick={(event) => handleOpenEditDialog(event, attendence)}
+                  variant="ghost"
+                  className="cursor-pointer"
+                  disabled={isLoading}
+                >
+                  <Edit className="text-primary" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  className="text-destructive cursor-pointer"
+                  disabled={isLoading}
+                  onClick={(event) => onDelete(event, attendence.id)}
+                >
+                  <Trash2 />
+                </Button>
+              </div>
             </Card>
           </Link>
         )
