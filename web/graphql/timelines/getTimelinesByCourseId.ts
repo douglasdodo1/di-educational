@@ -6,6 +6,7 @@ export const GET_TIMELINES_BY_COURSE_ID = gql`
       id
       is_done
       date
+      contentId
       content {
         id
         name

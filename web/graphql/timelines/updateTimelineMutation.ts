@@ -5,6 +5,7 @@ export const UPDATE_TIMELINE_MUTATION = gql`
     updateTimeline(id: $id, data: $data) {
       id
       date
+      contentId
       content {
         id
         name
