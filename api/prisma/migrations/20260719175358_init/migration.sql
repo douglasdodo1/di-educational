@@ -93,8 +93,7 @@ CREATE TABLE "Timeline" (
     "id" SERIAL NOT NULL,
     "is_done" BOOLEAN NOT NULL DEFAULT false,
     "date" DATE NOT NULL,
-    "courseId" INTEGER NOT NULL,
-    "contentId" INTEGER,
+    "contentId" INTEGER NOT NULL,
 
     CONSTRAINT "Timeline_pkey" PRIMARY KEY ("id")
 );
@@ -135,16 +134,13 @@ ALTER TABLE "Content" ADD CONSTRAINT "Content_courseId_fkey" FOREIGN KEY ("cours
 ALTER TABLE "Attendence" ADD CONSTRAINT "Attendence_courseId_fkey" FOREIGN KEY ("courseId") REFERENCES "Course"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Frequency" ADD CONSTRAINT "Frequency_attendenceId_fkey" FOREIGN KEY ("attendenceId") REFERENCES "Attendence"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Frequency" ADD CONSTRAINT "Frequency_attendenceId_fkey" FOREIGN KEY ("attendenceId") REFERENCES "Attendence"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Frequency" ADD CONSTRAINT "Frequency_studentId_fkey" FOREIGN KEY ("studentId") REFERENCES "Student"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Timeline" ADD CONSTRAINT "Timeline_courseId_fkey" FOREIGN KEY ("courseId") REFERENCES "Course"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Timeline" ADD CONSTRAINT "Timeline_contentId_fkey" FOREIGN KEY ("contentId") REFERENCES "Content"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Timeline" ADD CONSTRAINT "Timeline_contentId_fkey" FOREIGN KEY ("contentId") REFERENCES "Content"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_CourseMembers" ADD CONSTRAINT "_CourseMembers_A_fkey" FOREIGN KEY ("A") REFERENCES "Course"("id") ON DELETE CASCADE ON UPDATE CASCADE;

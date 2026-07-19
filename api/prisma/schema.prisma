@@ -5,8 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
   moduleFormat = "cjs"
 }
 
@@ -29,32 +29,32 @@ model User {
   student    Student?
 
   phones     Phone[]
-  courses Course[] @relation("AdminCourse")
+  courses    Course[] @relation("AdminCourse")
 
-  memberCourses  Course[] @relation("CourseMembers")
+  memberCourses Course[] @relation("CourseMembers")
 }
 
 model Teacher {
-  id     Int    @id
+  id     Int   @id
   salary Float
 
-  user   User   @relation(fields: [id], references: [id])
+  user User @relation(fields: [id], references: [id])
 }
 
 model Student {
   id               Int    @id
   enrollmentNumber String @unique
 
-  user             User   @relation(fields: [id], references: [id])
-  frequencies       Frequency[]
+  user        User        @relation(fields: [id], references: [id])
+  frequencies Frequency[]
 }
 
 model Phone {
-  id      Int      @id @default(autoincrement())
-  number  String
+  id     Int    @id @default(autoincrement())
+  number String
 
-  user User @relation(fields:[userId], references: [id])
-  userId  Int
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
 }
 
 model Course {
@@ -68,72 +68,64 @@ model Course {
   start_date  DateTime
   end_date    DateTime
 
-  userId   Int
-  adminCourse     User  @relation("AdminCourse", fields: [userId], references: [id])
+  userId      Int
+  adminCourse User     @relation("AdminCourse", fields: [userId], references: [id])
 
   members     User[]   @relation("CourseMembers")
 
-  contents     Content[]
+  contents    Content[]
 
-  attendances  Attendence[]
+  attendances Attendence[]
+}
+
+model Content {
+  id          Int         @id @default(autoincrement())
+  name        String
+  description String?
+  type        ContentType
+  url         String
+
+  courseId    Int
+  course      Course      @relation(fields: [courseId], references: [id])
 
   timelines   Timeline[]
 }
 
-model Content {
-  id       Int    @id @default(autoincrement())
-  name     String
-  description String?
-  type     ContentType
-  url      String
-
-  courseId  Int
-  course   Course  @relation(fields: [courseId], references: [id])
-
-  timelines Timeline[]
-}
-
 model Attendence {
-  id        Int      @id @default(autoincrement())
-  date      DateTime
+  id   Int      @id @default(autoincrement())
+  date DateTime
 
-  courseId  Int
-  course    Course   @relation(fields: [courseId], references: [id])
+  courseId    Int
+  course      Course      @relation(fields: [courseId], references: [id])
 
   frequencies Frequency[]
-
 }
 
 model Frequency {
-  id        Int      @id @default(autoincrement())
+  id         Int     @id @default(autoincrement())
   is_present Boolean
 
   attendenceId Int
-  attendence   Attendence @relation(fields: [attendenceId], references: [id])
+  attendence   Attendence @relation(fields: [attendenceId], references: [id], onDelete: Cascade)
 
   studentId Int
-  student   Student  @relation(fields: [studentId], references: [id])
+  student   Student @relation(fields: [studentId], references: [id])
 }
 
 model Timeline {
-  id          Int      @id @default(autoincrement())
+  id      Int      @id @default(autoincrement())
+  is_done Boolean  @default(false)
+  date    DateTime @db.Date
 
-  is_done     Boolean  @default(false)
-  date DateTime @db.Date
-  courseId    Int
-  course      Course   @relation(fields: [courseId], references: [id])
-
-  contentId   Int?
-  content     Content? @relation(fields: [contentId], references: [id])
+  contentId Int
+  content   Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
 }
-
 
 enum UserRole {
   ADMIN
   STUDENT
   TEACHER
 }
-
 
 enum ContentType {
   IMAGE

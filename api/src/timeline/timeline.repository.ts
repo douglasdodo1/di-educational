@@ -11,7 +11,11 @@ export class TimelineRepository {
 
   async findAllByCourseId(courseId: number): Promise<TimelineModel[]> {
     return await this.prisma.timeline.findMany({
-      where: { courseId: courseId },
+      where: {
+        content: {
+          courseId: courseId,
+        },
+      },
       include: {
         content: true,
       },
@@ -23,7 +27,11 @@ export class TimelineRepository {
 
   async create(data: CreateTimelineInput): Promise<TimelineModel> {
     return await this.prisma.timeline.create({
-      data,
+      data: {
+        date: data.date,
+        is_done: data.is_done,
+        contentId: data.contentId,
+      },
       include: {
         content: true,
       },
@@ -33,7 +41,10 @@ export class TimelineRepository {
   async update(id: number, data: EditTimelineInput): Promise<TimelineModel> {
     return await this.prisma.timeline.update({
       where: { id },
-      data,
+      data: {
+        date: data.date,
+        contentId: data.contentId,
+      },
       include: {
         content: true,
       },
@@ -50,6 +61,12 @@ export class TimelineRepository {
       include: {
         content: true,
       },
+    });
+  }
+
+  async delete(id: number): Promise<void> {
+    await this.prisma.timeline.delete({
+      where: { id },
     });
   }
 }

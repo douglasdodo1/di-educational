@@ -16,7 +16,6 @@ async function main() {
   console.log('🌱 Iniciando seed do banco de dados...\n');
 
   // ─── Limpar dados existentes ─────────────────────────────────────────────
-  // Timeline referencia Course e Content, então precisa ser limpa antes deles
   await prisma.timeline.deleteMany();
   await prisma.frequency.deleteMany();
   await prisma.attendence.deleteMany();
@@ -375,7 +374,7 @@ async function main() {
       `🗓️  ${attendanceDates.length} chamadas criadas para "${course.name}" (${courseData.members.length} alunos cada)`,
     );
 
-    // ─── Timeline do curso ───────────────────────────────────────────────
+    /* eslint-disable @typescript-eslint/no-require-imports */ // ─── Timeline do curso ───────────────────────────────────────────────
     const createdContents = await prisma.content.findMany({
       where: { courseId: course.id },
       orderBy: { id: 'asc' },
@@ -390,17 +389,8 @@ async function main() {
       return {
         date,
         is_done: index < Math.ceil(createdContents.length / 2), // ~metade concluída
-        courseId: course.id,
         contentId: content.id,
       };
-    });
-
-    // Marco inicial sem conteúdo vinculado (ex: "início do curso")
-    timelineEntries.unshift({
-      date: course.start_date,
-      is_done: true,
-      courseId: course.id,
-      contentId: null,
     });
 
     await prisma.timeline.createMany({ data: timelineEntries });

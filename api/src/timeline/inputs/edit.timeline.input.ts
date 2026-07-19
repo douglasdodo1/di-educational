@@ -10,8 +10,7 @@ export class EditTimelineInput {
   @IsDate()
   date?: Date;
 
-  @Field(() => Int, { nullable: true })
-  @IsOptional()
+  @Field(() => Int)
   @IsNumber()
-  contentId?: number | null;
+  contentId: number;
 }
