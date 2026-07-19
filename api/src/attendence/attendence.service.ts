@@ -23,4 +23,9 @@ export class AttendenceService {
   ): Promise<AttendenceModel> {
     return this.attendenceRepository.update(editAttendenceInput);
   }
+
+  async delete(id: number): Promise<boolean> {
+    await this.attendenceRepository.delete(id);
+    return true;
+  }
 }

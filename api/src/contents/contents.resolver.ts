@@ -27,9 +27,14 @@ export class ContentsResolver {
   updateContent(
     @Args('data', { type: () => UpdateContentInput }) data: UpdateContentInput,
   ): Promise<ContentModel> {
-    console.log('resolver', data);
-
     return this.contentsService.updateContent(data);
+  }
+
+  @Mutation(() => Boolean)
+  deleteContent(
+    @Args('id', { type: () => Int }) id: number,
+  ): Promise<boolean> {
+    return this.contentsService.deleteContent(id);
   }
 
   @Mutation(() => Boolean)

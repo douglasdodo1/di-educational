@@ -38,4 +38,11 @@ export class TimelineResolver {
   ): Promise<TimelineModel> {
     return this.timelineService.updateIsDone(id, data);
   }
+
+  @Mutation(() => Boolean)
+  deleteTimeline(
+    @Args('id', { type: () => Int }) id: number,
+  ): Promise<boolean> {
+    return this.timelineService.delete(id);
+  }
 }

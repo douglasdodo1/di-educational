@@ -98,9 +98,7 @@ type TimelineModel {
   id: Int!
   is_done: Boolean!
   date: DateTime!
-  courseId: Int!
   contentId: Int
-  course: CoursesModel
   content: ContentModel
 }
 
@@ -127,11 +125,13 @@ type Mutation {
   updateStudent(id: Float!, data: UpdateStudentInput!): Boolean!
   createAttendence(createAttendenceInput: CreateAttendenceInput!): AttendenceModel!
   updateAttendence(updateAttendenceInput: UpdateAttendenceInput!): AttendenceModel!
+  deleteAttendence(id: Int!): Boolean!
   setFrequency(frequencyId: Int!, isPresent: Boolean!): FrequencyModel!
   setAllFrequencies(attendenceId: Int!, isPresent: Boolean!): [FrequencyModel!]!
   createTimeline(data: CreateTimelineInput!): TimelineModel!
   updateTimeline(id: Int!, data: EditTimelineInput!): TimelineModel!
   updateTimelineIsDone(id: Int!, data: EditTimelineIsDoneInput!): TimelineModel!
+  deleteTimeline(id: Int!): Boolean!
   createCourse(data: CreateCourseInput!): CoursesModel
   updateCourse(id: Int!, data: UpdateCourseInput!): Boolean!
   deleteCourse(id: Int!): Boolean!
@@ -140,6 +140,7 @@ type Mutation {
   updateIsActive(courseId: Int!, state: Boolean!): Boolean!
   createContent(data: CreateContentInput!): ContentModel!
   updateContent(data: UpdateContentInput!): ContentModel!
+  deleteContent(id: Int!): Boolean!
   deleteContents(contentIds: [Int!]!): Boolean!
 }
 
@@ -177,13 +178,12 @@ input UpdateAttendenceInput {
 input CreateTimelineInput {
   date: DateTime!
   is_done: Boolean!
-  courseId: Int!
-  contentId: Int
+  contentId: Int!
 }
 
 input EditTimelineInput {
   date: DateTime
-  contentId: Int
+  contentId: Int!
 }
 
 input EditTimelineIsDoneInput {

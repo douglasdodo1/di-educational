@@ -35,6 +35,12 @@ export class ContentsRepository {
     });
   }
 
+  async deleteContent(contentId: number) {
+    await this.prisma.content.delete({
+      where: { id: contentId },
+    });
+  }
+
   async deleteContents(contentIds: number[]) {
     await this.prisma.content.deleteMany({
       where: {

@@ -22,6 +22,11 @@ export class ContentsService {
     return await this.contentsRepository.updateContent(data);
   }
 
+  async deleteContent(contentId: number): Promise<boolean> {
+    await this.contentsRepository.deleteContent(contentId);
+    return true;
+  }
+
   async deleteContents(contentIds: number[]): Promise<boolean> {
     await this.contentsRepository.deleteContents(contentIds);
     return true;

@@ -33,4 +33,10 @@ export class AttendenceRepository {
       data: editAttendenceInput,
     });
   }
+
+  async delete(id: number): Promise<void> {
+    await this.prisma.attendence.delete({
+      where: { id },
+    });
+  }
 }

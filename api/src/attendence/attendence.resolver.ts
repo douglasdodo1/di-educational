@@ -30,4 +30,11 @@ export class AttendenceResolver {
   ): Promise<AttendenceModel> {
     return this.attendenceService.update(updateAttendenceInput);
   }
+
+  @Mutation(() => Boolean)
+  deleteAttendence(
+    @Args('id', { type: () => Int }) id: number,
+  ): Promise<boolean> {
+    return this.attendenceService.delete(id);
+  }
 }

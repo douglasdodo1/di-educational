@@ -27,4 +27,9 @@ export class TimelineService {
   ): Promise<TimelineModel> {
     return this.timelineRepository.updateIsDone(id, data);
   }
+
+  async delete(id: number): Promise<boolean> {
+    await this.timelineRepository.delete(id);
+    return true;
+  }
 }
